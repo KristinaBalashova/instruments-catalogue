@@ -1,0 +1,61 @@
+.root {
+  font-size: 14px;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 25px;
+  width: 100%;
+  gap: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.headline {
+  font-size: 40px;
+  color: var(--dark);
+}
+
+.discription {
+  font-size: 40px;
+  color: var(--dark);
+
+  @media (min-width: 744px) {
+    flex-direction: 50px;
+  }
+}
+
+.galaxy {
+  background-image: url('./galaxy.png');
+  background-repeat: no-repeat;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  transform: skew(0.312rad);
+}
+
+.planet {
+  width: 100px;
+  background-color: #d4af37;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+  text-align: center;
+  color: white;
+}
+
+.planet:hover {
+  transform: translateY(-10px); /* Move the item up by 10px */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}

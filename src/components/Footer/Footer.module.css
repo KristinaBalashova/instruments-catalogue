@@ -1,0 +1,15 @@
+.root {
+  bottom: 0;
+  font-size: 14px;
+  color: #ffff;
+  width: 100%;
+  color: #1c1c1c; /* White color */
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+}
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  align-items: center;
+}

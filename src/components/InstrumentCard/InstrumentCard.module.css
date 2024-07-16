@@ -1,0 +1,46 @@
+.cardContainer {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid white;
+  flex-grow: 1;
+
+  @media (min-width: 1024px) {
+    width: calc(50% - 5px);
+  }
+}
+
+.img {
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.title {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editorButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.edit {
+  font-size: 30px;
+  color: var(--primary-gold);
+}
+
+.link {
+  text-decoration: none;
+}
+
+.content {
+  padding: 15px;
+}

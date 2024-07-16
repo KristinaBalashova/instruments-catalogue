@@ -1,0 +1,44 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+.label:hover {
+  text-decoration: underline;
+}
+
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 16px;
+  color: #333;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+select:hover,
+select:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+}
+
+option {
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+}
+
+option:hover {
+  background-color: #f1f1f1;
+}

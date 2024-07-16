@@ -1,0 +1,12 @@
+.input {
+  height: 40px;
+  width: 100%;
+  border-radius: 8px;
+  border: none;
+  padding: 10px;
+}
+.input:hover,
+.input:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+}

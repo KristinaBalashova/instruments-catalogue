@@ -1,0 +1,62 @@
+.root{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.imageContainer {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detailsContainer {
+  width: 100%;
+  max-width: 800px;
+}
+
+.name {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.characteristics {
+  margin-top: 20px;
+}
+
+.characteristics h2 {
+  margin-bottom: 10px;
+}
+
+.characteristicItem {
+  margin-bottom: 8px;
+  font-size: 1em;
+}
+
+.editorButtons {
+  font-size: 30px;
+  text-decoration: none;
+}
+.delete {
+  color: rgb(151, 22, 22);
+}

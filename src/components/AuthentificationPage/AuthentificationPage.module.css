@@ -1,0 +1,29 @@
+.root {
+  font-size: 14px;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 25px;
+  align-items: flex-start;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.intro {
+}
+.auth {
+  flex-basis: 80%;
+}
+
+.headline {
+  font-size: 60px;
+}
+
+.discription {
+  font-size: 40px;
+  width: 90%;
+}

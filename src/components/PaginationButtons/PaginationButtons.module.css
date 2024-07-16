@@ -1,0 +1,23 @@
+.paginationButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px;
+}
+
+.paginationButton {
+  border-radius: 100%;
+  background-color: var(--primary-gold);
+  border: none;
+  padding: 10px;
+}
+
+.arrow {
+  width: 25px;
+  height: 25px;
+  fill: white;
+}
+
+.disabled {
+  opacity: 80%;
+}

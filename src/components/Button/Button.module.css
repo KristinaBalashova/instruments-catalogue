@@ -1,0 +1,16 @@
+.button {
+  height: 40px;
+  border-radius: 8px;
+  color: var(--primary-gold);
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid var(--primary-gold);
+  background-color: transparent;
+  font-size: 18px;
+  width: 100px;
+}
+
+.button:hover {
+  color: white;
+  background: var(--primary-gold);
+}
