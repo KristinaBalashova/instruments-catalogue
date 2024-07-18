@@ -14,7 +14,7 @@ const FiltersPanel = ({ setFilters }) => {
       } else {
         // Extract unique values for each filter category
         const uniqueFilters = listOfFilters.reduce((acc, filter) => {
-          acc[filter] = [...new Set(data.map(item => item[filter]))];
+          acc[filter] = [...new Set(data.map((item) => item[filter]))];
           return acc;
         }, {});
         setDataFilters(uniqueFilters);
@@ -26,7 +26,7 @@ const FiltersPanel = ({ setFilters }) => {
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
-    setFilters(prevFilters => ({
+    setFilters((prevFilters) => ({
       ...prevFilters,
       [name]: value,
     }));
@@ -39,18 +39,14 @@ const FiltersPanel = ({ setFilters }) => {
       {listOfFilters.map((filter) => (
         <form key={filter} className={styles.form}>
           <label className={styles.label}>{filter}</label>
-          <select
-            id={filter}
-            name={filter}
-            onChange={handleFilterChange}
-            className={styles.select}
-          >
+          <select id={filter} name={filter} onChange={handleFilterChange} className={styles.select}>
             <option value="">All</option>
-            {dataFilters[filter] && dataFilters[filter].map((item) => (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            ))}
+            {dataFilters[filter] &&
+              dataFilters[filter].map((item) => (
+                <option value={item} key={item}>
+                  {item}
+                </option>
+              ))}
           </select>
         </form>
       ))}

@@ -2,7 +2,7 @@ import styles from './InstrumentsCatalogue.module.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../supabaseClient';
 import InstrumentCard from '../InstrumentCard/InstrumentCard';
-import FiltersPanel from '../FilterForm/FilterForm'
+import FiltersPanel from '../FilterForm/FilterForm';
 import PaginationButtons from '../PaginationButtons/PaginationButtons';
 import SearchBar from '../SearchBar/SearchBar';
 
@@ -21,8 +21,6 @@ const InstrumentsCatalogue = () => {
 
   const itemsPerPage = 4;
 
-  //data for cunting
-  
   useEffect(() => {
     const fetchTotalItems = async () => {
       const { count, error } = await supabase
@@ -39,22 +37,18 @@ const InstrumentsCatalogue = () => {
     fetchTotalItems();
   }, []);
 
-  
   useEffect(() => {
-
     const fetchData = async () => {
-      console.log(filters, 'filters');
       setLoading(true);
       let { data, error } = await supabase
         .from('instruments-collection')
         .select('*')
-        .textSearch('name', 'nova')//use array search, transform name to arr and search contains
+        //.textSearch('name', 'nova') //use array search, transform name to arr and search contains
         .ilike('brand', filters.brand)
         .ilike('type', filters.type)
         .ilike('country', filters.country)
         .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
 
-  
       if (error) {
         console.error('Error fetching data:', error);
       } else {
@@ -63,15 +57,8 @@ const InstrumentsCatalogue = () => {
       setLoading(false);
     };
 
-    
     fetchData();
-  }, [currentPage, searchQuery]);
-
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+  }, [currentPage, searchQuery, filters]);
 
   return (
     <section className={styles.root}>
@@ -79,20 +66,25 @@ const InstrumentsCatalogue = () => {
         {<SearchBar setSearchQuery={setSearchQuery} />}
         <div className={styles.itemsContainer}>
           <FiltersPanel setFilters={setFilters} />
-          <div className={styles.cardsContainer}>
-            <div className={styles.cards}>
-              {data &&
-                data.map((item) => {
-                  return <InstrumentCard key={item.id} instrumentData={item} />;
-                })}
+
+          {loading && <div>Loading...</div>}
+          {
+            <div className={styles.cardsContainer}>
+              <div className={styles.cards}>
+                {data &&
+                  data.map((item) => {
+                    return <InstrumentCard key={item.id} instrumentData={item} />;
+                  })}
+              </div>
+
+              <PaginationButtons
+                currentPage={currentPage}
+                totalItems={totalItems}
+                itemsPerPage={itemsPerPage}
+                setCurrentPage={setCurrentPage}
+              />
             </div>
-            <PaginationButtons
-              currentPage={currentPage}
-              totalItems={totalItems}
-              itemsPerPage={itemsPerPage}
-              setCurrentPage={setCurrentPage}
-            />
-          </div>
+          }
         </div>
       </div>
     </section>

@@ -44,3 +44,7 @@
 .content {
   padding: 15px;
 }
+
+.fav {
+  align-self: flex-end;
+}
