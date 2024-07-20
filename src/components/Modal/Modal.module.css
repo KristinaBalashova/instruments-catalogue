@@ -1,0 +1,59 @@
+.root {
+  font-family: var(--montserrat), Helvetica, Arial, sans-serif;
+  position: relative;
+  z-index: 30;
+  width: 90%;
+  padding: 24px 32px;
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: 1px 1px 2px 0px #0000001f;
+  color: #282828;
+
+  @media (min-width: 744px) {
+    width: 740px;
+  }
+}
+
+.overlay {
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(40, 40, 40, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.container {
+  white-space: pre-line;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.header {
+  font-weight: 500;
+  font-size: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ffffff1a;
+}
+
+.body {
+  overflow-x: hidden;
+  max-height: 360px;
+  padding: 16px 16px 16px 0;
+}
+
+.closeButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.closeIcon {
+  display: block;
+  height: 24px;
+  width: 24px;
+}
