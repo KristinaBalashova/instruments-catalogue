@@ -1,56 +1,147 @@
-import React from 'react';
-import styles from './InstrumentEditor.module.css/';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import React, { useState } from 'react';
+import { supabase } from '../../supabaseClient';
+import styles from './InstrumentEditor.module.css';
+import Button from '../Button/Button';
 
 const InstrumentEditor = () => {
+  const instrument = {};
+  const [name, setName] = useState(instrument.name || '');
+  const [description, setDescription] = useState(instrument.description || '');
+  const [image, setImage] = useState(null);
+  const [type, setType] = useState(instrument.type || '');
+  const [date, setDate] = useState(instrument.date || '');
+  const [brand, setBrand] = useState(instrument.brand || '');
+  const [country, setCountry] = useState(instrument.country || '');
+  const [materials, setMaterials] = useState(instrument.materials || '');
+  const [error, setError] = useState('');
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const validTypes = ['image/jpeg', 'image/png'];
+
+    if (file && validTypes.includes(file.type)) {
+      setImage(file);
+      setError('');
+    } else {
+      setError('Please upload a JPEG or PNG image.');
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Upload the image to Supabase storage
+    if (image) {
+      const { data, error: uploadError } = await supabase.storage
+        .from('instruments')
+        .upload(`public/${image.name}`, image);
+
+      if (uploadError) {
+        console.error('Error uploading image:', uploadError);
+        setError('Error uploading image');
+        return;
+      }
+
+      const imageUrl = `${process.env.REACT_APP_SUPABASE_URL}/storage/v1/object/public/instruments/${image.name}`;
+
+      // Update instrument details in the database
+      const { data: updatedInstrument, error: updateError } = await supabase
+        .from('instruments-collection')
+        .update({ name, description, picture_url: imageUrl })
+        .eq('id', instrument.id);
+
+      if (updateError) {
+        console.error('Error updating instrument:', updateError);
+        setError('Error updating instrument');
+      } else {
+        console.log('Instrument updated successfully:', updatedInstrument);
+      }
+    }
+  };
+
   return (
-    <>
-      <Header />
-      <section className={styles.root}>
-        <div className={styles.container}>
-          <div className={styles.imgContainer}>
-            <img src="./musician.png"></img>
+    <div className={styles.root}>
+      <div className={styles.container}>
+        <h2>Edit Instrument</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Name:</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className={styles.input}
+            />
           </div>
-          <div className={styles.descriptionContainer}>
-            <div className={styles.itemInfo}>
-              <h2 className={styles.title}>Stratocaster RockEt ST-01</h2>
-              <p className={styles.description}>
-                Краткое описание инструмента, его особенностей и характеристик
-              </p>
-
-              <div className={styles.itemContainer}>
-                <p className={styles.text}>Тип</p>
-                <p className={styles.text}>Духовой</p>
-              </div>
-              <div className={styles.itemContainer}>
-                <p className={styles.text}>Производитель</p>
-                <p className={styles.text}>Мастер</p>
-              </div>
-              <div className={styles.itemContainer}>
-                <p className={styles.text}>Дата</p>
-                <p className={styles.text}>Дата</p>
-              </div>
-              <div className={styles.itemContainer}>
-                <p className={styles.text}>Страна</p>
-                <p className={styles.text}>Страна</p>
-              </div>
-              <div className={styles.itemContainer}>
-                <p className={styles.text}>Материалы</p>
-                <p className={styles.text}>Дерево</p>
-              </div>
-            </div>
-
-            <div className={styles.buttons}>
-              <button className={styles.button}>Add to Favorits</button>
-              <button className={styles.button}>Redact</button>
-              <button className={styles.button}>Delete</button>
-            </div>
+          <div>
+            <label>Description:</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+              className={styles.text}
+            ></textarea>
           </div>
-        </div>
-      </section>
-      <Footer />
-    </>
+          <div>
+            <label>Picture:</label>
+            <input type="file" accept="image/jpeg, image/png" onChange={handleFileChange} />
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+          </div>
+          <div>
+            <label>Type:</label>
+            <input
+              type="text"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              required
+              className={styles.input}
+            />
+          </div>
+          <div>
+            <label>Date:</label>
+            <input
+              type="text"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+              className={styles.input}
+            />
+          </div>
+          <div>
+            <label>Brand:</label>
+            <input
+              type="text"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              required
+              className={styles.input}
+            />
+          </div>
+          <div>
+            <label>Country:</label>
+            <input
+              type="text"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              required
+              className={styles.input}
+            />
+          </div>
+          <div>
+            <label>Materials:</label>
+            <input
+              type="text"
+              value={materials}
+              onChange={(e) => setMaterials(e.target.value)}
+              required
+              className={styles.input}
+            />
+          </div>
+          <Button>Save</Button>
+        </form>
+      </div>
+    </div>
   );
 };
 

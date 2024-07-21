@@ -3,13 +3,10 @@ import Button from '../Button/Button';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import InstrumentsCatalogue from '../InstrumentsCatalogue/InstrumentsCatalogue';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 
 const MainPage = () => {
   return (
     <>
-      <Header />
       <section className={styles.root}>
         <div className={styles.container}>
           <div className={styles.intro}>
@@ -28,7 +25,6 @@ const MainPage = () => {
         </div>
       </section>
       <InstrumentsCatalogue />
-      <Footer />
     </>
   );
 };
