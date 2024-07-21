@@ -2,8 +2,6 @@ import { Auth } from '@supabase/auth-ui-react';
 import styles from './AuthentificationPage.module.css';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '../../supabaseClient';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import { UserContext } from '../../context/context';
 import { useEffect, useContext, useState } from 'react';
 
@@ -23,8 +21,8 @@ const AuthentificationPage = () => {
       setSession(session);
     });
 
-    if (session?.user.app_metadata.role === 'super-admin') {
-      setUser('editor');
+    if (session?.user.app_metadata.role === 'admin') {
+      setUser('admin');
     }
 
     console.log(session);
@@ -33,7 +31,6 @@ const AuthentificationPage = () => {
 
   return (
     <div className={styles.root}>
-      <Header />
       {!session && (
         <div className={styles.container}>
           <div className={styles.auth}>
@@ -55,7 +52,6 @@ const AuthentificationPage = () => {
         </div>
       )}
       {session && 'You are logged in'}
-      <Footer />
     </div>
   );
 };

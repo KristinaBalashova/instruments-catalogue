@@ -1,6 +1,7 @@
 import './App.module.css';
 import MainPage from './components/MainPage/MainPage';
-
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import InstrumentCreator from './components/InstrumentCreator/InstrumentCreator';
 import AuthentificationPage from './components/AuthentificationPage/AuthentificationPage';
@@ -15,8 +16,8 @@ function App() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user.app_metadata.role === 'super-admin') {
-        setUser('editor');
+      if (session?.user.app_metadata.role === 'admin') {
+        setUser('admin');
       }
     });
   }, []);
@@ -24,14 +25,16 @@ function App() {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/favorites" element={<Favorites />} />
-          <Route path="/instrument-edit" element={<InstrumentEditor />} />
+          <Route path="/instrument-editor" element={<InstrumentEditor />} />
           <Route path="/authentification" element={<AuthentificationPage />} />
           <Route path="/instrument-creator" element={<InstrumentCreator />} />
           <Route path="/instrument-page" element={<InstrumentPage />} />
         </Routes>
+        <Footer />
       </Router>
     </UserContext.Provider>
   );
