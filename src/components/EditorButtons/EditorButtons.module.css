@@ -1,0 +1,16 @@
+
+.editorButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .edit {
+    font-size: 30px;
+    color: var(--primary-gold);
+    cursor: pointer;
+  }
+  
+  .link {
+    text-decoration: none;
+  }
