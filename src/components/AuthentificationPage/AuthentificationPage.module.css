@@ -1,29 +1,65 @@
 .root {
   font-size: 14px;
+  color: black;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 25px;
-  align-items: flex-start;
-  width: 100%;
   display: flex;
-  flex-direction: row;
-  gap: 30px;
+
+  align-items: center;
+  flex-direction: column;
+  padding: 50px;
 }
 
-.intro {
-}
-.auth {
-  flex-basis: 80%;
+.authForm {
+  background-color: #fff8dc;
+  border: 2px solid #deb887;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 360px;
 }
 
-.headline {
-  font-size: 60px;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #8b4513;
 }
 
-.discription {
-  font-size: 40px;
-  width: 90%;
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  margin-bottom: 5px;
+  display: block;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #deb887;
+  border-radius: 5px;
+  background-color: #fdf5e6;
+  color: #333;
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: #8b4513;
+  outline: none;
 }
