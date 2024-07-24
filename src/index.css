@@ -13,11 +13,11 @@ body {
   height: 100vh;
   overflow-x: hidden;
   font-family: 'Montserrat', sans-serif;
-  background-color: rgb(248, 247, 244);
+  background-color: #faf3e0;
+  color: var(--dark);
 }
 
 header {
-  color: #ffffff; /* White color */
   text-align: center;
   padding: 20px;
   position: fixed;
@@ -43,8 +43,18 @@ footer {
 }
 
 :root {
-  --primary-red: #ca5b2b;
-  --primary-orange: #c8862b;
-  --primary-gold: #d4af37;
-  --dark: #323337;
+  --burnt-orange: #d2691e;
+  --cream: #faf3e0;
+  --dark-brown: #8b4513;
+  --copper: #b87333;
+  --rust-red: #8b0000;
+  --dark-rust: hsl(25, 76%, 31%);
+  --teal: #008080;
+  --white: #fff;
+  --dark-teal: #006666;
+  --darker-teal: #004d4d;
+  --darkest-teal: #003333;
+  --lighter-teal: #66b2b2;
+  --lighter-teal-border: #339999;
+  --lighter-text: #b3e0e0;
 }
