@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loader {
+  border: 8px solid #fff8dc; /* Light border color */
+  border-top: 8px solid #8b4513; /* Dark brown border */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1.5s linear infinite;
+}
+
+.text {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #5d4037; /* Dark brown */
+  font-family: 'Courier New', Courier, monospace;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
