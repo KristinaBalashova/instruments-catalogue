@@ -1,16 +1,54 @@
 .button {
-  height: 40px;
-  border-radius: 8px;
-  color: var(--primary-gold);
+  border-radius: 5px;
   padding: 10px 20px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
-  border: 1px solid var(--primary-gold);
-  background-color: transparent;
-  font-size: 18px;
-  width: 170px;
+  transition: all 0.2s ease;
 }
 
-.button:hover {
-  color: white;
-  background: var(--primary-gold);
+.button.primary {
+  background-color: var(--burnt-orange);
+  color: var(--cream);
+  border: 2px solid var(--dark-brown);
+  box-shadow: 3px 3px 0 var(--dark-brown);
+}
+
+.button.primary:hover {
+  background-color: var(--copper);
+  box-shadow: 1px 1px 0 var(--dark-brown);
+}
+
+.button.primary:active {
+  background-color: var(--rust-red);
+  box-shadow: inset 1px 1px 0 var(--dark-rust);
+}
+
+.button.secondary {
+  background-color: var(--teal);
+  color: var(--white);
+  border-color: var(--dark-teal);
+}
+
+.button.secondary:hover {
+  background-color: var(--dark-teal);
+  border-color: var(--darker-teal);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.button.secondary:active {
+  background-color: var(--darker-teal);
+  border-color: var(--darkest-teal);
+  transform: translateY(2px);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.button.secondary:disabled {
+  background-color: var(--lighter-teal);
+  border-color: var(--lighter-teal-border);
+  color: var(--lighter-text);
+  cursor: not-allowed;
+  box-shadow: none;
 }
