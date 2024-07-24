@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from './FiltersPanel.module.css';
 import { supabase } from '../../supabaseClient';
-
+import Button from '../Button/Button';
 const FiltersPanel = ({ setFilters }) => {
   const [dataFilters, setDataFilters] = useState({});
 
   useEffect(() => {
     const fetchDataForFiltering = async () => {
-      const { data, error } = await supabase.from('instruments-collection').select('*');
+      const { data, error } = await supabase.from('instruments_collection').select('*');
 
       if (error) {
         console.error('Error fetching data for filters:', error);
@@ -32,6 +32,14 @@ const FiltersPanel = ({ setFilters }) => {
     }));
   };
 
+  const handleFilterClear = () => {
+    setFilters((prevFilters) => ({
+      ...listOfFilters.reduce((acc, filter) => {
+        acc[filter] = '*';
+        return acc;
+      }, {}),
+    }));
+  };
   const listOfFilters = ['brand', 'type', 'date', 'country', 'materials'];
 
   return (
@@ -50,6 +58,9 @@ const FiltersPanel = ({ setFilters }) => {
           </select>
         </form>
       ))}
+      <Button secondary onClick={handleFilterClear}>
+        Clear filters
+      </Button>
     </div>
   );
 };
