@@ -2,9 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import { supabase } from '../../supabaseClient';
 import { UserContext } from '../../context/context';
 import Button from '../Button/Button';
-import styles from './AuthentificationPage.module.css';
+import styles from './AuthPage.module.css';
 
-const AuthentificationPage = () => {
+const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -78,7 +78,7 @@ const AuthentificationPage = () => {
       <div className={styles.container}>
         {!session ? (
           <div className={styles.authForm}>
-            <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className={styles.signInForm}>
+            <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className={styles.form}>
               <h2 className={styles.formTitle}>{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
               {error && <p className={styles.error}>{error}</p>}
               <div className={styles.formGroup}>
@@ -126,8 +126,9 @@ const AuthentificationPage = () => {
             </form>
           </div>
         ) : (
-          <div className={styles.signedIn}>
-            <p>You are logged in as {session.user.email}</p>
+          <div className={styles.insideContainer}>
+            <p className={styles.text}>You are logged in as</p>
+            <p className={styles.email}>{session.user.email}</p>
             <Button secondary onClick={handleSignOut}>
               Sign Out
             </Button>
@@ -138,4 +139,4 @@ const AuthentificationPage = () => {
   );
 };
 
-export default AuthentificationPage;
+export default AuthPage;

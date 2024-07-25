@@ -1,14 +1,10 @@
 import logo from '/logo.png';
 import styles from './Header.module.css';
-import HeartSymbol from '../HeartSymbol/HeartSymbol';
+
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../context/context';
-import { useContext } from 'react';
 import Button from '../Button/Button';
 
-const Header = ({ nightMode }) => {
-  const { user } = useContext(UserContext);
-
+const Header = () => {
   return (
     <section className={styles.root}>
       <div className={styles.container}>
@@ -17,17 +13,15 @@ const Header = ({ nightMode }) => {
         </Link>
 
         <div className={styles.right}>
-          {user === 'admin' && (
-            <Link to="/instrument-creator">
-              <Button>Add new instrument</Button>
-            </Link>
-          )}
-
-          <Link to="/favorites">
-            <HeartSymbol filled />
+          <Link to="/auth">
+            <Button children="Sign in" />
           </Link>
 
-          {nightMode ? <span>&#127769;</span> : <span>&#9728;</span>}
+          {/* <Link to="/favorites">
+            <img src="/heart.svg" className={styles.heart} alt="favorite-heart" />
+          </Link>*/}
+
+          {/*nightMode ? <img src="/day-icon.png" className={styles.themeIcon} alt="night-mode-on" /> : <img src="/night-icon.png" className={styles.themeIcon} alt="night-mode-off" />*/}
         </div>
       </div>
     </section>

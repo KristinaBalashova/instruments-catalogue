@@ -3,8 +3,12 @@ import Button from '../Button/Button';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import InstrumentsCatalogue from '../InstrumentsCatalogue/InstrumentsCatalogue';
+import { UserContext } from '../../context/context';
+import { useContext } from 'react';
 
 const MainPage = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <>
       <section className={styles.root}>
@@ -16,12 +20,13 @@ const MainPage = () => {
               create an account to explore, manage, and enjoy our extensive library of instruments.{' '}
             </p>
             <div className={styles.auth}>
-              <Link to="/authentification">
-                <Button children="Sign in" />
-              </Link>
+              {user === 'admin' && (
+                <Link to="/instrument-creator">
+                  <Button>Add new instrument</Button>
+                </Link>
+              )}
             </div>
           </div>
-          <div className={styles.galaxy}></div>
         </div>
       </section>
       <InstrumentsCatalogue />

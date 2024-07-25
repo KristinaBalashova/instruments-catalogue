@@ -6,15 +6,14 @@
 
 .container {
   display: flex;
-
   align-items: center;
   flex-direction: column;
   padding: 50px;
 }
 
-.authForm {
-  background-color: #fff8dc;
-  border: 2px solid #deb887;
+.insideContainer {
+  background-color: var(--secondary-color);
+  border: 2px solid var(--border-color);
   border-radius: 10px;
   padding: 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -22,20 +21,25 @@
   width: 360px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.authForm {
+  background-color: var(--secondary-color);
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 360px;
 }
+
 .title {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #8b4513;
 }
 
 .form {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .form-group {
@@ -52,14 +56,27 @@ label {
 input {
   width: 100%;
   padding: 10px;
-  border: 2px solid #deb887;
+  border: 2px solid var(--lighter-teal);
   border-radius: 5px;
-  background-color: #fdf5e6;
+  background-color: var(--background-color);
   color: #333;
   font-size: 16px;
 }
 
 input:focus {
-  border-color: #8b4513;
+  border-color: var(--darkest-teal);
   outline: none;
+}
+
+.text {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.email {
+  font-size: 14px;
+  margin-bottom: 10px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 10px;
 }
