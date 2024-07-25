@@ -1,7 +1,6 @@
 .button {
-  border-radius: 5px;
   padding: 10px 20px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--font-family);
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -10,44 +9,56 @@
 }
 
 .button.primary {
-  background-color: var(--burnt-orange);
-  color: var(--cream);
-  border: 2px solid var(--dark-brown);
-  box-shadow: 3px 3px 0 var(--dark-brown);
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: 2px solid var(--accent-color);
+  box-shadow: 3px 3px 0 var(--darkest-teal);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .button.primary:hover {
-  background-color: var(--copper);
-  box-shadow: 1px 1px 0 var(--dark-brown);
+  background-color: var(--hover-color);
+  color: var(--secondary-color);
 }
 
 .button.primary:active {
-  background-color: var(--rust-red);
-  box-shadow: inset 1px 1px 0 var(--dark-rust);
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+}
+
+.button.primary:disabled {
+  background-color: var(--lighter-teal);
+  border-color: var(--lighter-teal-border);
+  color: var(--lighter-text);
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .button.secondary {
-  background-color: var(--teal);
-  color: var(--white);
-  border-color: var(--dark-teal);
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  border: 2px solid var(--border-color);
+  box-shadow: 3px 3px 0 var(--darkest-gray);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .button.secondary:hover {
-  background-color: var(--dark-teal);
-  border-color: var(--darker-teal);
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  background-color: var(--border-color);
+  color: var(--secondary-color);
 }
 
 .button.secondary:active {
-  background-color: var(--darker-teal);
-  border-color: var(--darkest-teal);
-  transform: translateY(2px);
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  background-color: var(--darkest-gray);
+  color: var(--secondary-color);
 }
 
 .button.secondary:disabled {
-  background-color: var(--lighter-teal);
-  border-color: var(--lighter-teal-border);
+  background-color: var(--lighter-gray);
+  border-color: var(--lighter-gray-border);
   color: var(--lighter-text);
   cursor: not-allowed;
   box-shadow: none;

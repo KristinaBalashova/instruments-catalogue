@@ -18,8 +18,15 @@ const ImageDownloader = ({ setFile }) => {
   return (
     <div className={styles.root}>
       <label>Download image:</label>
-      <input type="file" accept="image/jpeg, image/png" onChange={handleFileChange} />
-      <p className={styles.text}>Download PNG or JPG picture, 500x500 max with removed background</p>
+      <input
+        type="file"
+        accept="image/jpeg, image/png"
+        onChange={handleFileChange}
+        className={styles.input}
+      />
+      <p className={styles.text}>
+        Download PNG or JPG picture, 500x500 max with removed background
+      </p>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );

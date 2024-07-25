@@ -13,8 +13,9 @@ body {
   height: 100vh;
   overflow-x: hidden;
   font-family: 'Montserrat', sans-serif;
-  background-color: #faf3e0;
-  color: var(--dark);
+  background-color: var(--background-color);
+  color: var(--accent-color);
+  font-family: var(--font-family);
 }
 
 header {
@@ -25,11 +26,6 @@ header {
   width: 100%;
   z-index: 1000;
   height: 60px; /* Adjust based on your header content */
-}
-
-section {
-  flex: 1;
-  padding: 20px;
 }
 
 footer {
@@ -43,18 +39,18 @@ footer {
 }
 
 :root {
-  --burnt-orange: #d2691e;
-  --cream: #faf3e0;
-  --dark-brown: #8b4513;
-  --copper: #b87333;
-  --rust-red: #8b0000;
-  --dark-rust: hsl(25, 76%, 31%);
-  --teal: #008080;
-  --white: #fff;
-  --dark-teal: #006666;
-  --darker-teal: #004d4d;
-  --darkest-teal: #003333;
-  --lighter-teal: #66b2b2;
-  --lighter-teal-border: #339999;
-  --lighter-text: #b3e0e0;
+  --primary-color: #008080; /* Teal */
+  --secondary-color: #ffffff; /* White */
+  --accent-color: #333333; /* Black */
+  --background-color: #f0f0f0; /* Light Gray */
+  --border-color: #cccccc; /* Gray */
+  --hover-color: #005959; /* Darker Teal */
+  --font-family: 'Courier New', Courier, monospace;
+  --darkest-teal: #004c4c; /* Darkest Teal for box-shadow */
+  --lighter-teal: #b2d8d8; /* Lighter Teal for disabled state */
+  --lighter-teal-border: #a3c6c6; /* Lighter Teal Border for disabled state */
+  --lighter-text: #888888; /* Lighter Text for disabled state */
+  --darkest-gray: #666666; /* Darkest Gray for box-shadow */
+  --lighter-gray: #d3d3d3; /* Lighter Gray for disabled state */
+  --lighter-gray-border: #c0c0c0; /* Lighter Gray Border for disabled state */
 }

@@ -7,9 +7,21 @@
 
 .paginationButton {
   border-radius: 100%;
-  background-color: var(--primary-gold);
+  background-color: var(--primary-color);
+  border-color: var(--lighter-teal);
   border: none;
   padding: 10px;
+  cursor: pointer;
+  transition:
+    box-shadow 0.3s ease,
+    color 0.3s ease;
+}
+
+.paginationButton:hover {
+  box-shadow: 3px 3px 0 var(--darkest-teal);
+}
+
+.paginationButton:disabled {
 }
 
 .arrow {
@@ -19,5 +31,5 @@
 }
 
 .disabled {
-  opacity: 80%;
+  opacity: 70%;
 }
