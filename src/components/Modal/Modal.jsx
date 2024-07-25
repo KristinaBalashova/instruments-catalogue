@@ -24,7 +24,7 @@ const Modal = ({ isOpen = false, onClose, children, header }) => {
           <img src="/icon-close.svg" className={styles.closeIcon} alt="close" />
         </button>
         {header ? <div className={styles.header}>{header}</div> : null}
-        <div className={styles.body}>{children}</div>
+        <div className={styles.content}>{children}</div>
       </div>
     </ReactModal>
   );

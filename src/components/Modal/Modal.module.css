@@ -4,7 +4,6 @@
   z-index: 30;
   width: 90%;
   padding: 24px 32px;
-  border-radius: 16px;
   background-color: #fff;
   box-shadow: 1px 1px 2px 0px #0000001f;
   color: #282828;
@@ -40,12 +39,6 @@
   border-bottom: 1px solid #ffffff1a;
 }
 
-.body {
-  overflow-x: hidden;
-  max-height: 360px;
-  padding: 16px 16px 16px 0;
-}
-
 .closeButton {
   position: absolute;
   right: 10px;
@@ -56,4 +49,38 @@
   display: block;
   height: 24px;
   width: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--primary-color);
+  padding: 5px 10px;
+  border-bottom: 2px solid var(--border-color);
+  font-size: 16px;
+  padding-bottom: 10px;
+  font-family: var(--font-family);
+}
+
+.closeButton {
+  background-color: var(--lighter-teal);
+  color: var(--secondary-color);
+  border: none;
+  padding: 2px 5px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 14px;
+}
+
+.closeButton:hover {
+  background-color: var(--hover-color);
+}
+
+.content {
+  padding: 25px 0px;
+  font-family: var(--font-family);
+  color: var(--accent-color);
+  overflow-x: hidden;
+  max-height: 360px;
 }
