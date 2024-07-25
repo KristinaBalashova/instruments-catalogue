@@ -5,19 +5,12 @@
 }
 
 .loader {
-  border: 8px solid #fff8dc; /* Light border color */
-  border-top: 8px solid #8b4513; /* Dark brown border */
+  border: 8px solid var(--lighter-teal); /* Light border color */
+  border-top: 8px solid var(--primary-color); /* Dark brown border */
   border-radius: 50%;
   width: 50px;
   height: 50px;
   animation: spin 1.5s linear infinite;
-}
-
-.text {
-  margin-top: 10px;
-  font-size: 16px;
-  color: #5d4037; /* Dark brown */
-  font-family: 'Courier New', Courier, monospace;
 }
 
 @keyframes spin {
