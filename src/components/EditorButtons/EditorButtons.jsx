@@ -4,21 +4,20 @@ import Modal from '../Modal/Modal';
 import { supabase } from '../../supabaseClient';
 import { useState } from 'react';
 import Button from '../Button/Button';
-const EditorButtons = () => {
+
+const EditorButtons = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorFetch, setErrorFetch] = useState(null);
 
   const handleDeleteButton = () => {
-    console.log(id, 'id');
     setIsModalOpen(true);
   };
 
   const handleConfirmDelete = async () => {
-    console.log('we are here');
-    console.log('id', id);
-    const { data, error } = await supabase.from('instruments-collection').delete().eq('id', id);
+    const { data, error } = await supabase.from('instruments_collection').delete().eq('id', id);
 
     if (error) {
-      console.error('Error deleting data:', error);
+      console.log(error);
     } else {
       console.log('Data deleted:', data);
       setIsModalOpen(false);
@@ -28,12 +27,15 @@ const EditorButtons = () => {
   return (
     <>
       <div className={styles.editorButtons}>
-        <Link to="/instrument-editor" className={styles.link}>
-          <span className={styles.edit}>&#9998;</span>
+        <Link to={`/instrument-editor/${id}`} state={{ id }} className={styles.link}>
+          <div className={styles.edit}>Edit</div>
         </Link>
-        <span className={styles.edit} onClick={handleDeleteButton}>
-          &#128465;
-        </span>
+        <img
+          src="/trash-bin.png"
+          className={styles.delete}
+          alt="trash-bin-icon"
+          onClick={handleDeleteButton}
+        />
       </div>
 
       {isModalOpen && (
@@ -45,6 +47,7 @@ const EditorButtons = () => {
         >
           <Button onClick={handleConfirmDelete}>Yes, delete</Button>
           <Button onClick={() => setIsModalOpen(false)}>No, cancel</Button>
+          {/*errorFetch && <div>'Error deleting data:', {errorFetch}</div>*/}
         </Modal>
       )}
     </>

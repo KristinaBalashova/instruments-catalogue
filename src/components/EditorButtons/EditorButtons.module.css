@@ -1,16 +1,24 @@
-
 .editorButtons {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-  }
-  
-  .edit {
-    font-size: 30px;
-    color: var(--primary-gold);
-    cursor: pointer;
-  }
-  
-  .link {
-    text-decoration: none;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.edit {
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.delete {
+  width: 30px;
+  cursor: pointer;
+}
+
+.link {
+  text-decoration: none;
+}
