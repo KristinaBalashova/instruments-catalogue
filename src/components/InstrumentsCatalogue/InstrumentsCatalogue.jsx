@@ -5,6 +5,7 @@ import InstrumentCard from '../InstrumentCard/InstrumentCard';
 import FiltersPanel from '../FilterForm/FilterForm';
 import PaginationButtons from '../PaginationButtons/PaginationButtons';
 import SearchBar from '../SearchBar/SearchBar';
+import Loader from '../Loader/Loader';
 
 const InstrumentsCatalogue = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -17,48 +18,36 @@ const InstrumentsCatalogue = () => {
     brand: '*',
     type: '*',
     country: '*',
+    materials: '*',
   });
 
   const itemsPerPage = 4;
 
   useEffect(() => {
-    const fetchTotalItems = async () => {
-      const { count, error } = await supabase
-        .from('instruments-collection')
-        .select('*', { count: 'exact', head: true });
-
-      if (error) {
-        console.error('Error fetching total items count:', error);
-      } else {
-        setTotalItems(count);
-      }
-    };
-
-    fetchTotalItems();
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      let { data, error } = await supabase
-        .from('instruments-collection')
-        .select('*')
-        //.textSearch('name', 'nova') //use array search, transform name to arr and search contains
+
+      let { data, error, count } = await supabase
+        .from('instruments_collection')
+        .select('*', { count: 'exact' })
         .ilike('brand', filters.brand)
         .ilike('type', filters.type)
         .ilike('country', filters.country)
+        .ilike('materials', filters.materials)
+        .ilike('name', `%${searchQuery}%`)
         .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
 
       if (error) {
         console.error('Error fetching data:', error);
       } else {
         setData(data);
+        setTotalItems(count);
       }
       setLoading(false);
     };
 
     fetchData();
-  }, [currentPage, searchQuery, filters]);
+  }, [currentPage, searchQuery, filters, totalItems]);
 
   return (
     <section className={styles.root}>
@@ -67,7 +56,8 @@ const InstrumentsCatalogue = () => {
         <div className={styles.itemsContainer}>
           <FiltersPanel setFilters={setFilters} />
 
-          {loading && <div>Loading...</div>}
+          {loading && <Loader />}
+          {!totalItems && <div>Sorry, nothing found</div>}
           {
             <div className={styles.cardsContainer}>
               <div className={styles.cards}>
@@ -76,13 +66,14 @@ const InstrumentsCatalogue = () => {
                     return <InstrumentCard key={item.id} instrumentData={item} />;
                   })}
               </div>
-
-              <PaginationButtons
-                currentPage={currentPage}
-                totalItems={totalItems}
-                itemsPerPage={itemsPerPage}
-                setCurrentPage={setCurrentPage}
-              />
+              {totalItems ? (
+                <PaginationButtons
+                  currentPage={currentPage}
+                  totalItems={totalItems}
+                  itemsPerPage={itemsPerPage}
+                  setCurrentPage={setCurrentPage}
+                />
+              ) : null}
             </div>
           }
         </div>

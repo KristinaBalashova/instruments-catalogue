@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './FiltersPanel.module.css';
 import { supabase } from '../../supabaseClient';
 import Button from '../Button/Button';
+
 const FiltersPanel = ({ setFilters }) => {
   const [dataFilters, setDataFilters] = useState({});
 
@@ -12,7 +13,6 @@ const FiltersPanel = ({ setFilters }) => {
       if (error) {
         console.error('Error fetching data for filters:', error);
       } else {
-        // Extract unique values for each filter category
         const uniqueFilters = listOfFilters.reduce((acc, filter) => {
           acc[filter] = [...new Set(data.map((item) => item[filter]))];
           return acc;
@@ -40,7 +40,7 @@ const FiltersPanel = ({ setFilters }) => {
       }, {}),
     }));
   };
-  const listOfFilters = ['brand', 'type', 'date', 'country', 'materials'];
+  const listOfFilters = ['brand', 'type', 'country', 'materials'];
 
   return (
     <div className={styles.filterContainer}>
@@ -48,7 +48,7 @@ const FiltersPanel = ({ setFilters }) => {
         <form key={filter} className={styles.form}>
           <label className={styles.label}>{filter}</label>
           <select id={filter} name={filter} onChange={handleFilterChange} className={styles.select}>
-            <option value="">All</option>
+            <option value={'*'}>{'All'}</option>
             {dataFilters[filter] &&
               dataFilters[filter].map((item) => (
                 <option value={item} key={item}>
