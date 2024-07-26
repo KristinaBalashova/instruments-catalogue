@@ -18,9 +18,11 @@ const EditorButtons = ({ id }) => {
 
     if (error) {
       console.log(error);
+      setErrorFetch('Error deleting data');
     } else {
       console.log('Data deleted:', data);
       setIsModalOpen(false);
+      setErrorFetch(null);
     }
   };
 
@@ -45,9 +47,11 @@ const EditorButtons = ({ id }) => {
           header="Are you sure you want to delete this instrument?"
           ariaHideApp={false}
         >
-          <Button onClick={handleConfirmDelete}>Yes, delete</Button>
-          <Button onClick={() => setIsModalOpen(false)}>No, cancel</Button>
-          {/*errorFetch && <div>'Error deleting data:', {errorFetch}</div>*/}
+          <div className={styles.modalButtons}>
+            <Button onClick={handleConfirmDelete}>Yes, delete</Button>
+            <Button onClick={() => setIsModalOpen(false)}>No, cancel</Button>
+          </div>
+          {errorFetch && <div className={styles.error}>Error deleting data: {errorFetch}</div>}
         </Modal>
       )}
     </>
