@@ -25,7 +25,7 @@ const EditorButtons = ({ id }) => {
       setErrorFetch(null);
     }
   };
-
+  
   return (
     <>
       <div className={styles.editorButtons}>
@@ -45,7 +45,7 @@ const EditorButtons = ({ id }) => {
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           header="Are you sure you want to delete this instrument?"
-          ariaHideApp={false}
+          appElement={document.getElementById('root') || undefined}
         >
           <div className={styles.modalButtons}>
             <Button onClick={handleConfirmDelete}>Yes, delete</Button>
