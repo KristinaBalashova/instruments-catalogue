@@ -38,10 +38,10 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/favorites" element={<Favorites />} />
-          <Route path="/instrument-editor" element={<InstrumentEditor />} />
+          <Route path="/instrument-editor/:id" element={<InstrumentPage isEditable={true} />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/instrument-creator" element={<InstrumentCreator />} />
-          <Route path="/instrument-page" element={<InstrumentPage />} />
+          <Route path="/instrument-page/:id" element={<InstrumentPage isEditable={false} />} />
         </Routes>
         <Footer />
       </Router>
