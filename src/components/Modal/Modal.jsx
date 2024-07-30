@@ -5,6 +5,7 @@ import ReactModal from 'react-modal';
 import styles from './Modal.module.css';
 
 const Modal = ({ isOpen = false, onClose, children, header }) => {
+  ReactModal.setAppElement('#root');
   return (
     <ReactModal
       isOpen={isOpen}
