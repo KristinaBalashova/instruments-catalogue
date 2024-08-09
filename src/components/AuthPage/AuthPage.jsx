@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { supabase } from '../../supabaseClient';
-import { UserContext } from '../../context/context';
+import { UserContext, SessionContext } from '../../context/context';
 import Button from '../Button/Button';
 import styles from './AuthPage.module.css';
 
@@ -8,23 +8,11 @@ const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { user, setUser } = useContext(UserContext);
-  const [session, setSession] = useState(null);
+  const { setUser } = useContext(UserContext);
+  const { session, setSession } = useContext(SessionContext);
   const [isSignUp, setIsSignUp] = useState(false);
 
   useEffect(() => {
-    const fetchSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setSession(session);
-      if (session?.user) {
-        setUser(session.user);
-      }
-    };
-
-    fetchSession();
-
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -37,7 +25,7 @@ const AuthPage = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [setUser]);
+  }, [setUser, setSession]);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -60,7 +48,7 @@ const AuthPage = () => {
     } else {
       setUser(data.user);
       setError('');
-      setIsSignUp(false); // Switch back to sign-in mode after successful sign-up
+      setIsSignUp(false);
     }
   };
 
@@ -70,6 +58,9 @@ const AuthPage = () => {
       setError(error.message);
     } else {
       setUser(null);
+      setEmail('');
+      setPassword('');
+      setSession(null);
     }
   };
 
@@ -79,7 +70,24 @@ const AuthPage = () => {
         {!session ? (
           <div className={styles.authForm}>
             <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className={styles.form}>
-              <h2 className={styles.formTitle}>{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
+              <h2 className={styles.formTitle}>Welcome to InLib!</h2>
+              <div>
+                {isSignUp ? (
+                  <p>
+                    Already have an account?{' '}
+                    <span onClick={() => setIsSignUp(false)} className={styles.link}>
+                      Sign In
+                    </span>
+                  </p>
+                ) : (
+                  <p>
+                    Don’t have an account?{' '}
+                    <span onClick={() => setIsSignUp(true)} className={styles.link}>
+                      Sign Up
+                    </span>
+                  </p>
+                )}
+              </div>
               {error && <p className={styles.error}>{error}</p>}
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email:</label>
@@ -106,23 +114,6 @@ const AuthPage = () => {
               <Button primary type="submit">
                 {isSignUp ? 'Sign Up' : 'Sign In'}
               </Button>
-              <p>
-                {isSignUp ? (
-                  <span>
-                    Already have an account?{' '}
-                    <Button secondary onClick={() => setIsSignUp(false)}>
-                      Sign In
-                    </Button>
-                  </span>
-                ) : (
-                  <span>
-                    Don’t have an account?{' '}
-                    <Button secondary Click={() => setIsSignUp(true)}>
-                      Sign Up
-                    </Button>
-                  </span>
-                )}
-              </p>
             </form>
           </div>
         ) : (

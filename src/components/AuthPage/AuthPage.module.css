@@ -80,3 +80,10 @@ input:focus {
   color: var(--secondary-color);
   padding: 10px;
 }
+
+.link {
+  cursor: pointer;
+  &:hover {
+    color: var(--darkest-teal);
+  }
+}
