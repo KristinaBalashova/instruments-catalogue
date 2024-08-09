@@ -4,28 +4,38 @@ import Modal from '../Modal/Modal';
 import { supabase } from '../../supabaseClient';
 import { useState } from 'react';
 import Button from '../Button/Button';
+import { StatusInfo } from '../StatusInfo/StatusInfo';
 
 const EditorButtons = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
+  const [statusDelete, setStatusDelete] = useState(true);
 
   const handleDeleteButton = () => {
     setIsModalOpen(true);
   };
 
   const handleConfirmDelete = async () => {
-    const { data, error } = await supabase.from('instruments_collection').delete().eq('id', id);
+    const { data, error } = await supabase
+      .from('instruments_collection')
+      .delete()
+      .eq('id', id);
 
     if (error) {
       console.log(error);
+      setStatusDelete(false);
       setErrorFetch('Error deleting data');
     } else {
       console.log('Data deleted:', data);
-      setIsModalOpen(false);
-      setErrorFetch(null);
+      setStatusDelete(true);
+
+      
+      setTimeout(() => {
+        setIsModalOpen(false);
+      }, 2000);
     }
   };
-  
+
   return (
     <>
       <div className={styles.editorButtons}>
@@ -47,10 +57,14 @@ const EditorButtons = ({ id }) => {
           header="Are you sure you want to delete this instrument?"
           appElement={document.getElementById('root') || undefined}
         >
-          <div className={styles.modalButtons}>
-            <Button onClick={handleConfirmDelete}>Yes, delete</Button>
-            <Button onClick={() => setIsModalOpen(false)}>No, cancel</Button>
-          </div>
+          {statusDelete ? (
+              <StatusInfo status="success">Instrument deleted successfully!</StatusInfo>
+          ) : (
+            <div className={styles.modalButtons}>
+              <Button onClick={handleConfirmDelete}>Yes, delete</Button>
+              <Button onClick={() => setIsModalOpen(false)}>No, cancel</Button>
+            </div>
+          )}
           {errorFetch && <div className={styles.error}>Error deleting data: {errorFetch}</div>}
         </Modal>
       )}
