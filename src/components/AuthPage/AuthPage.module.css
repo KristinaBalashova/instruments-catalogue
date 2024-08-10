@@ -53,7 +53,7 @@ label {
   font-weight: bold;
 }
 
-input {
+.input {
   width: 100%;
   padding: 10px;
   border: 2px solid var(--lighter-teal);
@@ -63,7 +63,7 @@ input {
   font-size: 16px;
 }
 
-input:focus {
+.input:focus {
   border-color: var(--darkest-teal);
   outline: none;
 }

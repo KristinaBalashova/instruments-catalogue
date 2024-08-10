@@ -96,7 +96,7 @@ const AuthPage = () => {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={styles.vintageInput}
+                  className={styles.input}
                   required
                 />
               </div>
@@ -107,7 +107,7 @@ const AuthPage = () => {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={styles.vintageInput}
+                  className={styles.input}
                   required
                 />
               </div>
