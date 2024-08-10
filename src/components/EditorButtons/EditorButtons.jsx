@@ -16,10 +16,7 @@ const EditorButtons = ({ id }) => {
   };
 
   const handleConfirmDelete = async () => {
-    const { data, error } = await supabase
-      .from('instruments_collection')
-      .delete()
-      .eq('id', id);
+    const { data, error } = await supabase.from('instruments_collection').delete().eq('id', id);
 
     if (error) {
       console.log(error);
@@ -29,7 +26,6 @@ const EditorButtons = ({ id }) => {
       console.log('Data deleted:', data);
       setStatusDelete(true);
 
-      
       setTimeout(() => {
         setIsModalOpen(false);
       }, 2000);
@@ -58,7 +54,7 @@ const EditorButtons = ({ id }) => {
           appElement={document.getElementById('root') || undefined}
         >
           {statusDelete ? (
-              <StatusInfo status="success">Instrument deleted successfully!</StatusInfo>
+            <StatusInfo status="success">Instrument deleted successfully!</StatusInfo>
           ) : (
             <div className={styles.modalButtons}>
               <Button onClick={handleConfirmDelete}>Yes, delete</Button>
