@@ -53,4 +53,6 @@ footer {
   --darkest-gray: #666666; /* Darkest Gray for box-shadow */
   --lighter-gray: #d3d3d3; /* Lighter Gray for disabled state */
   --lighter-gray-border: #c0c0c0; /* Lighter Gray Border for disabled state */
+
+  --dark-theme-background: #333333;
 }

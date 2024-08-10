@@ -10,6 +10,9 @@
   padding: 25px;
 }
 
+.root.darkTheme {
+  background-color: var(--dark-theme-background);
+}
 .container {
   max-width: 1440px;
   margin: 0 auto;
@@ -28,18 +31,8 @@
   gap: 30px;
 }
 
-.heart {
-  width: 50px;
-  transition: transform 0.2s ease;
-}
-
-/* Jump animation */
-.heart:active {
-  animation: jump 0.5s ease forwards;
-}
-
-.themeIcon {
-  height: 50px;
+.toggle {
+  cursor: pointer;
 }
 
 /* Keyframes for jumping animation */

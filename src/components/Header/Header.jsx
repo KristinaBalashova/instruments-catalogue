@@ -1,12 +1,16 @@
 import logo from '/logo.png';
 import styles from './Header.module.css';
-
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/context';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
+import cx from 'classnames';
 
 const Header = () => {
+  const { theme, setTheme } = useContext(ThemeContext);
+
   return (
-    <section className={styles.root}>
+    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
         <Link to="/">
           <img src={logo} className={styles.logo} alt="logo" />
@@ -21,7 +25,12 @@ const Header = () => {
             <img src="/heart.svg" className={styles.heart} alt="favorite-heart" />
           </Link>*/}
 
-          {/*nightMode ? <img src="/day-icon.png" className={styles.themeIcon} alt="night-mode-on" /> : <img src="/night-icon.png" className={styles.themeIcon} alt="night-mode-off" />*/}
+          <span onClick={() => setTheme('light')} className={styles.toggle}>
+            light
+          </span>
+          <span onClick={() => setTheme('dark')} className={styles.toggle}>
+            dark
+          </span>
         </div>
       </div>
     </section>

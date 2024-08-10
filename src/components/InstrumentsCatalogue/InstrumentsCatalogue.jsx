@@ -6,6 +6,9 @@ import FiltersPanel from '../FilterPanel/FilterPanel';
 import PaginationButtons from '../PaginationButtons/PaginationButtons';
 import SearchBar from '../SearchBar/SearchBar';
 import Loader from '../Loader/Loader';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/context';
+import cx from 'classnames';
 
 const InstrumentsCatalogue = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -13,6 +16,7 @@ const InstrumentsCatalogue = () => {
   const [loading, setLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
   const [searchQuery, setSearchQuery] = useState('*');
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const [filters, setFilters] = useState({
     brand: '*',
@@ -49,15 +53,19 @@ const InstrumentsCatalogue = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
 
-    const { data, error, count } = await supabase
-      .from('instruments_collection')
-      .select('*', { count: 'exact' })
-      .ilike('brand', filters.brand)
-      .ilike('type', filters.type)
-      .ilike('country', filters.country)
-      .ilike('materials', filters.materials)
-      .ilike('name', `%${searchQuery}%`)
-      .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
+    const filterByType = 'guitar';
+    const filterByBrand = 'Fender';
+
+    let query = supabase.from('instruments_collection').select('*');
+
+    if (filterByType) {
+      query = query.eq('type', filterByType);
+    }
+    if (filterByBrand) {
+      query = query.gte('brand', filterByBrand);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error('Error fetching data:', error);
@@ -65,7 +73,6 @@ const InstrumentsCatalogue = () => {
       setData(data);
       setTotalItems(count);
     }
-
     setLoading(false);
   }, [currentPage, searchQuery, filters]);
 
@@ -75,7 +82,7 @@ const InstrumentsCatalogue = () => {
   }, [fetchData]);
 
   return (
-    <section className={styles.root}>
+    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
         <SearchBar setSearchQuery={setSearchQuery} />
         <div className={styles.itemsContainer}>
@@ -104,3 +111,22 @@ const InstrumentsCatalogue = () => {
 };
 
 export default InstrumentsCatalogue;
+
+/*
+    const { data, error, count } = await supabase
+      .from('instruments_collection')
+      .select('*', { count: 'exact' })
+      .ilike('brand', filters.brand)
+      .ilike('type', filters.type)
+      .ilike('country', filters.country)
+      .ilike('materials', filters.materials)
+      .ilike('name', `%${searchQuery}%`)
+      .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
+
+    if (error) {
+      console.error('Error fetching data:', error);
+    } else {
+      setData(data);
+      setTotalItems(count);
+    }
+    */

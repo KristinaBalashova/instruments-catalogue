@@ -1,17 +1,19 @@
 import styles from './MainPage.module.css';
 import Button from '../Button/Button';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import InstrumentsCatalogue from '../InstrumentsCatalogue/InstrumentsCatalogue';
 import { UserContext } from '../../context/context';
 import { useContext } from 'react';
+import { ThemeContext } from '../../context/context';
+import cx from 'classnames';
 
 const MainPage = () => {
   const { user } = useContext(UserContext);
-
+  const { theme } = useContext(ThemeContext);
   return (
     <>
-      <section className={styles.root}>
+      <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
         <div className={styles.container}>
           <div className={styles.intro}>
             <h1 className={styles.headline}>Welcome to In-lib: Your Music Instruments Catalogue</h1>
