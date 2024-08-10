@@ -1,29 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './FiltersPanel.module.css';
-import { supabase } from '../../supabaseClient';
 import Button from '../Button/Button';
 
-const FiltersPanel = ({ setFilters }) => {
-  const [dataFilters, setDataFilters] = useState({});
-
-  useEffect(() => {
-    const fetchDataForFiltering = async () => {
-      const { data, error } = await supabase.from('instruments_collection').select('*');
-
-      if (error) {
-        console.error('Error fetching data for filters:', error);
-      } else {
-        const uniqueFilters = listOfFilters.reduce((acc, filter) => {
-          acc[filter] = [...new Set(data.map((item) => item[filter]))];
-          return acc;
-        }, {});
-        setDataFilters(uniqueFilters);
-      }
-    };
-
-    fetchDataForFiltering();
-  }, []);
-
+const FiltersPanel = ({ setFilters, dataFilters }) => {
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
     setFilters((prevFilters) => ({
@@ -34,17 +13,16 @@ const FiltersPanel = ({ setFilters }) => {
 
   const handleFilterClear = () => {
     setFilters((prevFilters) => ({
-      ...listOfFilters.reduce((acc, filter) => {
+      ...Object.keys(dataFilters).reduce((acc, filter) => {
         acc[filter] = '*';
         return acc;
       }, {}),
     }));
   };
-  const listOfFilters = ['brand', 'type', 'country', 'materials'];
 
   return (
     <div className={styles.filterContainer}>
-      {listOfFilters.map((filter) => (
+      {Object.keys(dataFilters).map((filter) => (
         <form key={filter} className={styles.form}>
           <label className={styles.label}>{filter}</label>
           <select id={filter} name={filter} onChange={handleFilterChange} className={styles.select}>
