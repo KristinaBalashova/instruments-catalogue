@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { supabase } from '../../supabaseClient';
-import { UserContext, SessionContext } from '../../context/context';
+import { UserContext } from '../../context/context';
 import Button from '../Button/Button';
 import styles from './AuthPage.module.css';
 
@@ -9,23 +9,23 @@ const AuthPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { setUser } = useContext(UserContext);
-  const { session, setSession } = useContext(SessionContext);
   const [isSignUp, setIsSignUp] = useState(false);
+  const [session, setSession] = useState('');
 
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
       if (session?.user) {
         setUser(session.user);
+        setSession(session);
       } else {
         setUser(null);
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [setUser, setSession]);
+  }, [setUser]);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -60,7 +60,6 @@ const AuthPage = () => {
       setUser(null);
       setEmail('');
       setPassword('');
-      setSession(null);
     }
   };
 
