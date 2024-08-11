@@ -123,6 +123,17 @@ const InstrumentPage = ({ isEditable = false }) => {
         <div className={styles.detailsContainer}>
           <div className={styles.content}>
             <h1 className={styles.name}>{name}</h1>
+            {isEditable ? (
+              <input
+                type="text"
+                name={name}
+                value={name}
+                onChange={handleInputChange}
+                className={styles.input}
+              />
+            ) : (
+              data
+            )}
             {list.map(({ title, data }) => (
               <div key={title} className={styles.descriptionContainer}>
                 <p className={styles.description}>
@@ -133,7 +144,7 @@ const InstrumentPage = ({ isEditable = false }) => {
                       name={title}
                       value={data}
                       onChange={handleInputChange}
-                      className={styles.editInput}
+                      className={styles.input}
                     />
                   ) : (
                     data
