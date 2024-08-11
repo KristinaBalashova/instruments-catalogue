@@ -1,125 +1,96 @@
 import React, { useState } from 'react';
 import { supabase } from '../../supabaseClient';
 import styles from './InstrumentCreator.module.css';
-import { Button } from 'antd';
+import Button from '../Button/Button';
 import ImageDownloader from '../ImageDownloader/ImageDownloader';
+import Modal from '../Modal/Modal';
 
 const dataStub = {
-  name: 'Name fo the best music intrument',
-  description: 'Description for the best music intrument',
-  image: '/pic-stub.jpg',
-  type: 'Description for the best music intrument',
-  country: 'Description for the best music intrument',
-  type: 'Description for the best music intrument',
+  name: 'Name of the best music instrument',
+  description: 'Description for the best music instrument',
+  image: '/blank-image.png',
+  type: 'String',
+  date: '10.10.2024',
+  brand: 'Brand',
+  country: 'Country',
+  materials: 'Wood, Metal',
 };
+
 const InstrumentCreator = () => {
-  const [name, setName] = useState(dataStub.name);
-  const [description, setDescription] = useState(dataStub.description);
-  const [image, setImage] = useState(dataStub.img);
-  const [type, setType] = useState('');
-  const [date, setDate] = useState('');
-  const [brand, setBrand] = useState('');
-  const [country, setCountry] = useState('');
-  const [materials, setMaterials] = useState('');
+  const [newInstrument, setNewInstrument] = useState({
+    ...dataStub,
+  });
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [confirmationError, setConfirmationError] = useState(false);
-  const handleSubmit = () => {
-    if (!isConfirmed) {
-      setConfirmationError(true);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewInstrument({
+      ...newInstrument,
+      [name]: value,
+    });
+  };
+
+  const handleCheckboxChange = (e) => {
+    setIsConfirmed(e.target.checked);
+    if (e.target.checked) {
+      setConfirmationError(false);
     }
   };
 
-  const data = [name, description, type, date, brand, country, materials];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isConfirmed) {
+      setConfirmationError(true);
+      return;
+    }
+    // Submit logic goes here (e.g., sending data to the server)
+    console.log('Submitting:', newInstrument);
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.container}>
         <div className={styles.editContainer}>
-          <h2>Edit Instrument</h2>
+          <h2>Add New Instrument</h2>
           <form onSubmit={handleSubmit}>
-            <div>
-              <label>Name:</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className={styles.input}
-              />
-            </div>
-            <div>
-              <label>Description:</label>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-                className={styles.text}
-              ></textarea>
-            </div>
-            <div>
-              <label>Type:</label>
-              <input
-                type="text"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                required
-                className={styles.input}
-              />
-            </div>
-            <div>
-              <label>Date:</label>
-              <input
-                type="text"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                required
-                className={styles.input}
-              />
-            </div>
-            <div>
-              <label>Brand:</label>
-              <input
-                type="text"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-                required
-                className={styles.input}
-              />
-            </div>
-            <div>
-              <label>Country:</label>
-              <input
-                type="text"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                required
-                className={styles.input}
-              />
-            </div>
-            <div>
-              <label>Materials:</label>
-              <input
-                type="text"
-                value={materials}
-                onChange={(e) => setMaterials(e.target.value)}
-                required
-                className={styles.input}
-              />
-            </div>
-            <Button onClick={handleSubmit}>Save</Button>
-            {confirmationError && 'Проверьте указанные данные и подтвердите'}
+            {Object.keys(dataStub).map((item) => {
+              if (item === 'image') return null; // Skip rendering the input for 'image'
+
+              return (
+                <div key={item}>
+                  <label>{item}:</label>
+                  <input
+                    type="text"
+                    name={item}
+                    value={newInstrument[item]}
+                    onChange={handleChange}
+                    required
+                    className={styles.input}
+                  />
+                </div>
+              );
+            })}
+            <Button type="primary" htmlType="submit">
+              Save
+            </Button>
+            {confirmationError && (
+              <div className={styles.error}>Please check the data and confirm.</div>
+            )}
           </form>
         </div>
-        <div className={styles.resultContainer}>
-          <img src="/pic-stub.png" className={styles.logo} alt="pic" />
+        <div className={styles.imageContainer}>
+          <img src={dataStub.image} className={styles.image} alt="instrument" />
           <ImageDownloader />
-          <p>'Name fo the best music intrument'</p>
-          <p>'Name fo the best music intrument'</p>
-          <p>'Name fo the best music intrument'</p>
-          <p>'Name fo the best music intrument'</p>
-
-          <div onClick={setIsConfirmed} class="checkbox-container">
-            <input type="checkbox" id="vintageCheckbox" class="vintage-checkbox" />
-            <label for="vintageCheckbox" class="vintage-checkbox-label">
+          <div className={styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              id="checkbox"
+              checked={isConfirmed}
+              onChange={handleCheckboxChange}
+              className={styles.сheckbox}
+            />
+            <label htmlFor="checkbox" className={styles.сheckboxLabel}>
               Confirm data
             </label>
           </div>
