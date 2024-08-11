@@ -20,8 +20,6 @@ const InstrumentCreator = () => {
   const [newInstrument, setNewInstrument] = useState({
     ...dataStub,
   });
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  const [confirmationError, setConfirmationError] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,19 +29,16 @@ const InstrumentCreator = () => {
     });
   };
 
-  const handleCheckboxChange = (e) => {
-    setIsConfirmed(e.target.checked);
-    if (e.target.checked) {
-      setConfirmationError(false);
-    }
+  const handleImageUpdate = (newImageUrl) => {
+    setNewInstrument((prevInstrument) => ({
+      ...prevInstrument,
+      image: newImageUrl,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isConfirmed) {
-      setConfirmationError(true);
-      return;
-    }
+
     // Submit logic goes here (e.g., sending data to the server)
     console.log('Submitting:', newInstrument);
   };
@@ -71,29 +66,14 @@ const InstrumentCreator = () => {
                 </div>
               );
             })}
-            <Button type="primary" htmlType="submit">
-              Save
-            </Button>
-            {confirmationError && (
-              <div className={styles.error}>Please check the data and confirm.</div>
-            )}
           </form>
+          <Button type="primary" htmlType="submit">
+            Save
+          </Button>
         </div>
         <div className={styles.imageContainer}>
-          <img src={dataStub.image} className={styles.image} alt="instrument" />
-          <ImageDownloader />
-          <div className={styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              id="checkbox"
-              checked={isConfirmed}
-              onChange={handleCheckboxChange}
-              className={styles.сheckbox}
-            />
-            <label htmlFor="checkbox" className={styles.сheckboxLabel}>
-              Confirm data
-            </label>
-          </div>
+          <img src={newInstrument.image} className={styles.image} alt="instrument" />
+          <ImageDownloader setFile={handleImageUpdate} />
         </div>
       </div>
     </div>

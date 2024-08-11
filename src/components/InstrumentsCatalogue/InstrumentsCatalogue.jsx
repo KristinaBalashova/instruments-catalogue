@@ -31,9 +31,7 @@ const InstrumentsCatalogue = () => {
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('instruments_collection')
-        .select('*');
+      const { data, error } = await supabase.from('instruments_collection').select('*');
 
       if (error) {
         console.error('Error fetching data for filters:', error);
@@ -54,15 +52,15 @@ const InstrumentsCatalogue = () => {
     const fetchData = async () => {
       setLoading(true);
 
-      let query = supabase
-        .from('instruments_collection')
-        .select('*', { count: 'exact' });
+      let query = supabase.from('instruments_collection').select('*', { count: 'exact' });
 
       if (brand !== '*') query = query.ilike('brand', brand);
       if (type !== '*') query = query.ilike('type', type);
       if (country !== '*') query = query.ilike('country', country);
-     
-      const { data, error, count } = await query.ilike('name', `%${searchQuery}%`).range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
+
+      const { data, error, count } = await query
+        .ilike('name', `%${searchQuery}%`)
+        .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
 
       if (error) {
         console.error('Error fetching data:', error);
