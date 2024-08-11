@@ -18,12 +18,6 @@ const InstrumentsCatalogue = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [searchQuery, setSearchQuery] = useState('*');
   const { theme } = useContext(ThemeContext);
-  const [filters, setFilters] = useState({
-    brand: '*',
-    type: '*',
-    country: '*',
-    materials: '*',
-  });
   const [searchParams] = useSearchParams();
   const [dataFilters, setDataFilters] = useState({});
 
@@ -34,9 +28,8 @@ const InstrumentsCatalogue = () => {
 
   const listOfFilters = ['brand', 'type', 'country'];
 
-  // Fetching all available filters
   useEffect(() => {
-    const fetchDataForFiltering = async () => {
+    const fetchAllData = async () => {
       setLoading(true);
       const { data, error } = await supabase
         .from('instruments_collection')
@@ -54,10 +47,9 @@ const InstrumentsCatalogue = () => {
       setLoading(false);
     };
 
-    fetchDataForFiltering();
+    fetchAllData();
   }, []);
 
-  // Fetching data with applied filters and search
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -66,13 +58,11 @@ const InstrumentsCatalogue = () => {
         .from('instruments_collection')
         .select('*', { count: 'exact' });
 
-      // Apply filters
       if (brand !== '*') query = query.ilike('brand', brand);
       if (type !== '*') query = query.ilike('type', type);
       if (country !== '*') query = query.ilike('country', country);
-      if (searchQuery !== '*') query = query.ilike('name', `%${searchQuery}%`);
-
-      const { data, error, count } = await query.range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
+     
+      const { data, error, count } = await query.ilike('name', `%${searchQuery}%`).range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
 
       if (error) {
         console.error('Error fetching data:', error);

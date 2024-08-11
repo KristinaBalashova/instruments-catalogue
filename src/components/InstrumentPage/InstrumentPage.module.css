@@ -85,11 +85,9 @@
   text-decoration: none;
 }
 
-
 .error {
   color: rgb(151, 22, 22);
   border: 1px solid rgb(151, 22, 22);
   padding: 10px;
   margin: 10px;
-
 }

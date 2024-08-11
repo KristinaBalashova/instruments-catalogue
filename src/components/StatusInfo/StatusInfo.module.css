@@ -1,12 +1,12 @@
 .wrap {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 .success {
-    background-color: rgba(168, 236, 122, 0.538);
-    padding: 10px;
+  background-color: rgba(168, 236, 122, 0.538);
+  padding: 10px;
 }
 
 .fail {
-    background-color: rgba(255, 99, 71, 0.4);
-    padding: 10px;
+  background-color: rgba(255, 99, 71, 0.4);
+  padding: 10px;
 }
