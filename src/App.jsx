@@ -10,28 +10,38 @@ import InstrumentPage from './components/InstrumentPage/InstrumentPage';
 import { UserContext, ThemeContext } from './context/context';
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
-
 import { jwtDecode } from 'jwt-decode';
 
 function App() {
   const [user, setUser] = useState('reader');
   const [theme, setTheme] = useState('light');
 
-  /*
-  async function getToken() {
-    const { subscription: authListener } = supabase.auth.onAuthStateChange(
-      async (session) => {
-        if (session) {
-          const jwt = jwtDecode(session.access_token);
-          const userRole = jwt.app_metadata.userrole.role;
-          setUser(userRole);
-        }
-      },
-    );
-  }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-  getToken();
-*/
+      if (user) {
+        let { data, error } = await supabase.from('users').select('role').eq('id', user.id);
+
+        if (error) {
+          console.error('Error fetching data:', error);
+        } else if (data && data.length > 0) {
+          const userRole = data[0].role;
+          setUser(userRole);
+          console.log(userRole, 'user role fetched');
+        } else {
+          console.log('No user found');
+        }
+      } else {
+        console.log('User not authenticated');
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <UserContext.Provider value={{ user, setUser }}>

@@ -12,6 +12,7 @@ const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [session, setSession] = useState('');
 
+  /*
   useEffect(() => {
     const {
       data: { subscription },
@@ -26,7 +27,7 @@ const AuthPage = () => {
 
     return () => subscription.unsubscribe();
   }, [setUser]);
-
+  */
   const handleSignIn = async (e) => {
     e.preventDefault();
     const { error, data } = await supabase.auth.signInWithPassword({ email, password });
@@ -34,7 +35,7 @@ const AuthPage = () => {
     if (error) {
       setError(error.message);
     } else {
-      setUser(data.user);
+      //setUser(data.user);
       setError('');
     }
   };
