@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import ImageDownloader from '../ImageDownloader/ImageDownloader';
 import Button from '../Button/Button';
+import { StatusInfo } from '../StatusInfo/StatusInfo';
+import Loader from '../Loader/Loader';
 
 const InstrumentPage = ({ isEditable = false }) => {
   let { id } = useParams();
@@ -38,11 +40,11 @@ const InstrumentPage = ({ isEditable = false }) => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (!item) {
-    return <div>No instrument data available.</div>;
+    return <StatusInfo status="fail">No instrument data available.</StatusInfo>;
   }
 
   const { brand, country, date, description, materials, name, image, type } = editableItem;
@@ -71,27 +73,31 @@ const InstrumentPage = ({ isEditable = false }) => {
       if (imageFile) {
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `${id}.${fileExt}`;
-        const filePath = `instruments/${fileName}`;
+        const filePath = `instruments/${fileName}`; // Adding a directory name like 'instruments'
 
+        // Upload the image to the specified storage bucket
         const { error: uploadError } = await supabase.storage
-          .from('pics')
+          .from('pics') // Ensure 'pics' is the correct bucket name
           .upload(filePath, imageFile, { upsert: true });
 
         if (uploadError) {
           throw uploadError;
         }
 
-        const { data: publicURL, error: urlError } = supabase.storage
+        // Generate a signed URL for the uploaded image
+        const { data: signedURLData, error: signedURLError } = await supabase.storage
           .from('pics')
-          .getPublicUrl(filePath);
+          .createSignedUrl(filePath, 60 * 60 * 24); // Signed URL valid for 24 hours
 
-        if (urlError) {
-          throw urlError;
+        if (signedURLError) {
+          throw signedURLError;
         }
 
-        updatedItem.image = publicURL.publicUrl;
+        // Use the signed URL
+        updatedItem.image = signedURLData.signedUrl;
       }
 
+      // Update the database with the new image URL and other changes
       const { error: updateError } = await supabase
         .from('instruments_collection')
         .update(updatedItem)
@@ -104,10 +110,9 @@ const InstrumentPage = ({ isEditable = false }) => {
       alert('Instrument data updated successfully!');
     } catch (error) {
       console.error('Error updating data:', error);
-      setError('Error updating instrument data.');
+      setError(`Error updating instrument data: ${error.message}`);
     }
   };
-
   return (
     <div className={styles.root}>
       <div className={styles.container}>
@@ -122,18 +127,20 @@ const InstrumentPage = ({ isEditable = false }) => {
         </div>
         <div className={styles.detailsContainer}>
           <div className={styles.content}>
-            <h1 className={styles.name}>{name}</h1>
-            {isEditable ? (
-              <input
-                type="text"
-                name={name}
-                value={name}
-                onChange={handleInputChange}
-                className={styles.input}
-              />
-            ) : (
-              data
-            )}
+            <h1 className={styles.name}>
+              <span className={styles.title}>Name:</span>
+              {isEditable ? (
+                <input
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={handleInputChange}
+                  className={styles.input}
+                />
+              ) : (
+                name
+              )}
+            </h1>
             {list.map(({ title, data }) => (
               <div key={title} className={styles.descriptionContainer}>
                 <p className={styles.description}>

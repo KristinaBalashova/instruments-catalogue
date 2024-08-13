@@ -6,6 +6,9 @@
   padding: 15px;
   text-align: center;
   margin: 20px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
 }
 
 .img {
