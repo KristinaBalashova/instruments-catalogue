@@ -3,7 +3,6 @@ import { supabase } from '../../supabaseClient';
 import styles from './InstrumentCreator.module.css';
 import Button from '../Button/Button';
 import ImageDownloader from '../ImageDownloader/ImageDownloader';
-import Modal from '../Modal/Modal';
 
 const dataStub = {
   name: 'Name of the best music instrument',
@@ -17,9 +16,7 @@ const dataStub = {
 };
 
 const InstrumentCreator = () => {
-  const [newInstrument, setNewInstrument] = useState({
-    ...dataStub,
-  });
+  const [newInstrument, setNewInstrument] = useState({ ...dataStub });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,11 +33,18 @@ const InstrumentCreator = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Submit logic goes here (e.g., sending data to the server)
     console.log('Submitting:', newInstrument);
+
+    const { error } = await supabase.from('instruments_collection').insert(newInstrument).select();
+
+    if (error) {
+      console.error('Error inserting instrument:', error);
+      alert('Failed to save instrument data.');
+    } else {
+      alert('Instrument data saved successfully!');
+    }
   };
 
   return (
@@ -50,8 +54,7 @@ const InstrumentCreator = () => {
           <h2>Add New Instrument</h2>
           <form onSubmit={handleSubmit}>
             {Object.keys(dataStub).map((item) => {
-              if (item === 'image') return null; // Skip rendering the input for 'image'
-
+              if (item === 'image') return null;
               return (
                 <div key={item}>
                   <label>{item}:</label>
@@ -66,10 +69,8 @@ const InstrumentCreator = () => {
                 </div>
               );
             })}
+            <Button type="submit">Save</Button>
           </form>
-          <Button type="primary" htmlType="submit">
-            Save
-          </Button>
         </div>
         <div className={styles.imageContainer}>
           <img src={newInstrument.image} className={styles.image} alt="instrument" />
