@@ -7,6 +7,8 @@ import ImageDownloader from '../ImageDownloader/ImageDownloader';
 import Button from '../Button/Button';
 import { StatusInfo } from '../StatusInfo/StatusInfo';
 import Loader from '../Loader/Loader';
+import useDeleteItem from '../../hooks/useDeleteItem';
+import { useCallback } from 'react';
 
 const InstrumentPage = ({ isEditable = false }) => {
   let { id } = useParams();
@@ -15,6 +17,11 @@ const InstrumentPage = ({ isEditable = false }) => {
   const [error, setError] = useState(null);
   const [editableItem, setEditableItem] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
+
+  const handleDeleteSuccess = useCallback(() => {
+    setItem(null);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,31 +80,25 @@ const InstrumentPage = ({ isEditable = false }) => {
       if (imageFile) {
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `${id}.${fileExt}`;
-        const filePath = `instruments/${fileName}`; // Adding a directory name like 'instruments'
+        const filePath = `instruments/${fileName}`;
 
-        // Upload the image to the specified storage bucket
         const { error: uploadError } = await supabase.storage
-          .from('pics') // Ensure 'pics' is the correct bucket name
+          .from('pics')
           .upload(filePath, imageFile, { upsert: true });
 
         if (uploadError) {
           throw uploadError;
         }
-
-        // Generate a signed URL for the uploaded image
         const { data: signedURLData, error: signedURLError } = await supabase.storage
           .from('pics')
-          .createSignedUrl(filePath, 60 * 60 * 24); // Signed URL valid for 24 hours
+          .createSignedUrl(filePath, 60 * 60 * 24);
 
         if (signedURLError) {
           throw signedURLError;
         }
-
-        // Use the signed URL
         updatedItem.image = signedURLData.signedUrl;
       }
 
-      // Update the database with the new image URL and other changes
       const { error: updateError } = await supabase
         .from('instruments_collection')
         .update(updatedItem)
@@ -123,7 +124,12 @@ const InstrumentPage = ({ isEditable = false }) => {
             className={styles.image}
           />
           {isEditable && <ImageDownloader setFile={setImageFile} />}
-          <EditorButtons id={id} />
+          <EditorButtons
+            id={id}
+            onDelete={() => deleteItem('instruments_collection', id, handleDeleteSuccess)}
+            statusDelete={statusDelete}
+            errorDelete={errorDelete}
+          />
         </div>
         <div className={styles.detailsContainer}>
           <div className={styles.content}>

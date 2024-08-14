@@ -21,7 +21,7 @@ const InstrumentsCatalogue = () => {
   const { theme } = useContext(ThemeContext);
   const [searchParams] = useSearchParams();
   const [dataFilters, setDataFilters] = useState({});
-  const { deleteItem, statusDelete, errorFetch } = useDeleteItem();
+  const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
 
   const filtersObject = getFiltersFromSearchParams(searchParams);
   const { brand = '*', type = '*', country = '*' } = filtersObject;
@@ -103,7 +103,7 @@ const InstrumentsCatalogue = () => {
                     deleteItem('instruments_collection', item.id, handleDeleteSuccess)
                   }
                   statusDelete={statusDelete}
-                  errorDelete={errorFetch}
+                  errorDelete={errorDelete}
                 />
               ))}
             </div>

@@ -11,14 +11,7 @@ const EditorButtons = ({ id, onDelete, statusDelete, errorDelete }) => {
   const handleConfirmDelete = async () => {
     onDelete(id);
   };
-  /*
 
-  if(statusDelete) {
-    setTimeout(() => {
-      setIsModalOpen(false);
-    }, 2000);
-  }
-*/
   return (
     <>
       <div className={styles.editorButtons}>
