@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
 import styles from './InstrumentCreator.module.css';
 import Button from '../Button/Button';
 import ImageDownloader from '../ImageDownloader/ImageDownloader';
+import useUploadImage from '../../hooks/useUploadImage';
 
 const dataStub = {
   name: 'Name of the best music instrument',
@@ -17,6 +18,17 @@ const dataStub = {
 
 const InstrumentCreator = () => {
   const [newInstrument, setNewInstrument] = useState({ ...dataStub });
+  const [imageFile, setImageFile] = useState(null);
+  const { signedUrl, statusUpload, errorUpload } = useUploadImage(imageFile, 'pics');
+
+  useEffect(() => {
+    if (signedUrl) {
+      setNewInstrument((prevInstrument) => ({
+        ...prevInstrument,
+        image: signedUrl,
+      }));
+    }
+  }, [signedUrl]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,16 +38,18 @@ const InstrumentCreator = () => {
     });
   };
 
-  const handleImageUpdate = (newImageUrl) => {
-    setNewInstrument((prevInstrument) => ({
-      ...prevInstrument,
-      image: newImageUrl,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting:', newInstrument);
+
+    if (statusUpload === null) {
+      alert('Please upload an image before saving.');
+      return;
+    }
+
+    if (statusUpload === false) {
+      alert('Image upload failed. Please try again.');
+      return;
+    }
 
     const { error } = await supabase.from('instruments_collection').insert(newInstrument).select();
 
@@ -74,8 +88,9 @@ const InstrumentCreator = () => {
         </div>
         <div className={styles.imageContainer}>
           <img src={newInstrument.image} className={styles.image} alt="instrument" />
-          <ImageDownloader setFile={handleImageUpdate} />
+          <ImageDownloader setFile={setImageFile} />
         </div>
+        {errorUpload && <p className={styles.error}>Error uploading image: {errorUpload}</p>}
       </div>
     </div>
   );
