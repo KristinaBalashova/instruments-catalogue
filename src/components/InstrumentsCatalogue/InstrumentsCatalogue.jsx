@@ -1,5 +1,5 @@
 import styles from './InstrumentsCatalogue.module.css';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { supabase } from '../../supabaseClient';
 import InstrumentCard from '../InstrumentCard/InstrumentCard';
 import FiltersPanel from '../FilterPanel/FilterPanel';
@@ -10,6 +10,7 @@ import { ThemeContext } from '../../context/context';
 import cx from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 import { getFiltersFromSearchParams } from '../../assets/getFiltersFromSearchParams';
+import useDeleteItem from '../../hooks/useDeleteItem';
 
 const InstrumentsCatalogue = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -20,6 +21,7 @@ const InstrumentsCatalogue = () => {
   const { theme } = useContext(ThemeContext);
   const [searchParams] = useSearchParams();
   const [dataFilters, setDataFilters] = useState({});
+  const { deleteItem, statusDelete, errorFetch } = useDeleteItem();
 
   const filtersObject = getFiltersFromSearchParams(searchParams);
   const { brand = '*', type = '*', country = '*' } = filtersObject;
@@ -28,6 +30,7 @@ const InstrumentsCatalogue = () => {
 
   const listOfFilters = ['brand', 'type', 'country'];
 
+  // Fetch all data for filters on mount
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
@@ -48,6 +51,13 @@ const InstrumentsCatalogue = () => {
     fetchAllData();
   }, []);
 
+  // Callback function to handle successful deletion
+  const handleDeleteSuccess = useCallback((deletedId) => {
+    setData((prevData) => prevData.filter((item) => item.id !== deletedId));
+    setTotalItems((prevTotal) => prevTotal - 1);
+  }, []);
+
+  // Fetch filtered and paginated data
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -86,7 +96,15 @@ const InstrumentsCatalogue = () => {
           <div className={styles.cardsContainer}>
             <div className={styles.cards}>
               {data.map((item) => (
-                <InstrumentCard key={item.id} instrumentData={item} />
+                <InstrumentCard
+                  key={item.id}
+                  instrumentData={item}
+                  onDelete={() =>
+                    deleteItem('instruments_collection', item.id, handleDeleteSuccess)
+                  }
+                  statusDelete={statusDelete}
+                  errorDelete={errorFetch}
+                />
               ))}
             </div>
             {totalItems > itemsPerPage && (
