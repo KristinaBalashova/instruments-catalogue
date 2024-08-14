@@ -2,59 +2,37 @@ import React, { useEffect, useState } from 'react';
 import styles from './InstrumentPage.module.css';
 import EditorButtons from '../EditorButtons/EditorButtons';
 import { useParams } from 'react-router-dom';
-import { supabase } from '../../supabaseClient';
 import ImageDownloader from '../ImageDownloader/ImageDownloader';
 import Button from '../Button/Button';
 import { StatusInfo } from '../StatusInfo/StatusInfo';
 import Loader from '../Loader/Loader';
-import useDeleteItem from '../../hooks/useDeleteItem';
-import { useCallback } from 'react';
+import useFetchItem from '../../hooks/useFetchItem';
+import { supabase
 
+ } from '../../supabaseClient';
 const InstrumentPage = ({ isEditable = false }) => {
-  let { id } = useParams();
-  const [item, setItem] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { id } = useParams();
   const [editableItem, setEditableItem] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
+  const[error, setError] = useState(null);
+  const { fetchedItem, statusFetch, errorFetch } = useFetchItem(id);
 
-  const handleDeleteSuccess = useCallback(() => {
-    setItem(null);
-  }, []);
-
+  console.log(fetchedItem)
   useEffect(() => {
-    const fetchData = async () => {
-      if (id) {
-        const { data, error } = await supabase
-          .from('instruments_collection')
-          .select('*')
-          .eq('id', id)
-          .single();
+    if (statusFetch) {
+      setEditableItem(fetchedItem);
+    }
+  }, [statusFetch, fetchedItem]);
 
-        if (error) {
-          console.error('Error fetching data:', error);
-          setError('Error fetching instrument data.');
-        } else {
-          setItem(data);
-          setEditableItem(data);
-        }
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  if (loading) {
+  if (!statusFetch) {
     return <Loader />;
   }
 
-  if (!item) {
-    return <StatusInfo status="fail">No instrument data available.</StatusInfo>;
+  if (errorFetch) {
+    return <StatusInfo status="fail">{errorFetch}</StatusInfo>;
   }
 
-  const { brand, country, date, description, materials, name, image, type } = editableItem;
+  const { brand, country, date, description, materials, name, image, type } = editableItem || {};
 
   const list = [
     { title: 'brand', data: brand },
@@ -114,6 +92,7 @@ const InstrumentPage = ({ isEditable = false }) => {
       setError(`Error updating instrument data: ${error.message}`);
     }
   };
+
   return (
     <div className={styles.root}>
       <div className={styles.container}>
@@ -124,12 +103,7 @@ const InstrumentPage = ({ isEditable = false }) => {
             className={styles.image}
           />
           {isEditable && <ImageDownloader setFile={setImageFile} />}
-          <EditorButtons
-            id={id}
-            onDelete={() => deleteItem('instruments_collection', id, handleDeleteSuccess)}
-            statusDelete={statusDelete}
-            errorDelete={errorDelete}
-          />
+          <EditorButtons id={id} />
         </div>
         <div className={styles.detailsContainer}>
           <div className={styles.content}>
