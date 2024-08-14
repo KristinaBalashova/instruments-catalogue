@@ -1,20 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ImageDownloader.module.css';
 import Button from '../Button/Button';
 
 const ImageDownloader = ({ setFile, image = '/blank-image.png' }) => {
   const [error, setError] = useState(null);
-  const [imageFile, setimageFile] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+  const [objectURL, setObjectURL] = useState('');
 
-  console.log('image', image);
+  useEffect(() => {
+    if (imageFile) {
+      const url = URL.createObjectURL(imageFile);
+      setObjectURL(url);
+
+      return () => {
+        URL.revokeObjectURL(url);
+      };
+    }
+  }, [imageFile]);
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    const validTypes = ['image/jpeg', 'image/png'];
 
-    if (file && validTypes.includes(file.type)) {
+    if (file) {
       setFile(file);
-      setimageFile(file.name);
-      setError('');
+      setImageFile(file);
+      setError(null);
     } else {
       setError('Please upload a JPEG or PNG image.');
     }
@@ -22,15 +32,16 @@ const ImageDownloader = ({ setFile, image = '/blank-image.png' }) => {
 
   const handleDeleteFile = () => {
     setFile(null);
-    setimageFile('');
-    setError('');
+    setImageFile(null);
+    setObjectURL('');
+    setError(null);
   };
 
   return (
     <div className={styles.root}>
       <img
-        src={imageFile ? URL.createObjectURL(imageFile) : image}
-        alt={imageFile.name || image}
+        src={imageFile ? objectURL : image}
+        alt={imageFile ? imageFile.name : 'Placeholder image'}
         className={styles.imagePreview}
       />
       <label>Upload image:</label>
@@ -52,7 +63,6 @@ const ImageDownloader = ({ setFile, image = '/blank-image.png' }) => {
           </div>
         )}
       </div>
-
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
