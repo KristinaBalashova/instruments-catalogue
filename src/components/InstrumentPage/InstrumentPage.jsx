@@ -7,17 +7,15 @@ import Button from '../Button/Button';
 import { StatusInfo } from '../StatusInfo/StatusInfo';
 import Loader from '../Loader/Loader';
 import useFetchItem from '../../hooks/useFetchItem';
-import { supabase
-
- } from '../../supabaseClient';
+import { supabase } from '../../supabaseClient';
 const InstrumentPage = ({ isEditable = false }) => {
   const { id } = useParams();
   const [editableItem, setEditableItem] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  const[error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const { fetchedItem, statusFetch, errorFetch } = useFetchItem(id);
 
-  console.log(fetchedItem)
+  console.log(fetchedItem);
   useEffect(() => {
     if (statusFetch) {
       setEditableItem(fetchedItem);
