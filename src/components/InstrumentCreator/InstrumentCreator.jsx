@@ -8,7 +8,7 @@ import useUploadImage from '../../hooks/useUploadImage';
 const dataStub = {
   name: 'Name of the best music instrument',
   description: 'Description for the best music instrument',
-  image: '/blank-image.png',
+  image: '',
   type: 'String',
   date: '10.10.2024',
   brand: 'Brand',
@@ -87,7 +87,6 @@ const InstrumentCreator = () => {
           </form>
         </div>
         <div className={styles.imageContainer}>
-          <img src={newInstrument.image} className={styles.image} alt="instrument" />
           <ImageDownloader setFile={setImageFile} />
         </div>
         {errorUpload && <p className={styles.error}>Error uploading image: {errorUpload}</p>}

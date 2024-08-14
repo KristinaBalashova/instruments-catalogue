@@ -15,7 +15,6 @@ const InstrumentPage = ({ isEditable = false }) => {
   const [error, setError] = useState(null);
   const { fetchedItem, statusFetch, errorFetch } = useFetchItem(id);
 
-  console.log(fetchedItem);
   useEffect(() => {
     if (statusFetch) {
       setEditableItem(fetchedItem);
@@ -95,12 +94,14 @@ const InstrumentPage = ({ isEditable = false }) => {
     <div className={styles.root}>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
-          <img
-            src={imageFile ? URL.createObjectURL(imageFile) : image}
-            alt={name}
-            className={styles.image}
-          />
-          {isEditable && <ImageDownloader setFile={setImageFile} />}
+          {!isEditable && (
+            <img
+              src={imageFile ? URL.createObjectURL(imageFile) : image}
+              alt={name}
+              className={styles.image}
+            />
+          )}
+          {isEditable && <ImageDownloader setFile={setImageFile} image={image} />}
           <EditorButtons id={id} />
         </div>
         <div className={styles.detailsContainer}>
