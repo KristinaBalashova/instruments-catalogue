@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 
-const useUploadImage = (image, folderName) => {
+const useUploadImage = (image, storageBucket) => {
   const [signedUrl, setSignedUrl] = useState(null);
   const [errorUpload, setErrorUpload] = useState(null);
   const [statusUpload, setStatusUpload] = useState(null);
 
   useEffect(() => {
     const uploadImage = async () => {
-      if (!image || !folderName) return;
+      if (!image || !storageBucket) return;
 
       try {
         const fileExt = image.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
-        const filePath = `${folderName}/${fileName}`;
+        const filePath = fileName;
 
         const { error: uploadError } = await supabase.storage
-          .from(folderName)
+          .from(storageBucket)
           .upload(filePath, image, { upsert: true });
 
         if (uploadError) {
@@ -24,7 +24,7 @@ const useUploadImage = (image, folderName) => {
         }
 
         const { data: signedURLData, error: signedURLError } = await supabase.storage
-          .from(folderName)
+          .from(storageBucket)
           .createSignedUrl(filePath, 60 * 60 * 24);
 
         if (signedURLError) {
@@ -40,7 +40,7 @@ const useUploadImage = (image, folderName) => {
     };
 
     uploadImage();
-  }, [image, folderName]);
+  }, [image, storageBucket]);
 
   return { signedUrl, statusUpload, errorUpload };
 };

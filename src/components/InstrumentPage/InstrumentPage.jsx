@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styles from './InstrumentPage.module.css';
 import EditorButtons from '../EditorButtons/EditorButtons';
 import { useParams } from 'react-router-dom';
@@ -8,12 +8,15 @@ import { StatusInfo } from '../StatusInfo/StatusInfo';
 import Loader from '../Loader/Loader';
 import useFetchItem from '../../hooks/useFetchItem';
 import { supabase } from '../../supabaseClient';
+import useUploadImage from '../../hooks/useUploadImage';
+
 const InstrumentPage = ({ isEditable = false }) => {
   const { id } = useParams();
   const [editableItem, setEditableItem] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
   const { fetchedItem, statusFetch, errorFetch } = useFetchItem(id);
+  const { signedUrl, statusUpload, errorUpload } = useUploadImage(imageFile, 'pics');
 
   useEffect(() => {
     if (statusFetch) {
@@ -21,58 +24,27 @@ const InstrumentPage = ({ isEditable = false }) => {
     }
   }, [statusFetch, fetchedItem]);
 
-  if (!statusFetch) {
-    return <Loader />;
-  }
-
-  if (errorFetch) {
-    return <StatusInfo status="fail">{errorFetch}</StatusInfo>;
-  }
-
-  const { brand, country, date, description, materials, name, image, type } = editableItem || {};
-
-  const list = [
-    { title: 'brand', data: brand },
-    { title: 'description', data: description },
-    { title: 'country', data: country },
-    { title: 'materials', data: materials },
-    { title: 'type', data: type },
-    { title: 'date', data: date },
-  ];
-
-  const handleInputChange = (e) => {
+  const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     setEditableItem((prevItem) => ({
       ...prevItem,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
+    if (statusUpload === null) {
+      alert('Please upload an image before saving.');
+      return;
+    }
+
+    if (errorUpload) {
+      alert(`Image upload failed. ${errorUpload} Please try again.`);
+      return;
+    }
+
     try {
-      let updatedItem = { ...editableItem };
-
-      if (imageFile) {
-        const fileExt = imageFile.name.split('.').pop();
-        const fileName = `${id}.${fileExt}`;
-        const filePath = `instruments/${fileName}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from('pics')
-          .upload(filePath, imageFile, { upsert: true });
-
-        if (uploadError) {
-          throw uploadError;
-        }
-        const { data: signedURLData, error: signedURLError } = await supabase.storage
-          .from('pics')
-          .createSignedUrl(filePath, 60 * 60 * 24);
-
-        if (signedURLError) {
-          throw signedURLError;
-        }
-        updatedItem.image = signedURLData.signedUrl;
-      }
+      const updatedItem = { ...editableItem, image: signedUrl };
 
       const { error: updateError } = await supabase
         .from('instruments_collection')
@@ -88,20 +60,44 @@ const InstrumentPage = ({ isEditable = false }) => {
       console.error('Error updating data:', error);
       setError(`Error updating instrument data: ${error.message}`);
     }
-  };
+  }, [editableItem, signedUrl, statusUpload, id]);
+
+  if (!statusFetch) return <Loader />;
+
+  if (errorFetch) return <StatusInfo status="fail">{errorFetch}</StatusInfo>;
+
+  const renderInputField = (title, data) => (
+    <div key={title} className={styles.descriptionContainer}>
+      <p className={styles.description}>
+        <span className={styles.title}>{title}:</span>
+        {isEditable ? (
+          <input
+            type="text"
+            name={title}
+            value={data}
+            onChange={handleInputChange}
+            className={styles.input}
+          />
+        ) : (
+          data
+        )}
+      </p>
+    </div>
+  );
 
   return (
     <div className={styles.root}>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
-          {!isEditable && (
+          {isEditable ? (
+            <ImageDownloader setFile={setImageFile} image={editableItem?.image} />
+          ) : (
             <img
-              src={imageFile ? URL.createObjectURL(imageFile) : image}
-              alt={name}
+              src={imageFile ? URL.createObjectURL(imageFile) : editableItem?.image}
+              alt={editableItem?.name}
               className={styles.image}
             />
           )}
-          {isEditable && <ImageDownloader setFile={setImageFile} image={image} />}
           <EditorButtons id={id} />
         </div>
         <div className={styles.detailsContainer}>
@@ -112,32 +108,18 @@ const InstrumentPage = ({ isEditable = false }) => {
                 <input
                   type="text"
                   name="name"
-                  value={name}
+                  value={editableItem?.name || ''}
                   onChange={handleInputChange}
                   className={styles.input}
                 />
               ) : (
-                name
+                editableItem?.name
               )}
             </h1>
-            {list.map(({ title, data }) => (
-              <div key={title} className={styles.descriptionContainer}>
-                <p className={styles.description}>
-                  <span className={styles.title}>{title}:</span>
-                  {isEditable ? (
-                    <input
-                      type="text"
-                      name={title}
-                      value={data}
-                      onChange={handleInputChange}
-                      className={styles.input}
-                    />
-                  ) : (
-                    data
-                  )}
-                </p>
-              </div>
-            ))}
+            {editableItem &&
+              ['brand', 'description', 'country', 'materials', 'type', 'date'].map((title) =>
+                renderInputField(title, editableItem[title]),
+              )}
             {isEditable && <Button onClick={handleSave}>Save Changes</Button>}
           </div>
         </div>
