@@ -7,6 +7,7 @@ import { UserContext } from '../../context/context';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/context';
 import cx from 'classnames';
+import { strings } from '../../strings';
 
 const MainPage = () => {
   const { user } = useContext(UserContext);
@@ -16,15 +17,12 @@ const MainPage = () => {
       <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
         <div className={styles.container}>
           <div className={styles.intro}>
-            <h1 className={styles.headline}>Welcome to In-lib: Your Music Instruments Catalogue</h1>
-            <p className={styles.description}>
-              Discover a vast collection of musical instruments from around the world. Sign in or
-              create an account to explore, manage, and enjoy our extensive library of instruments.{' '}
-            </p>
+            <h1 className={styles.headline}>{strings.title}</h1>
+            <p className={styles.description}>{strings.description}</p>
             <div className={styles.auth}>
               {user === 'admin' && (
                 <Link to="/instrument-creator">
-                  <Button>Add new instrument</Button>
+                  <Button>{strings.addInstrument}</Button>
                 </Link>
               )}
             </div>

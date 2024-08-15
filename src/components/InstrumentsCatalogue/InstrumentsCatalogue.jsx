@@ -11,6 +11,7 @@ import cx from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 import { getFiltersFromSearchParams } from '../../assets/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
+import { strings } from '../../strings';
 
 const InstrumentsCatalogue = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -30,14 +31,13 @@ const InstrumentsCatalogue = () => {
 
   const listOfFilters = ['brand', 'type', 'country'];
 
-  // Fetch all data for filters on mount
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
       const { data, error } = await supabase.from('instruments_collection').select('*');
 
       if (error) {
-        console.error('Error fetching data for filters:', error);
+        console.error(strings.errors.fethingData, error);
       } else {
         const uniqueFilters = listOfFilters.reduce((acc, filter) => {
           acc[filter] = [...new Set(data.map((item) => item[filter]))];
@@ -51,13 +51,11 @@ const InstrumentsCatalogue = () => {
     fetchAllData();
   }, []);
 
-  // Callback function to handle successful deletion
   const handleDeleteSuccess = useCallback((deletedId) => {
     setData((prevData) => prevData.filter((item) => item.id !== deletedId));
     setTotalItems((prevTotal) => prevTotal - 1);
   }, []);
 
-  // Fetch filtered and paginated data
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -73,7 +71,7 @@ const InstrumentsCatalogue = () => {
         .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
 
       if (error) {
-        console.error('Error fetching data:', error);
+        console.error(strings.errors.fethingData, error);
       } else {
         setData(data);
         setTotalItems(count);
@@ -92,7 +90,7 @@ const InstrumentsCatalogue = () => {
         <div className={styles.itemsContainer}>
           <FiltersPanel dataFilters={dataFilters} />
           {loading && <Loader />}
-          {!loading && totalItems === 0 && <div>Sorry, nothing found</div>}
+          {!loading && totalItems === 0 && <div>{strings.nothingFound}</div>}
           <div className={styles.cardsContainer}>
             <div className={styles.cards}>
               {data.map((item) => (

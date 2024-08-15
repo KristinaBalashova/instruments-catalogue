@@ -3,6 +3,7 @@ import { supabase } from '../../supabaseClient';
 import { UserContext } from '../../context/context';
 import Button from '../Button/Button';
 import styles from './AuthPage.module.css';
+import { strings } from '../../strings';
 
 const AuthPage = () => {
   const [email, setEmail] = useState('');
@@ -70,27 +71,27 @@ const AuthPage = () => {
         {!session ? (
           <div className={styles.authForm}>
             <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className={styles.form}>
-              <h2 className={styles.formTitle}>Welcome to InLib!</h2>
+              <h2 className={styles.formTitle}>{strings.welcome}</h2>
               <div>
                 {isSignUp ? (
                   <p>
-                    Already have an account?{' '}
+                    {strings.doHaveAccount}{' '}
                     <span onClick={() => setIsSignUp(false)} className={styles.link}>
-                      Sign In
+                      {strings.signIn}
                     </span>
                   </p>
                 ) : (
                   <p>
-                    Don’t have an account?{' '}
+                    {strings.notHaveAccount}{' '}
                     <span onClick={() => setIsSignUp(true)} className={styles.link}>
-                      Sign Up
+                      {strings.signUp}
                     </span>
                   </p>
                 )}
               </div>
               {error && <p className={styles.error}>{error}</p>}
               <div className={styles.formGroup}>
-                <label htmlFor="email">Email:</label>
+                <label htmlFor="email">{strings.email}</label>
                 <input
                   type="email"
                   id="email"
@@ -101,7 +102,7 @@ const AuthPage = () => {
                 />
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="password">Password:</label>
+                <label htmlFor="password">{strings.password}</label>
                 <input
                   type="password"
                   id="password"
@@ -112,16 +113,16 @@ const AuthPage = () => {
                 />
               </div>
               <Button primary type="submit">
-                {isSignUp ? 'Sign Up' : 'Sign In'}
+                {isSignUp ? strings.signIn : strings.signUp}
               </Button>
             </form>
           </div>
         ) : (
           <div className={styles.insideContainer}>
-            <p className={styles.text}>You are logged in as</p>
+            <p className={styles.text}>{strings.currentlyLogedIn}</p>
             <p className={styles.email}>{session.user.email}</p>
             <Button secondary onClick={handleSignOut}>
-              Sign Out
+              {strings.signOut}
             </Button>
           </div>
         )}

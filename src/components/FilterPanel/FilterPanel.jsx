@@ -2,36 +2,35 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './FiltersPanel.module.css';
 import Button from '../Button/Button';
+import { strings } from '../../strings';
 
 const FiltersPanel = ({ dataFilters }) => {
   const location = useLocation();
   const navigateTo = useNavigate();
 
-  // Update the URL's searchParams when filters change
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
     const searchParams = new URLSearchParams(location.search);
 
     if (value === '*') {
-      searchParams.delete(name); // Remove filter if it's set to "All"
+      searchParams.delete(name);
     } else {
-      searchParams.set(name, value); // Set the filter value in the URL
+      searchParams.set(name, value);
     }
 
-    searchParams.set('page', 0); // Reset to the first page on filter change
+    searchParams.set('page', 0);
 
     navigateTo(`?${searchParams.toString()}`);
   };
 
-  // Clear all filters
   const handleFilterClear = () => {
     const searchParams = new URLSearchParams(location.search);
 
     Object.keys(dataFilters).forEach((filter) => {
-      searchParams.delete(filter); // Remove all filters
+      searchParams.delete(filter);
     });
 
-    searchParams.set('page', 0); // Reset to the first page
+    searchParams.set('page', 0);
 
     navigateTo(`?${searchParams.toString()}`);
   };
@@ -46,9 +45,9 @@ const FiltersPanel = ({ dataFilters }) => {
             name={filter}
             onChange={handleFilterChange}
             className={styles.select}
-            value={new URLSearchParams(location.search).get(filter) || '*'} // Set the current filter value from URL
+            value={new URLSearchParams(location.search).get(filter) || '*'}
           >
-            <option value={'*'}>{'All'}</option>
+            <option value={'*'}>{strings.all}</option>
             {dataFilters[filter] &&
               dataFilters[filter].map((item) => (
                 <option value={item} key={item}>
@@ -59,7 +58,7 @@ const FiltersPanel = ({ dataFilters }) => {
         </form>
       ))}
       <Button secondary onClick={handleFilterClear}>
-        Clear filters
+        {strings.clearFilters}
       </Button>
     </div>
   );

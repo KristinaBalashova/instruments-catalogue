@@ -4,6 +4,7 @@ import styles from './InstrumentCreator.module.css';
 import Button from '../Button/Button';
 import ImageDownloader from '../ImageDownloader/ImageDownloader';
 import useUploadImage from '../../hooks/useUploadImage';
+import { strings } from '../../strings';
 
 const dataStub = {
   name: 'Name of the best music instrument',
@@ -42,22 +43,16 @@ const InstrumentCreator = () => {
     e.preventDefault();
 
     if (statusUpload === null) {
-      alert('Please upload an image before saving.');
-      return;
-    }
-
-    if (statusUpload === false) {
-      alert('Image upload failed. Please try again.');
+      alert(strings.status.noImg);
       return;
     }
 
     const { error } = await supabase.from('instruments_collection').insert(newInstrument).select();
 
     if (error) {
-      console.error('Error inserting instrument:', error);
-      alert('Failed to save instrument data.');
+      alert(string.errors.saveSuccess, error);
     } else {
-      alert('Instrument data saved successfully!');
+      alert(strings.status.saveSuccess);
     }
   };
 
@@ -65,7 +60,7 @@ const InstrumentCreator = () => {
     <div className={styles.root}>
       <div className={styles.container}>
         <div className={styles.editContainer}>
-          <h2>Add New Instrument</h2>
+          <h2>{strings.addInstrument}</h2>
           <form onSubmit={handleSubmit}>
             {Object.keys(dataStub).map((item) => {
               if (item === 'image') return null;
@@ -83,13 +78,17 @@ const InstrumentCreator = () => {
                 </div>
               );
             })}
-            <Button type="submit">Save</Button>
+            <Button type="submit">{strings.save}</Button>
           </form>
         </div>
         <div className={styles.imageContainer}>
           <ImageDownloader setFile={setImageFile} />
         </div>
-        {errorUpload && <p className={styles.error}>Error uploading image: {errorUpload}</p>}
+        {errorUpload && (
+          <p className={styles.error}>
+            {strings.uploadError} {errorUpload}
+          </p>
+        )}
       </div>
     </div>
   );

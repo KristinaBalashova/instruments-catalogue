@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './ImageDownloader.module.css';
 import Button from '../Button/Button';
+import { strings } from '../../strings';
 
 const ImageDownloader = ({ setFile, image = '/blank-image.png' }) => {
   const [error, setError] = useState(null);
@@ -26,7 +27,7 @@ const ImageDownloader = ({ setFile, image = '/blank-image.png' }) => {
       setImageFile(file);
       setError(null);
     } else {
-      setError('Please upload a JPEG or PNG image.');
+      setError(strings.formatError);
     }
   };
 
@@ -41,7 +42,7 @@ const ImageDownloader = ({ setFile, image = '/blank-image.png' }) => {
     <div className={styles.root}>
       <img
         src={imageFile ? objectURL : image}
-        alt={imageFile ? imageFile.name : 'Placeholder image'}
+        alt={imageFile ? imageFile.name : strings.placehilderImg}
         className={styles.imagePreview}
       />
       <label>Upload image:</label>
@@ -52,13 +53,11 @@ const ImageDownloader = ({ setFile, image = '/blank-image.png' }) => {
         className={styles.input}
       />
       <div className={styles.infoContainer}>
-        <p className={styles.text}>
-          Upload PNG or JPG picture, 500x500 max with removed background
-        </p>
+        <p className={styles.text}>{strings.uploadRules}</p>
         {imageFile && (
           <div className={styles.fileInfo}>
             <Button onClick={handleDeleteFile} secondary className={styles.deleteButton}>
-              Delete File
+              {strings.delete}
             </Button>
           </div>
         )}

@@ -5,7 +5,7 @@ import { ThemeContext } from '../../context/context';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import cx from 'classnames';
-
+import { strings } from '../../strings';
 const Header = () => {
   const { theme, setTheme } = useContext(ThemeContext);
 
@@ -18,7 +18,7 @@ const Header = () => {
 
         <div className={styles.right}>
           <Link to="/auth">
-            <Button children="Sign in" />
+            <Button children={strings.signIn} />
           </Link>
 
           {/* <Link to="/favorites">

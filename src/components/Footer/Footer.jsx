@@ -1,10 +1,11 @@
 import styles from './Footer.module.css';
+import { strings } from '../../strings';
 
 const Footer = () => {
   return (
     <section className={styles.root}>
       <div className={styles.container}>
-        <div>Created by</div>
+        <p>{strings.createdBy}</p>
       </div>
     </section>
   );

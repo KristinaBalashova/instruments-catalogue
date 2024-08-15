@@ -10,7 +10,7 @@ import InstrumentPage from './components/InstrumentPage/InstrumentPage';
 import { UserContext, ThemeContext } from './context/context';
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
-import { jwtDecode } from 'jwt-decode';
+import { strings } from './strings';
 
 function App() {
   const [user, setUser] = useState('reader');
@@ -26,16 +26,15 @@ function App() {
         let { data, error } = await supabase.from('users').select('role').eq('id', user.id);
 
         if (error) {
-          console.error('Error fetching data:', error);
+          alert(strings.errors.fetchingError, error);
         } else if (data && data.length > 0) {
           const userRole = data[0].role;
           setUser(userRole);
-          console.log(userRole, 'user role fetched');
         } else {
-          console.log('No user found');
+          alert(strings.errors.userNotFound);
         }
       } else {
-        console.log('User not authenticated');
+        alert(strings.errors.userNotAuth);
       }
     };
 

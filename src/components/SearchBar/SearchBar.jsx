@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './SearchBar.module.css';
 import Button from '../Button/Button';
-
+import { strings } from '../../strings';
 const SearchBar = ({ setSearchQuery, placeholder = 'Search...' }) => {
   const [query, setQuery] = useState('');
 
@@ -23,7 +23,7 @@ const SearchBar = ({ setSearchQuery, placeholder = 'Search...' }) => {
         value={query}
         onChange={handleInputChange}
       />
-      <Button type="submit" children="Search" />
+      <Button type="submit" children={strings.search} />
     </form>
   );
 };

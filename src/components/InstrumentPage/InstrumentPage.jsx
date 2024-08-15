@@ -9,6 +9,7 @@ import Loader from '../Loader/Loader';
 import useFetchItem from '../../hooks/useFetchItem';
 import { supabase } from '../../supabaseClient';
 import useUploadImage from '../../hooks/useUploadImage';
+import { strings } from '../../strings';
 
 const InstrumentPage = ({ isEditable = false }) => {
   const { id } = useParams();
@@ -34,12 +35,12 @@ const InstrumentPage = ({ isEditable = false }) => {
 
   const handleSave = useCallback(async () => {
     if (statusUpload === null) {
-      alert('Please upload an image before saving.');
+      alert(strings.status.noImg);
       return;
     }
 
     if (errorUpload) {
-      alert(`Image upload failed. ${errorUpload} Please try again.`);
+      alert(strings.uploadError, errorUpload);
       return;
     }
 
@@ -55,10 +56,9 @@ const InstrumentPage = ({ isEditable = false }) => {
         throw updateError;
       }
 
-      alert('Instrument data updated successfully!');
+      alert(strings.status.saveSuccess);
     } catch (error) {
-      console.error('Error updating data:', error);
-      setError(`Error updating instrument data: ${error.message}`);
+      setError(`${strings.errors.updateError} ${error.message}`);
     }
   }, [editableItem, signedUrl, statusUpload, id]);
 
@@ -120,7 +120,7 @@ const InstrumentPage = ({ isEditable = false }) => {
               ['brand', 'description', 'country', 'materials', 'type', 'date'].map((title) =>
                 renderInputField(title, editableItem[title]),
               )}
-            {isEditable && <Button onClick={handleSave}>Save Changes</Button>}
+            {isEditable && <Button onClick={handleSave}>{strings.save}</Button>}
           </div>
         </div>
       </div>
