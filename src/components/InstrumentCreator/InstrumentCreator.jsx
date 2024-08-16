@@ -20,7 +20,7 @@ const dataStub = {
 const InstrumentCreator = () => {
   const [newInstrument, setNewInstrument] = useState({ ...dataStub });
   const [imageFile, setImageFile] = useState(null);
-  const { signedUrl, statusUpload, errorUpload } = useUploadImage(imageFile, 'pics');
+  const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
 
   useEffect(() => {
     if (signedUrl) {
@@ -41,11 +41,6 @@ const InstrumentCreator = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (statusUpload === null) {
-      alert(strings.status.noImg);
-      return;
-    }
 
     const { error } = await supabase.from('instruments_collection').insert(newInstrument).select();
 

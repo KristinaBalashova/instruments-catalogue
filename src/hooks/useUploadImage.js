@@ -3,8 +3,7 @@ import { supabase } from '../supabaseClient';
 
 const useUploadImage = (image, storageBucket) => {
   const [signedUrl, setSignedUrl] = useState(null);
-  const [errorUpload, setErrorUpload] = useState(null);
-  const [statusUpload, setStatusUpload] = useState(null);
+  const [errorUpload, setErrorUpload] = useState(false);
 
   useEffect(() => {
     const uploadImage = async () => {
@@ -32,17 +31,15 @@ const useUploadImage = (image, storageBucket) => {
         }
 
         setSignedUrl(signedURLData.signedUrl);
-        setStatusUpload(true);
       } catch (error) {
         setErrorUpload(error.message);
-        setStatusUpload(false);
       }
     };
 
     uploadImage();
   }, [image, storageBucket]);
 
-  return { signedUrl, statusUpload, errorUpload };
+  return { signedUrl, errorUpload };
 };
 
 export default useUploadImage;

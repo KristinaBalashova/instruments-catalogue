@@ -17,7 +17,7 @@ const InstrumentPage = ({ isEditable = false }) => {
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
   const { fetchedItem, statusFetch, errorFetch } = useFetchItem(id);
-  const { signedUrl, statusUpload, errorUpload } = useUploadImage(imageFile, 'pics');
+  const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
 
   useEffect(() => {
     if (statusFetch) {
@@ -34,11 +34,6 @@ const InstrumentPage = ({ isEditable = false }) => {
   }, []);
 
   const handleSave = useCallback(async () => {
-    if (statusUpload === null) {
-      alert(strings.status.noImg);
-      return;
-    }
-
     if (errorUpload) {
       alert(strings.uploadError, errorUpload);
       return;
@@ -60,7 +55,7 @@ const InstrumentPage = ({ isEditable = false }) => {
     } catch (error) {
       setError(`${strings.errors.updateError} ${error.message}`);
     }
-  }, [editableItem, signedUrl, statusUpload, id]);
+  }, [editableItem, signedUrl, id]);
 
   if (!statusFetch) return <Loader />;
 
