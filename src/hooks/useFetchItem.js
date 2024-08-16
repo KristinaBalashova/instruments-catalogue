@@ -4,7 +4,6 @@ import { supabase } from '../supabaseClient';
 const useFetchItem = (id) => {
   const [fetchedItem, setFetchedItem] = useState(null);
   const [errorFetch, setErrorFetch] = useState(null);
-  const [statusFetch, setStatusFetch] = useState(null);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -19,7 +18,6 @@ const useFetchItem = (id) => {
         setErrorFetch('Error fetching instrument data.');
       } else {
         setFetchedItem(data);
-        setStatusFetch(true);
       }
     };
 
@@ -30,7 +28,6 @@ const useFetchItem = (id) => {
 
   return {
     fetchedItem,
-    statusFetch,
     errorFetch,
   };
 };

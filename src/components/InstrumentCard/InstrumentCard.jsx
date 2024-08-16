@@ -1,13 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './InstrumentCard.module.css';
-import { UserContext } from '../../context/context';
 import EditorButtons from '../EditorButtons/EditorButtons';
 
-const InstrumentCard = ({ instrumentData, onDelete, statusDelete, errorDelete }) => {
+const InstrumentCard = ({ instrumentData, onDelete, statusDelete, errorDelete, isAdmin }) => {
   const { id, name, image } = instrumentData;
-  const { user } = useContext(UserContext);
-
+  console.log(isAdmin);
   return (
     <>
       <div key={id} className={styles.cardContainer}>
@@ -19,7 +17,7 @@ const InstrumentCard = ({ instrumentData, onDelete, statusDelete, errorDelete })
             <h3 className={styles.title}>{name}</h3>
           </Link>
           <div className={styles.buttons}>
-            {user === 'admin' && (
+            {isAdmin && (
               <EditorButtons
                 id={id}
                 onDelete={onDelete}

@@ -16,14 +16,14 @@ const InstrumentPage = ({ isEditable = false }) => {
   const [editableItem, setEditableItem] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
-  const { fetchedItem, statusFetch, errorFetch } = useFetchItem(id);
+  const { fetchedItem, errorFetch } = useFetchItem(id);
   const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
 
   useEffect(() => {
-    if (statusFetch) {
+    if (fetchedItem) {
       setEditableItem(fetchedItem);
     }
-  }, [statusFetch, fetchedItem]);
+  }, [fetchedItem]);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -57,7 +57,7 @@ const InstrumentPage = ({ isEditable = false }) => {
     }
   }, [editableItem, signedUrl, id]);
 
-  if (!statusFetch) return <Loader />;
+  if (!fetchedItem) return <Loader />;
 
   if (errorFetch) return <StatusInfo status="fail">{errorFetch}</StatusInfo>;
 

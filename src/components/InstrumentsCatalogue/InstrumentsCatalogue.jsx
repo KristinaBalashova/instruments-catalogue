@@ -12,6 +12,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getFiltersFromSearchParams } from '../../assets/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
 import { strings } from '../../strings';
+import { UserContext } from '../../context/context';
 
 const InstrumentsCatalogue = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -23,6 +24,7 @@ const InstrumentsCatalogue = () => {
   const [searchParams] = useSearchParams();
   const [dataFilters, setDataFilters] = useState({});
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
+  const { user } = useContext(UserContext);
 
   const filtersObject = getFiltersFromSearchParams(searchParams);
   const { brand = '*', type = '*', country = '*' } = filtersObject;
@@ -30,7 +32,7 @@ const InstrumentsCatalogue = () => {
   const itemsPerPage = 4;
 
   const listOfFilters = ['brand', 'type', 'country'];
-
+  console.log(user, 'user');
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
@@ -102,17 +104,17 @@ const InstrumentsCatalogue = () => {
                   }
                   statusDelete={statusDelete}
                   errorDelete={errorDelete}
+                  isAdim={user === 'admin' ? true : false}
                 />
               ))}
             </div>
-            {totalItems > itemsPerPage && (
-              <PaginationButtons
-                currentPage={currentPage}
-                totalItems={totalItems}
-                itemsPerPage={itemsPerPage}
-                setCurrentPage={setCurrentPage}
-              />
-            )}
+            <PaginationButtons
+              currentPage={currentPage}
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              setCurrentPage={setCurrentPage}
+              isVisible={totalItems > itemsPerPage}
+            />
           </div>
         </div>
       </div>
