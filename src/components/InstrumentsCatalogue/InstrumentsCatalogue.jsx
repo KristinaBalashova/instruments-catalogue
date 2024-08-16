@@ -104,7 +104,7 @@ const InstrumentsCatalogue = () => {
                   }
                   statusDelete={statusDelete}
                   errorDelete={errorDelete}
-                  isAdim={user === 'admin' ? true : false}
+                  isAdmin={user?.role === 'admin' ? true : false}
                 />
               ))}
             </div>

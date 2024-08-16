@@ -20,7 +20,7 @@ const MainPage = () => {
             <h1 className={styles.headline}>{strings.title}</h1>
             <p className={styles.description}>{strings.description}</p>
             <div className={styles.auth}>
-              {user === 'admin' && (
+              {user?.role === 'admin' && (
                 <Link to="/instrument-creator">
                   <Button>{strings.addInstrument}</Button>
                 </Link>

@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom';
 import styles from './InstrumentCard.module.css';
 import EditorButtons from '../EditorButtons/EditorButtons';
 
-const InstrumentCard = ({ instrumentData, onDelete, statusDelete, errorDelete, isAdmin }) => {
+const InstrumentCard = ({
+  instrumentData,
+  onDelete,
+  statusDelete,
+  errorDelete,
+  isAdmin = false,
+}) => {
   const { id, name, image } = instrumentData;
-  console.log(isAdmin);
+
   return (
     <>
       <div key={id} className={styles.cardContainer}>
