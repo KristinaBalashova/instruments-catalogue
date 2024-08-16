@@ -11,6 +11,7 @@ const Input = ({
   required = false,
   placeholder = null,
   disabled = false,
+  autocomplete = '',
 }) => {
   const errorMessage = error?.message;
 
@@ -18,7 +19,7 @@ const Input = ({
     <div className={styles.root}>
       <div className={styles.container}>
         {label && (
-          <label htmlFor={label} className={cx(styles.label, error && styles.error)}>
+          <label htmlFor={id} className={cx(styles.label, error && styles.error)}>
             {label}
           </label>
         )}
@@ -31,6 +32,7 @@ const Input = ({
           required={required}
           placeholder={placeholder}
           disabled={disabled}
+          autoComplete={autocomplete}
         />
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
       </div>

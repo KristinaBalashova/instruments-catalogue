@@ -6,11 +6,13 @@
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.2s ease;
+  border-radius: 8px;
 }
 .disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
 .button.primary {
   background-color: var(--primary-color);
   color: var(--secondary-color);
