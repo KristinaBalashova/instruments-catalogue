@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import styles from './InstrumentPage.module.css';
 import EditorButtons from '../EditorButtons/EditorButtons';
 import { useParams } from 'react-router-dom';
@@ -10,6 +10,8 @@ import useFetchItem from '../../hooks/useFetchItem';
 import { supabase } from '../../supabaseClient';
 import useUploadImage from '../../hooks/useUploadImage';
 import { strings } from '../../strings';
+import { UserContext } from '../../context/context';
+import useDeleteItem from '../../hooks/useDeleteItem';
 
 const InstrumentPage = ({ isEditable = false }) => {
   const { id } = useParams();
@@ -18,6 +20,8 @@ const InstrumentPage = ({ isEditable = false }) => {
   const [error, setError] = useState(null);
   const { fetchedItem, errorFetch } = useFetchItem(id);
   const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
+  const { user } = useContext(UserContext);
+  const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
 
   useEffect(() => {
     if (fetchedItem) {
@@ -57,8 +61,17 @@ const InstrumentPage = ({ isEditable = false }) => {
     }
   }, [editableItem, signedUrl, id]);
 
-  if (!fetchedItem) return <Loader />;
+  const handleDelete = async () => {
+    const successCallback = () => {
+      setEditableItem(null);
+  };
+    await deleteItem('instruments_collection', id, successCallback);
+  };
 
+  if (!fetchedItem) return <Loader />;
+  if(!editableItem) return (
+    <StatusInfo status="fail">No avaliable data</StatusInfo>
+  )
   if (errorFetch) return <StatusInfo status="fail">{errorFetch}</StatusInfo>;
 
   const renderInputField = (title, data) => (
@@ -82,6 +95,7 @@ const InstrumentPage = ({ isEditable = false }) => {
 
   return (
     <div className={styles.root}>
+
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           {isEditable ? (
@@ -93,7 +107,14 @@ const InstrumentPage = ({ isEditable = false }) => {
               className={styles.image}
             />
           )}
-          <EditorButtons id={id} />
+          {user?.role === 'admin' && (
+            <EditorButtons
+              id={id}
+              onDelete={handleDelete}
+              statusDelete={statusDelete}
+              errorDelete={errorDelete}
+            />
+          )}
         </div>
         <div className={styles.detailsContainer}>
           <div className={styles.content}>
