@@ -1,48 +1,62 @@
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { supabase } from '../../supabaseClient';
 import { UserContext } from '../../context/context';
 import Button from '../Button/Button';
 import styles from './AuthPage.module.css';
 import { strings } from '../../strings';
+import UserDashboard from './UserDashboard';
+import Input from '../Input/Input';
+import { z } from 'zod';
+
+const isValidDomain = (email) => {
+  const domainPattern = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const domain = email.split('@')[1];
+  return domainPattern.test(domain);
+};
+
+const authSchema = z.object({
+  email: z
+    .string()
+    .email({ message: 'Invalid email address' })
+    .refine((email) => isValidDomain(email), { message: 'Invalid email domain' }),
+  password: z.string().min(6, { message: 'Password must be at least 6 characters long' }),
+});
 
 const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
   const { setUser } = useContext(UserContext);
   const [isSignUp, setIsSignUp] = useState(false);
   const [session, setSession] = useState('');
 
-  /*
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setUser(session.user);
-        setSession(session);
-      } else {
-        setUser(null);
-      }
-    });
+  const validateForm = () => {
+    const result = authSchema.safeParse({ email, password });
+    if (!result.success) {
+      setError(result.error.errors.map((err) => err.message).join(', '));
+      return false;
+    }
+    setError('');
+    return true;
+  };
 
-    return () => subscription.unsubscribe();
-  }, [setUser]);
-  */
   const handleSignIn = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     const { error, data } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       setError(error.message);
     } else {
-      //setUser(data.user);
       setError('');
     }
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     const { error, data } = await supabase.auth.signUp({ email, password });
 
     if (error) {
@@ -89,42 +103,31 @@ const AuthPage = () => {
                   </p>
                 )}
               </div>
-              {error && <p className={styles.error}>{error}</p>}
-              <div className={styles.formGroup}>
-                <label htmlFor="email">{strings.email}</label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={styles.input}
-                  required
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="password">{strings.password}</label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className={styles.input}
-                  required
-                />
-              </div>
+              <Input
+                label={strings.email}
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                error={error}
+              />
+              <Input
+                label={strings.password}
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                error={error}
+              />
               <Button primary type="submit">
-                {isSignUp ? strings.signIn : strings.signUp}
+                {isSignUp ? strings.signUp : strings.signIn}
               </Button>
             </form>
           </div>
         ) : (
-          <div className={styles.insideContainer}>
-            <p className={styles.text}>{strings.currentlyLogedIn}</p>
-            <p className={styles.email}>{session.user.email}</p>
-            <Button secondary onClick={handleSignOut}>
-              {strings.signOut}
-            </Button>
-          </div>
+          <UserDashboard userEmail={session.user.email} handleSignOut={handleSignOut} />
         )}
       </div>
     </div>

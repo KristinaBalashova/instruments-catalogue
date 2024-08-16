@@ -30,11 +30,7 @@ function App() {
         } else if (data && data.length > 0) {
           const userRole = data[0].role;
           setUser(userRole);
-        } else {
-          alert(strings.errors.userNotFound);
         }
-      } else {
-        alert(strings.errors.userNotAuth);
       }
     };
 
