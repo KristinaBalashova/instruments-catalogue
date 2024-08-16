@@ -1,3 +1,6 @@
+import styles from './UserDashboard.module.css';
+import { strings } from '../../strings';
+import Button from '../Button/Button';
 const UserDashboard = ({ userEmail, handleSignOut }) => {
   return (
     <div className={styles.container}>
