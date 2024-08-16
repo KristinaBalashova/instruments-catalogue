@@ -7,7 +7,6 @@ const useFetchItem = (id) => {
 
   useEffect(() => {
     const fetchItem = async () => {
-      setStatusFetch(false);
       const { data, error } = await supabase
         .from('instruments_collection')
         .select('*')

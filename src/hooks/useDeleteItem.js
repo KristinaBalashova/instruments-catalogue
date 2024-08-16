@@ -3,7 +3,7 @@ import { supabase } from '../supabaseClient';
 
 const useDeleteItem = () => {
   const [statusDelete, setStatusDelete] = useState(null);
-  const [errorDelete, setErrorDelete] = useState(null);
+  const [errorDelete, setErrorDelete] = useState(false);
 
   const deleteItem = async (table, id, onSuccess) => {
     const { error } = await supabase.from(table).delete().eq('id', id);
