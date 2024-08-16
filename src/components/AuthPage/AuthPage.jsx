@@ -7,6 +7,7 @@ import { strings } from '../../strings';
 import UserDashboard from './UserDashboard';
 import Input from '../Input/Input';
 import { z } from 'zod';
+import { Link } from 'react-router-dom';
 
 const isValidDomain = (email) => {
   const domainPattern = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -28,6 +29,8 @@ const AuthPage = () => {
   const [error, setError] = useState(null);
   const { user, setUser } = useContext(UserContext);
   const [isSignUp, setIsSignUp] = useState(false);
+  const [confirmationCheck, setConfirmationCheck] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   const validateForm = () => {
     const result = authSchema.safeParse({ email, password });
@@ -61,7 +64,7 @@ const AuthPage = () => {
     if (error) {
       setError(error.message);
     } else {
-      setUser(data.user);
+      setConfirmationCheck(true);
       setError('');
       setIsSignUp(false);
     }
@@ -77,11 +80,32 @@ const AuthPage = () => {
       setPassword('');
     }
   };
+const handleResend = async () => {
+  const { error } = await supabase.auth.resend({
+    type: 'signup',
+    email: email,
+  })
+}
+  // Polling for confirmation status
+  useEffect(() => {
+    if (confirmationCheck) {
+      const interval = setInterval(async () => {
+        const { data } = await supabase.auth.getUser();
+        if (data.user && data.user.email_confirmed_at) {
+          setIsConfirmed(true);
+          setUser(data.user);
+          clearInterval(interval);
+        }
+      }, 5000); // Poll every 5 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [confirmationCheck, setUser]);
 
   return (
     <div className={styles.root}>
       <div className={styles.container}>
-        {!user && (
+        {!user && !confirmationCheck && (
           <div className={styles.authForm}>
             <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className={styles.form}>
               <h2 className={styles.formTitle}>{strings.welcome}</h2>
@@ -131,7 +155,21 @@ const AuthPage = () => {
             </form>
           </div>
         )}
-        {user && <UserDashboard user={user} handleSignOut={handleSignOut} />}
+        {confirmationCheck && !isConfirmed &&(
+          <div>
+            <p>{`Check you email ${email}! If you didnt get a confirmation letter, click here to resend`}</p>
+            <Button secondary onClick={handleResend}>
+              {'Resend'}
+            </Button>
+            <Link to="/">
+            <Button sprimary onClick={handleResend}>
+              {'Return to the main page'}
+            </Button>
+            </Link>
+           
+          </div>
+        )}
+        {isConfirmed || user && <UserDashboard user={user} handleSignOut={handleSignOut} />}
       </div>
     </div>
   );
