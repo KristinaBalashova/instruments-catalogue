@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
 import { supabase } from '../../supabaseClient';
-import styles from './InstrumentCreator.module.css';
+import { strings } from '../../strings';
+
+import useUploadImage from '../../hooks/useUploadImage';
+
 import Button from '../Button/Button';
 import ImageDownloader from '../ImageDownloader/ImageDownloader';
-import useUploadImage from '../../hooks/useUploadImage';
-import { strings } from '../../strings';
+
+import styles from './InstrumentCreator.module.css';
 
 const dataStub = {
   name: 'Name of the best music instrument',
@@ -20,6 +24,7 @@ const dataStub = {
 const InstrumentCreator = () => {
   const [newInstrument, setNewInstrument] = useState({ ...dataStub });
   const [imageFile, setImageFile] = useState(null);
+
   const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
 
   useEffect(() => {

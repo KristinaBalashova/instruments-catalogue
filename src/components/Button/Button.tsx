@@ -1,8 +1,9 @@
 import React from 'react';
-import styles from './Button.module.css';
 import cx from 'classnames';
 
-const Button = ({ children, onClick, primary, secondary, className, disabled = false }) => {
+import styles from './Button.module.css';
+
+const Button = ({ children, onClick, secondary, className, disabled = false }) => {
   return (
     <button
       className={cx(

@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
-import styles from './EditorButtons.module.css';
-import Modal from '../Modal/Modal';
 import { useState } from 'react';
-import Button from '../Button/Button';
-import { StatusInfo } from '../StatusInfo/StatusInfo';
+import { Link } from 'react-router-dom';
+
 import { strings } from '../../strings';
 
+import Modal from '../Modal/Modal';
+import Button from '../Button/Button';
+import { StatusInfo } from '../StatusInfo/StatusInfo';
+
+import styles from './EditorButtons.module.css';
 const EditorButtons = ({ id, onDelete, statusDelete, errorDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

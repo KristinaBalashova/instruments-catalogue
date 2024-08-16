@@ -21,15 +21,21 @@
   width: 360px;
 }
 
-.title {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
 .form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.formTitle {
+}
+
+.formContainer {
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 .link {
@@ -37,4 +43,8 @@
   &:hover {
     color: var(--darkest-teal);
   }
+}
+
+.error {
+  color: red;
 }

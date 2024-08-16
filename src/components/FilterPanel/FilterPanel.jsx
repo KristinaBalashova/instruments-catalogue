@@ -1,8 +1,11 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styles from './FiltersPanel.module.css';
-import Button from '../Button/Button';
+
 import { strings } from '../../strings';
+
+import Button from '../Button/Button';
+
+import styles from './FiltersPanel.module.css';
 
 const FiltersPanel = ({ dataFilters }) => {
   const location = useLocation();
@@ -25,13 +28,10 @@ const FiltersPanel = ({ dataFilters }) => {
 
   const handleFilterClear = () => {
     const searchParams = new URLSearchParams(location.search);
-
     Object.keys(dataFilters).forEach((filter) => {
       searchParams.delete(filter);
     });
-
     searchParams.set('page', 0);
-
     navigateTo(`?${searchParams.toString()}`);
   };
 

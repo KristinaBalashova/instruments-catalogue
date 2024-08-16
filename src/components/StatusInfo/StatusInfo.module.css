@@ -1,5 +1,6 @@
-.wrap {
+.container {
   border-radius: 50%;
+  color: white;
 }
 .success {
   background-color: rgba(168, 236, 122, 0.538);

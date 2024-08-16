@@ -1,5 +1,5 @@
-import styles from './Input.module.css';
 import cx from 'classnames';
+import styles from './Input.module.css';
 
 const Input = ({
   label = null,

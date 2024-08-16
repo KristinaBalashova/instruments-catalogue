@@ -21,7 +21,6 @@ const PaginationButtons = ({
     }
   };
 
-  // Conditional rendering for visibility
   if (!isVisible) return null;
 
   return (

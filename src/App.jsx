@@ -1,16 +1,19 @@
-import './App.module.css';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import { strings } from './strings';
+import { supabase } from './supabaseClient';
+import { UserContext, ThemeContext } from './context/context';
+
 import MainPage from './components/MainPage/MainPage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import InstrumentCreator from './components/InstrumentCreator/InstrumentCreator';
 import AuthPage from './components/AuthPage/AuthPage';
 import Favorites from './components/Favorites/Favorites';
 import InstrumentPage from './components/InstrumentPage/InstrumentPage';
-import { UserContext, ThemeContext } from './context/context';
-import { useState, useEffect } from 'react';
-import { strings } from './strings';
-import { supabase } from './supabaseClient';
+
+import './App.module.css';
 
 function App() {
   const [user, setUser] = useState(null);

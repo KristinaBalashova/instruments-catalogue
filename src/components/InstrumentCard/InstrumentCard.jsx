@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './InstrumentCard.module.css';
+
 import EditorButtons from '../EditorButtons/EditorButtons';
+
+import styles from './InstrumentCard.module.css';
 
 const InstrumentCard = ({
   instrumentData,

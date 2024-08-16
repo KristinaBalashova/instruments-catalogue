@@ -27,6 +27,7 @@ export const strings = {
   uploadRules: 'Upload PNG or JPG picture, 500x500 max with removed background',
   delete: 'Delete',
   nothingFound: 'Sorry, nothing found',
+  return: 'Return to the main page',
   errors: {
     userNotFound: 'No user found',
     userNotAuth: 'User not authenticated',

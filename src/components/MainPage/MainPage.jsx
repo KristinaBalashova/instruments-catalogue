@@ -1,13 +1,15 @@
-import styles from './MainPage.module.css';
-import Button from '../Button/Button';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import InstrumentsCatalogue from '../InstrumentsCatalogue/InstrumentsCatalogue';
-import { UserContext } from '../../context/context';
-import { useContext } from 'react';
-import { ThemeContext } from '../../context/context';
-import cx from 'classnames';
+
 import { strings } from '../../strings';
+import { ThemeContext, UserContext } from '../../context/context';
+
+import Button from '../Button/Button';
+import InstrumentsCatalogue from '../InstrumentsCatalogue/InstrumentsCatalogue';
+
+import cx from 'classnames';
+
+import styles from './MainPage.module.css';
 
 const MainPage = () => {
   const { user } = useContext(UserContext);

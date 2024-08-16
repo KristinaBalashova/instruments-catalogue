@@ -1,13 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { supabase } from '../../supabaseClient';
-import { UserContext } from '../../context/context';
-import Button from '../Button/Button';
-import styles from './AuthPage.module.css';
-import { strings } from '../../strings';
-import UserDashboard from './UserDashboard';
-import Input from '../Input/Input';
 import { z } from 'zod';
 import { Link } from 'react-router-dom';
+
+import { supabase } from '../../supabaseClient';
+import { strings } from '../../strings';
+import { UserContext } from '../../context/context';
+
+import Button from '../Button/Button';
+import Input from '../Input/Input';
+
+import UserDashboard from './UserDashboard';
+import styles from './AuthPage.module.css';
 
 const isValidDomain = (email) => {
   const domainPattern = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -24,13 +27,28 @@ const authSchema = z.object({
 });
 
 const AuthPage = () => {
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const { user, setUser } = useContext(UserContext);
   const [isSignUp, setIsSignUp] = useState(false);
   const [confirmationCheck, setConfirmationCheck] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
+
+  useEffect(() => {
+    if (confirmationCheck) {
+      const interval = setInterval(async () => {
+        const { data } = await supabase.auth.getUser();
+        if (data.user && data.user.email_confirmed_at) {
+          setIsConfirmed(true);
+          setUser(data.user);
+          clearInterval(interval);
+        }
+      }, 5000);
+
+      return () => clearInterval(interval);
+    }
+  }, [confirmationCheck, setUser]);
 
   const validateForm = () => {
     const result = authSchema.safeParse({ email, password });
@@ -80,26 +98,16 @@ const AuthPage = () => {
       setPassword('');
     }
   };
+
   const handleResend = async () => {
     const { error } = await supabase.auth.resend({
       type: 'signup',
       email: email,
     });
-  };
-  useEffect(() => {
-    if (confirmationCheck) {
-      const interval = setInterval(async () => {
-        const { data } = await supabase.auth.getUser();
-        if (data.user && data.user.email_confirmed_at) {
-          setIsConfirmed(true);
-          setUser(data.user);
-          clearInterval(interval);
-        }
-      }, 5000);
-
-      return () => clearInterval(interval);
+    if (error) {
+      alert(error);
     }
-  }, [confirmationCheck, setUser]);
+  };
 
   return (
     <div className={styles.root}>
@@ -108,7 +116,7 @@ const AuthPage = () => {
           <div className={styles.authForm}>
             <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className={styles.form}>
               <h2 className={styles.formTitle}>{strings.welcome}</h2>
-              <div>
+              <div className={styles.formContainer}>
                 {isSignUp ? (
                   <p>
                     {strings.doHaveAccount}{' '}
@@ -156,14 +164,12 @@ const AuthPage = () => {
         )}
         {confirmationCheck && !isConfirmed && (
           <div>
-            <p>{`Check you email ${email}! If you didnt get a confirmation letter, click here to resend`}</p>
+            <p>{`Check you email ${email}. If you didnt get a confirmation letter, click here to resend`}</p>
             <Button secondary onClick={handleResend}>
               {'Resend'}
             </Button>
-            <Link to="/">
-              <Button sprimary onClick={handleResend}>
-                {'Return to the main page'}
-              </Button>
+            <Link to="/" className={styles.link}>
+              <Button primary>{strings.return}</Button>
             </Link>
           </div>
         )}

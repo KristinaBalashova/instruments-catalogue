@@ -1,11 +1,14 @@
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import cx from 'classnames';
+
+import { strings } from '../../strings';
+import { ThemeContext } from '../../context/context';
+
+import Button from '../Button/Button';
+
 import logo from '/logo.png';
 import styles from './Header.module.css';
-import { useContext } from 'react';
-import { ThemeContext } from '../../context/context';
-import { Link } from 'react-router-dom';
-import Button from '../Button/Button';
-import cx from 'classnames';
-import { strings } from '../../strings';
 
 const Header = () => {
   const { theme, setTheme } = useContext(ThemeContext);

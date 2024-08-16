@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
-import styles from './ImageDownloader.module.css';
-import Button from '../Button/Button';
+
 import { strings } from '../../strings';
+
+import Button from '../Button/Button';
+
+import styles from './ImageDownloader.module.css';
 
 const ImageDownloader = ({ setFile, image = '/blank-image.png' }) => {
   const [error, setError] = useState(null);

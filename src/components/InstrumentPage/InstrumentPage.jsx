@@ -1,26 +1,33 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react';
-import styles from './InstrumentPage.module.css';
-import EditorButtons from '../EditorButtons/EditorButtons';
+import { useEffect, useState, useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import ImageDownloader from '../ImageDownloader/ImageDownloader';
-import Button from '../Button/Button';
-import { StatusInfo } from '../StatusInfo/StatusInfo';
-import Loader from '../Loader/Loader';
-import useFetchItem from '../../hooks/useFetchItem';
+
 import { supabase } from '../../supabaseClient';
-import useUploadImage from '../../hooks/useUploadImage';
 import { strings } from '../../strings';
 import { UserContext } from '../../context/context';
+
+import useFetchItem from '../../hooks/useFetchItem';
+import useUploadImage from '../../hooks/useUploadImage';
 import useDeleteItem from '../../hooks/useDeleteItem';
+
+import Button from '../Button/Button';
+import ImageDownloader from '../ImageDownloader/ImageDownloader';
+import EditorButtons from '../EditorButtons/EditorButtons';
+import StatusInfo from '../StatusInfo/StatusInfo';
+import Loader from '../Loader/Loader';
+
+import styles from './InstrumentPage.module.css';
 
 const InstrumentPage = ({ isEditable = false }) => {
   const { id } = useParams();
+
+  const { user } = useContext(UserContext);
+
   const [editableItem, setEditableItem] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
+
   const { fetchedItem, errorFetch } = useFetchItem(id);
   const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
-  const { user } = useContext(UserContext);
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
 
   useEffect(() => {
@@ -64,14 +71,12 @@ const InstrumentPage = ({ isEditable = false }) => {
   const handleDelete = async () => {
     const successCallback = () => {
       setEditableItem(null);
-  };
+    };
     await deleteItem('instruments_collection', id, successCallback);
   };
 
   if (!fetchedItem) return <Loader />;
-  if(!editableItem) return (
-    <StatusInfo status="fail">No avaliable data</StatusInfo>
-  )
+  if (!editableItem) return <StatusInfo status="fail">No avaliable data</StatusInfo>;
   if (errorFetch) return <StatusInfo status="fail">{errorFetch}</StatusInfo>;
 
   const renderInputField = (title, data) => (
@@ -95,7 +100,6 @@ const InstrumentPage = ({ isEditable = false }) => {
 
   return (
     <div className={styles.root}>
-
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           {isEditable ? (

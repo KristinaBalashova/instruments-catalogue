@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import styles from './SearchBar.module.css';
-import Button from '../Button/Button';
+
 import { strings } from '../../strings';
+
+import Button from '../Button/Button';
 import Input from '../Input/Input';
+
+import styles from './SearchBar.module.css';
 
 const SearchBar = ({ setSearchQuery, placeholder = 'Search...', disabled = false }) => {
   const [query, setQuery] = useState('');
