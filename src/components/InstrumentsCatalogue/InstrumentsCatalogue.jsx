@@ -32,7 +32,7 @@ const InstrumentsCatalogue = () => {
   const itemsPerPage = 4;
 
   const listOfFilters = ['brand', 'type', 'country'];
-  console.log(user, 'user');
+
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);

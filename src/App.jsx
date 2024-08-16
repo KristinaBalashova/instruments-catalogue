@@ -9,28 +9,42 @@ import Favorites from './components/Favorites/Favorites';
 import InstrumentPage from './components/InstrumentPage/InstrumentPage';
 import { UserContext, ThemeContext } from './context/context';
 import { useState, useEffect } from 'react';
-import { supabase } from './supabaseClient';
 import { strings } from './strings';
+import { supabase } from './supabaseClient';
 
 function App() {
-  const [user, setUser] = useState('reader');
+  const [user, setUser] = useState(null);
   const [theme, setTheme] = useState('light');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      try {
+        const {
+          data: { user: supabaseUser },
+          error: userError,
+        } = await supabase.auth.getUser();
 
-      if (user) {
-        let { data, error } = await supabase.from('users').select('role').eq('id', user.id);
+        if (userError) throw userError;
 
-        if (error) {
-          alert(strings.errors.fetchingError, error);
-        } else if (data && data.length > 0) {
-          const userRole = data[0].role;
-          setUser(userRole);
+        if (supabaseUser) {
+          const { data, error } = await supabase
+            .from('users')
+            .select('id, role')
+            .eq('id', supabaseUser.id)
+            .single();
+
+          if (error) throw error;
+
+          if (data) {
+            setUser({
+              id: supabaseUser.id,
+              role: data.role,
+            });
+          }
         }
+      } catch (error) {
+        setError(error.message);
       }
     };
 

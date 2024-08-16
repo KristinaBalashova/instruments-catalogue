@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
 import { UserContext } from '../../context/context';
 import Button from '../Button/Button';
@@ -26,9 +26,8 @@ const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [isSignUp, setIsSignUp] = useState(false);
-  const [session, setSession] = useState('');
 
   const validateForm = () => {
     const result = authSchema.safeParse({ email, password });
@@ -49,7 +48,7 @@ const AuthPage = () => {
     if (error) {
       setError(error.message);
     } else {
-      setError('');
+      setUser(data.user);
     }
   };
 
@@ -82,7 +81,7 @@ const AuthPage = () => {
   return (
     <div className={styles.root}>
       <div className={styles.container}>
-        {!session ? (
+        {!user && (
           <div className={styles.authForm}>
             <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className={styles.form}>
               <h2 className={styles.formTitle}>{strings.welcome}</h2>
@@ -111,6 +110,8 @@ const AuthPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 error={error}
+                placeholder="email"
+                autocomplete="email"
               />
               <Input
                 label={strings.password}
@@ -120,15 +121,17 @@ const AuthPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 error={error}
+                placeholder="password"
+                autocomplete="current-password"
               />
               <Button primary type="submit">
                 {isSignUp ? strings.signUp : strings.signIn}
               </Button>
+              {error && <p className={styles.error}>{error}</p>}
             </form>
           </div>
-        ) : (
-          <UserDashboard userEmail={session.user.email} handleSignOut={handleSignOut} />
         )}
+        {user && <UserDashboard user={user} handleSignOut={handleSignOut} />}
       </div>
     </div>
   );
