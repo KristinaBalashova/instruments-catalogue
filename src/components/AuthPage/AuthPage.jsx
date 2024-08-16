@@ -80,13 +80,12 @@ const AuthPage = () => {
       setPassword('');
     }
   };
-const handleResend = async () => {
-  const { error } = await supabase.auth.resend({
-    type: 'signup',
-    email: email,
-  })
-}
-  // Polling for confirmation status
+  const handleResend = async () => {
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email,
+    });
+  };
   useEffect(() => {
     if (confirmationCheck) {
       const interval = setInterval(async () => {
@@ -96,7 +95,7 @@ const handleResend = async () => {
           setUser(data.user);
           clearInterval(interval);
         }
-      }, 5000); // Poll every 5 seconds
+      }, 5000);
 
       return () => clearInterval(interval);
     }
@@ -155,21 +154,20 @@ const handleResend = async () => {
             </form>
           </div>
         )}
-        {confirmationCheck && !isConfirmed &&(
+        {confirmationCheck && !isConfirmed && (
           <div>
             <p>{`Check you email ${email}! If you didnt get a confirmation letter, click here to resend`}</p>
             <Button secondary onClick={handleResend}>
               {'Resend'}
             </Button>
             <Link to="/">
-            <Button sprimary onClick={handleResend}>
-              {'Return to the main page'}
-            </Button>
+              <Button sprimary onClick={handleResend}>
+                {'Return to the main page'}
+              </Button>
             </Link>
-           
           </div>
         )}
-        {isConfirmed || user && <UserDashboard user={user} handleSignOut={handleSignOut} />}
+        {isConfirmed || (user && <UserDashboard user={user} handleSignOut={handleSignOut} />)}
       </div>
     </div>
   );

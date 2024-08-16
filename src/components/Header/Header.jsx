@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import cx from 'classnames';
 import { strings } from '../../strings';
+
 const Header = () => {
   const { theme, setTheme } = useContext(ThemeContext);
 
