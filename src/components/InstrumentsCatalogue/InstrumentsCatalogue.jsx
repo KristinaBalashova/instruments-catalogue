@@ -86,7 +86,7 @@ const InstrumentsCatalogue = () => {
   return (
     <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
-        <SearchBar setSearchQuery={setSearchQuery} />
+        <SearchBar setSearchQuery={setSearchQuery} disabled={loading && true} />
         <div className={styles.itemsContainer}>
           <FiltersPanel dataFilters={dataFilters} />
           {loading && <Loader />}

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import styles from './SearchBar.module.css';
 import Button from '../Button/Button';
 import { strings } from '../../strings';
-const SearchBar = ({ setSearchQuery, placeholder = 'Search...' }) => {
+import Input from '../Input/Input';
+
+const SearchBar = ({ setSearchQuery, placeholder = 'Search...', disabled = false }) => {
   const [query, setQuery] = useState('');
 
   const handleInputChange = (event) => {
@@ -16,14 +18,14 @@ const SearchBar = ({ setSearchQuery, placeholder = 'Search...' }) => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <input
+      <Input
         type="text"
-        className={styles.input}
         placeholder={placeholder}
         value={query}
         onChange={handleInputChange}
+        disabled={disabled}
       />
-      <Button type="submit" children={strings.search} />
+      <Button type="submit" children={strings.search} disabled={disabled} />
     </form>
   );
 };

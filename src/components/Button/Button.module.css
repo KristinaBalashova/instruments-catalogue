@@ -7,7 +7,10 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 .button.primary {
   background-color: var(--primary-color);
   color: var(--secondary-color);
@@ -28,14 +31,6 @@
   color: var(--secondary-color);
 }
 
-.button.primary:disabled {
-  background-color: var(--lighter-teal);
-  border-color: var(--lighter-teal-border);
-  color: var(--lighter-text);
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
 .button.secondary {
   background-color: var(--accent-color);
   color: var(--secondary-color);
@@ -54,12 +49,4 @@
 .button.secondary:active {
   background-color: var(--darkest-gray);
   color: var(--secondary-color);
-}
-
-.button.secondary:disabled {
-  background-color: var(--lighter-gray);
-  border-color: var(--lighter-gray-border);
-  color: var(--lighter-text);
-  cursor: not-allowed;
-  box-shadow: none;
 }

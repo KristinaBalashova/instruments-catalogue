@@ -9,30 +9,3 @@
     flex-direction: row;
   }
 }
-
-.input {
-  background-color: var(--secondary-color);
-  color: var(--accent-color);
-  border: 2px solid var(--border-color);
-  padding: 10px;
-  font-size: 14px;
-  font-family: var(--font-family);
-  width: 100%;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
-  box-shadow: 3px 3px 0 var(--darkest-teal);
-}
-
-.input:hover {
-  border-color: var(--lighter-teal);
-}
-
-.input:focus {
-  background-color: var(--background-color);
-  border-color: var(--primary-color);
-}
-
-.input::placeholder {
-  color: var(--border-color);
-  opacity: 0.7;
-}
