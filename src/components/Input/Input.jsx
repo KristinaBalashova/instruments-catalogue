@@ -5,7 +5,7 @@ const Input = ({
   label = null,
   type,
   id = null,
-  value,
+  value = '',
   onChange,
   error,
   required = false,

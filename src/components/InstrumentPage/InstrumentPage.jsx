@@ -46,12 +46,16 @@ const InstrumentPage = ({ isEditable = false }) => {
 
   const handleSave = useCallback(async () => {
     if (errorUpload) {
-      alert(strings.uploadError, errorUpload);
+      alert(`${strings.uploadError}: ${errorUpload}`);
       return;
     }
 
     try {
-      const updatedItem = { ...editableItem, image: signedUrl };
+      // If signedUrl is not available, use the existing image URL from editableItem
+      const updatedItem = {
+        ...editableItem,
+        image: signedUrl || editableItem.image,
+      };
 
       const { error: updateError } = await supabase
         .from('instruments_collection')
@@ -64,9 +68,9 @@ const InstrumentPage = ({ isEditable = false }) => {
 
       alert(strings.status.saveSuccess);
     } catch (error) {
-      setError(`${strings.errors.updateError} ${error.message}`);
+      setError(`${strings.errors.updateError}: ${error.message}`);
     }
-  }, [editableItem, signedUrl, id]);
+  }, [editableItem, signedUrl, id, errorUpload]);
 
   const handleDelete = async () => {
     const successCallback = () => {
