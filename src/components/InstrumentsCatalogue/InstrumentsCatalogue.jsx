@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { supabase } from '../../supabaseClient';
 import { strings } from '../../strings';
-import { ThemeContext, UserContext } from '../../context/context';
+import { ThemeContext } from '../../context/context';
 
 import { getFiltersFromSearchParams } from '../../assets/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
@@ -22,7 +22,6 @@ const InstrumentsCatalogue = () => {
   const [searchParams] = useSearchParams();
 
   const { theme } = useContext(ThemeContext);
-  const { user } = useContext(UserContext);
 
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
 
@@ -106,7 +105,6 @@ const InstrumentsCatalogue = () => {
             deleteItem={deleteItem}
             statusDelete={statusDelete}
             errorDelete={errorDelete}
-            isAdmin={user?.role === 'admin'}
             onDeleteSuccess={handleDeleteSuccess}
           />
           <PaginationButtons

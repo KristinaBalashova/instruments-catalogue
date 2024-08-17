@@ -2,14 +2,7 @@ import React from 'react';
 import InstrumentCard from '../InstrumentCard/InstrumentCard';
 import styles from './InstrumentsList.module.css';
 
-const InstrumentsList = ({
-  data,
-  deleteItem,
-  statusDelete,
-  errorDelete,
-  isAdmin,
-  onDeleteSuccess,
-}) => {
+const InstrumentsList = ({ data, deleteItem, statusDelete, errorDelete, onDeleteSuccess }) => {
   return (
     <div className={styles.cards}>
       {data.map((item) => (
@@ -21,7 +14,6 @@ const InstrumentsList = ({
           }
           statusDelete={statusDelete}
           errorDelete={errorDelete}
-          isAdmin={isAdmin}
         />
       ))}
     </div>
