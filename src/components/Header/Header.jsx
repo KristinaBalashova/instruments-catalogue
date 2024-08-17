@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
+import { FaStar } from 'react-icons/fa';
 
 import { strings } from '../../strings';
 import { ThemeContext } from '../../context/context';
@@ -25,9 +26,9 @@ const Header = () => {
             <Button children={strings.signIn} />
           </Link>
 
-          {/* <Link to="/favorites">
-            <img src="/heart.svg" className={styles.heart} alt="favorite-heart" />
-          </Link>*/}
+          <Link to="/favorites">
+            <FaStar className={styles.filled} />
+          </Link>
 
           <span onClick={() => setTheme('light')} className={styles.toggle}>
             light

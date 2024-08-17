@@ -35,15 +35,8 @@
   cursor: pointer;
 }
 
-/* Keyframes for jumping animation */
-@keyframes jump {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px); /* Jump height */
-  }
-  100% {
-    transform: translateY(0);
-  }
+.filled {
+  color: #d4af37;
+  cursor: pointer;
+  font-size: 30px;
 }

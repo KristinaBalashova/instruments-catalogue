@@ -1,4 +1,4 @@
-.cardContainer {
+.container {
   background-color: var(--secondary-color);
   border: 2px solid var(--border-color);
   box-shadow: 5px 5px 0 var(--darkest-teal);
@@ -27,7 +27,8 @@
 
 .buttons {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 
 .content {
@@ -44,4 +45,16 @@
 
 .link {
   text-decoration: none;
+}
+
+.filled {
+  color: #d4af37;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.unfilled {
+  color: gray;
+  cursor: pointer;
+  font-size: 30px;
 }
