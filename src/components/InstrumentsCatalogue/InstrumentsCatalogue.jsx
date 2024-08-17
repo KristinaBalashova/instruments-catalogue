@@ -10,11 +10,11 @@ import useDeleteItem from '../../hooks/useDeleteItem';
 
 import cx from 'classnames';
 
-import InstrumentCard from '../InstrumentCard/InstrumentCard';
 import FiltersPanel from '../FilterPanel/FilterPanel';
 import PaginationButtons from '../PaginationButtons/PaginationButtons';
 import SearchBar from '../SearchBar/SearchBar';
 import Loader from '../Loader/Loader';
+import InstrumentsList from '../InstrumentsList/InstrumentsList';
 
 import styles from './InstrumentsCatalogue.module.css';
 
@@ -97,33 +97,25 @@ const InstrumentsCatalogue = () => {
     <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
         <SearchBar setSearchQuery={setSearchQuery} disabled={loading && true} />
-        <div className={styles.itemsContainer}>
+        <div className={styles.dataContainer}>
           <FiltersPanel dataFilters={dataFilters} />
           {loading && <Loader />}
           {!loading && totalItems === 0 && <div>{strings.nothingFound}</div>}
-          <div className={styles.cardsContainer}>
-            <div className={styles.cards}>
-              {data.map((item) => (
-                <InstrumentCard
-                  key={item.id}
-                  instrumentData={item}
-                  onDelete={() =>
-                    deleteItem('instruments_collection', item.id, handleDeleteSuccess)
-                  }
-                  statusDelete={statusDelete}
-                  errorDelete={errorDelete}
-                  isAdmin={user?.role === 'admin' ? true : false}
-                />
-              ))}
-            </div>
-            <PaginationButtons
-              currentPage={currentPage}
-              totalItems={totalItems}
-              itemsPerPage={itemsPerPage}
-              setCurrentPage={setCurrentPage}
-              isVisible={totalItems > itemsPerPage}
-            />
-          </div>
+          <InstrumentsList
+            data={data}
+            deleteItem={deleteItem}
+            statusDelete={statusDelete}
+            errorDelete={errorDelete}
+            isAdmin={user?.role === 'admin'}
+            onDeleteSuccess={handleDeleteSuccess}
+          />
+          <PaginationButtons
+            currentPage={currentPage}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            setCurrentPage={setCurrentPage}
+            isVisible={totalItems > itemsPerPage}
+          />
         </div>
       </div>
     </section>

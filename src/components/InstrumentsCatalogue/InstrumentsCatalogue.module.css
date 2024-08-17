@@ -12,42 +12,6 @@
   gap: 30px;
 }
 
-.cardsContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-
-  @media (min-width: 744px) {
-    align-items: flex-end;
-  }
-}
-
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  @media (min-width: 744px) {
-    flex-direction: row;
-  }
-}
-
-.searchContainer {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 10px;
-
-  @media (min-width: 744px) {
-    gap: 20px;
-    width: 50%;
-    flex-direction: row;
-  }
-}
-
 .description {
   width: 250px;
   white-space: nowrap;
@@ -55,7 +19,7 @@
   text-overflow: ellipsis;
 }
 
-.itemsContainer {
+.dataContainer {
   display: flex;
   flex-direction: column;
   gap: 30px;
