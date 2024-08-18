@@ -44,11 +44,7 @@ const EditorButtons = ({ id, onDelete, statusDelete, errorDelete }) => {
               <Button onClick={() => setIsModalOpen(false)}>{strings.cancelDelete}</Button>
             </div>
           )}
-          {errorDelete && (
-            <div className={styles.error}>
-              {strings.errorDelete} {errorFetch}
-            </div>
-          )}
+          {errorDelete && <div className={styles.error}>{strings.errorDelete}</div>}
         </Modal>
       )}
     </>
