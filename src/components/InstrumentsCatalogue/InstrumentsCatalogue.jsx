@@ -46,7 +46,7 @@ const InstrumentsCatalogue = () => {
       const { data, error } = await supabase
         .from('instruments_collection')
         .select('name, image, id');
-  
+
       if (error) {
         console.error(strings.errors.fethingData, error);
       } else {
@@ -58,36 +58,36 @@ const InstrumentsCatalogue = () => {
       }
       setLoading(false);
     };
-  
+
     fetchAllData();
   }, []);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-  
+
       let query = supabase
         .from('instruments_collection')
         .select('name, image, id', { count: 'exact' });
-  
+
       if (brand !== '*') query = query.ilike('brand', brand);
       if (type !== '*') query = query.ilike('type', type);
       if (country !== '*') query = query.ilike('country', country);
-  
+
       const { data, error, count } = await query
         .ilike('name', `%${searchQuery}%`)
         .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
-  
+
       if (error) {
         console.error(strings.errors.fethingData, error);
       } else {
         setData(data);
         setTotalItems(count);
       }
-  
+
       setLoading(false);
     };
-  
+
     fetchData();
   }, [currentPage, searchQuery, brand, type, country]);
 

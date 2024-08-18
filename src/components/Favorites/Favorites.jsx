@@ -24,7 +24,7 @@ const Favorites = () => {
           .eq('user_id', user?.id);
 
         if (favError) {
-          console.error(strings.errors.fethingData, favError);
+          console.log(favError);
           setLoading(false);
           return;
         }
@@ -38,7 +38,7 @@ const Favorites = () => {
             .in('id', itemIds);
 
           if (itemsError) {
-            console.error(strings.errors.fethingData, itemsError);
+            console.error(itemsError);
           } else {
             setData(items);
           }
@@ -57,7 +57,6 @@ const Favorites = () => {
 
   const handleDeleteSuccess = useCallback((deletedId) => {
     setData((prevData) => prevData.filter((item) => item.id !== deletedId));
-    setTotalItems((prevTotal) => prevTotal - 1);
   }, []);
 
   return (
