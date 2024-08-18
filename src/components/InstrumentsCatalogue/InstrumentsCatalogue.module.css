@@ -23,10 +23,24 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  align-items: center;
+  width: 100%;
 
   @media (min-width: 744px) {
+    align-items: flex-start;
     flex-direction: row;
   }
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 744px) {
+    align-items: flex-end;
+  }
+  
 }
 
 .root.darkTheme {

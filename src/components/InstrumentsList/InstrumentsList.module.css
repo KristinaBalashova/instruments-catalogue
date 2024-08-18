@@ -3,7 +3,6 @@
   flex-wrap: wrap;
   flex-direction: column;
   gap: 10px;
-  justify-content: space-between;
   margin-bottom: 20px;
 
   @media (min-width: 744px) {

@@ -1,11 +1,11 @@
 .root {
   font-size: 14px;
+  padding: 25px;
 }
 
 .container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 25px;
   width: 100%;
   gap: 30px;
   display: flex;

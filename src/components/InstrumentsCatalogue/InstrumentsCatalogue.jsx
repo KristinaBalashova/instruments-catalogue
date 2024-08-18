@@ -36,15 +36,17 @@ const InstrumentsCatalogue = () => {
 
   const { brand = '*', type = '*', country = '*' } = filtersObject;
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
 
   const listOfFilters = ['brand', 'type', 'country'];
 
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
-      const { data, error } = await supabase.from('instruments_collection').select('*');
-
+      const { data, error } = await supabase
+        .from('instruments_collection')
+        .select('name, image, id');
+  
       if (error) {
         console.error(strings.errors.fethingData, error);
       } else {
@@ -56,34 +58,36 @@ const InstrumentsCatalogue = () => {
       }
       setLoading(false);
     };
-
+  
     fetchAllData();
   }, []);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-
-      let query = supabase.from('instruments_collection').select('*', { count: 'exact' });
-
+  
+      let query = supabase
+        .from('instruments_collection')
+        .select('name, image, id', { count: 'exact' });
+  
       if (brand !== '*') query = query.ilike('brand', brand);
       if (type !== '*') query = query.ilike('type', type);
       if (country !== '*') query = query.ilike('country', country);
-
+  
       const { data, error, count } = await query
         .ilike('name', `%${searchQuery}%`)
         .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
-
+  
       if (error) {
         console.error(strings.errors.fethingData, error);
       } else {
         setData(data);
         setTotalItems(count);
       }
-
+  
       setLoading(false);
     };
-
+  
     fetchData();
   }, [currentPage, searchQuery, brand, type, country]);
 
@@ -100,20 +104,22 @@ const InstrumentsCatalogue = () => {
           <FiltersPanel dataFilters={dataFilters} />
           {loading && <Loader />}
           {!loading && totalItems === 0 && <div>{strings.nothingFound}</div>}
-          <InstrumentsList
-            data={data}
-            deleteItem={deleteItem}
-            statusDelete={statusDelete}
-            errorDelete={errorDelete}
-            onDeleteSuccess={handleDeleteSuccess}
-          />
-          <PaginationButtons
-            currentPage={currentPage}
-            totalItems={totalItems}
-            itemsPerPage={itemsPerPage}
-            setCurrentPage={setCurrentPage}
-            isVisible={totalItems > itemsPerPage}
-          />
+          <div className={styles.cardsContainer}>
+            <InstrumentsList
+              data={data}
+              deleteItem={deleteItem}
+              statusDelete={statusDelete}
+              errorDelete={errorDelete}
+              onDeleteSuccess={handleDeleteSuccess}
+            />
+            <PaginationButtons
+              currentPage={currentPage}
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              setCurrentPage={setCurrentPage}
+              isVisible={totalItems > itemsPerPage}
+            />
+          </div>
         </div>
       </div>
     </section>
