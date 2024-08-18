@@ -29,6 +29,11 @@
 
 .toggle {
   cursor: pointer;
+  font-size: 40px;
+}
+
+.toggleDark {
+  color: white;
 }
 
 .filled {

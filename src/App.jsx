@@ -13,8 +13,6 @@ import AuthPage from './components/AuthPage/AuthPage';
 import Favorites from './components/Favorites/Favorites';
 import InstrumentPage from './components/InstrumentPage/InstrumentPage';
 
-import './App.module.css';
-
 function App() {
   const [user, setUser] = useState(null);
   const [theme, setTheme] = useState('light');

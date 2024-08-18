@@ -43,9 +43,7 @@ const InstrumentsCatalogue = () => {
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('instruments_collection')
-        .select('name, image, id');
+      const { data, error } = await supabase.from('instruments_collection').select('*');
 
       if (error) {
         console.error(strings.errors.fethingData, error);

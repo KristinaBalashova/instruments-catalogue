@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { FaStar } from 'react-icons/fa';
+import { BsToggleOff } from 'react-icons/bs';
+import { BsToggleOn } from 'react-icons/bs';
 
 import { strings } from '../../strings';
 import { ThemeContext } from '../../context/context';
@@ -30,12 +32,11 @@ const Header = () => {
             <FaStar className={styles.filled} />
           </Link>
 
-          <span onClick={() => setTheme('light')} className={styles.toggle}>
-            light
-          </span>
-          <span onClick={() => setTheme('dark')} className={styles.toggle}>
-            dark
-          </span>
+          {theme === 'light' ? (
+            <BsToggleOff onClick={() => setTheme('light')} className={styles.toggle} />
+          ) : (
+            <BsToggleOn onClick={() => setTheme('dark')} className={styles.toggleDark} />
+          )}
         </div>
       </div>
     </section>
