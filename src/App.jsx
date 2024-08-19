@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { strings } from './strings';
 import { supabase } from './helpers/supabaseClient';
@@ -53,22 +54,24 @@ function App() {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      <UserContext.Provider value={{ user, setUser }}>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/instrument-editor/:id" element={<InstrumentPage isEditable={true} />} />
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/instrument-creator" element={<InstrumentCreator />} />
-            <Route path="/instrument-page/:id" element={<InstrumentPage isEditable={false} />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </UserContext.Provider>
-    </ThemeContext.Provider>
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <ThemeContext.Provider value={{ theme, setTheme }}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/instrument-editor/:id" element={<InstrumentPage isEditable={true} />} />
+              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/instrument-creator" element={<InstrumentCreator />} />
+              <Route path="/instrument-page/:id" element={<InstrumentPage isEditable={false} />} />
+            </Routes>
+            <Footer />
+          </Router>
+        </UserContext.Provider>
+      </ThemeContext.Provider>
+    </ErrorBoundary>
   );
 }
 
