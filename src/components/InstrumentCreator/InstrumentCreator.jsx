@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../helpers/supabaseClient';
 import { strings } from '../../strings';
 
 import useUploadImage from '../../hooks/useUploadImage';

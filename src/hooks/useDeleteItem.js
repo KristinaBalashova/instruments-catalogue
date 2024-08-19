@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../helpers/supabaseClient';
 
 const useDeleteItem = () => {
   const [statusDelete, setStatusDelete] = useState(null);

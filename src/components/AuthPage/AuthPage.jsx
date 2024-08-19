@@ -2,21 +2,16 @@ import React, { useState, useContext, useEffect } from 'react';
 import { z } from 'zod';
 import { Link } from 'react-router-dom';
 
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../helpers/supabaseClient';
 import { strings } from '../../strings';
 import { UserContext } from '../../context/context';
+import { isValidDomain } from '../../helpers/isValidDomain';
 
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 
-import UserDashboard from './UserDashboard';
+import UserDashboard from '../UserDashboard/UserDashboard';
 import styles from './AuthPage.module.css';
-
-const isValidDomain = (email) => {
-  const domainPattern = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const domain = email.split('@')[1];
-  return domainPattern.test(domain);
-};
 
 const authSchema = z.object({
   email: z

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../helpers/supabaseClient';
 import { strings } from '../../strings';
 import { UserContext } from '../../context/context';
 

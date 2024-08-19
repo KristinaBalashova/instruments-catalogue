@@ -2,7 +2,7 @@ import styles from './UserDashboard.module.css';
 import { strings } from '../../strings';
 import Button from '../Button/Button';
 import { useState, useEffect } from 'react';
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../helpers/supabaseClient';
 const UserDashboard = ({ handleSignOut }) => {
   const [email, setEmail] = useState(null);
 

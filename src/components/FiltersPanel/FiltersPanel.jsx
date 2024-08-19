@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 
 import styles from './FiltersPanel.module.css';
 
-const FiltersPanel = ({ dataFilters }) => {
+const FiltersPanel = ({ data }) => {
   const location = useLocation();
   const navigateTo = useNavigate();
 
@@ -28,7 +28,7 @@ const FiltersPanel = ({ dataFilters }) => {
 
   const handleFilterClear = () => {
     const searchParams = new URLSearchParams(location.search);
-    Object.keys(dataFilters).forEach((filter) => {
+    Object.keys(data).forEach((filter) => {
       searchParams.delete(filter);
     });
     searchParams.set('page', 0);
@@ -37,7 +37,7 @@ const FiltersPanel = ({ dataFilters }) => {
 
   return (
     <div className={styles.filterContainer}>
-      {Object.keys(dataFilters).map((filter) => (
+      {Object.keys(data).map((filter) => (
         <form key={filter} className={styles.form}>
           <label className={styles.label}>{filter}</label>
           <select
@@ -48,8 +48,8 @@ const FiltersPanel = ({ dataFilters }) => {
             value={new URLSearchParams(location.search).get(filter) || '*'}
           >
             <option value={'*'}>{strings.all}</option>
-            {dataFilters[filter] &&
-              dataFilters[filter].map((item) => (
+            {data[filter] &&
+              data[filter].map((item) => (
                 <option value={item} key={item}>
                   {item}
                 </option>

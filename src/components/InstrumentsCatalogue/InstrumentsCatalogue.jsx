@@ -1,16 +1,16 @@
 import { useEffect, useState, useContext, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../helpers/supabaseClient';
 import { strings } from '../../strings';
 import { ThemeContext } from '../../context/context';
 
-import { getFiltersFromSearchParams } from '../../assets/getFiltersFromSearchParams';
+import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
 
 import cx from 'classnames';
 
-import FiltersPanel from '../FilterPanel/FilterPanel';
+import FiltersPanel from '../FiltersPanel/FiltersPanel';
 import PaginationButtons from '../PaginationButtons/PaginationButtons';
 import SearchBar from '../SearchBar/SearchBar';
 import Loader from '../Loader/Loader';
@@ -99,7 +99,7 @@ const InstrumentsCatalogue = () => {
       <div className={styles.container}>
         <SearchBar setSearchQuery={setSearchQuery} disabled={loading && true} />
         <div className={styles.dataContainer}>
-          <FiltersPanel dataFilters={dataFilters} />
+          <FiltersPanel data={dataFilters} />
           {loading && <Loader />}
           {!loading && totalItems === 0 && <div>{strings.nothingFound}</div>}
           <div className={styles.cardsContainer}>

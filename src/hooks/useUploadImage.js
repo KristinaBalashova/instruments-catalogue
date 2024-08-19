@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../helpers/supabaseClient';
 
 const useUploadImage = (image, storageBucket) => {
   const [signedUrl, setSignedUrl] = useState(null);

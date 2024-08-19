@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { strings } from './strings';
-import { supabase } from './supabaseClient';
+import { supabase } from './helpers/supabaseClient';
 import { UserContext, ThemeContext } from './context/context';
 
 import MainPage from './components/MainPage/MainPage';
