@@ -1,13 +1,20 @@
-.container {
-  border-radius: 50%;
-  color: white;
-}
-.success {
-  background-color: rgba(168, 236, 122, 0.538);
+
+.info {
+  border: 1px solid #d2d2d2;
+  color: #9c9999;
+  border-radius: 8px;
   padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.success {
+  border-color: #bfd99f;
+  color: #598129;
 }
 
 .fail {
-  background-color: rgba(255, 99, 71, 0.4);
-  padding: 10px;
+  border-color: #dd2c00;
+  color: #ad2401;
 }

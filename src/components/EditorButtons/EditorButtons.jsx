@@ -5,7 +5,7 @@ import { strings } from '../../strings';
 
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
-import { StatusInfo } from '../StatusInfo/StatusInfo';
+import StatusInfo from '../StatusInfo/StatusInfo';
 
 import styles from './EditorButtons.module.css';
 const EditorButtons = ({ id, onDelete, statusDelete, errorDelete }) => {

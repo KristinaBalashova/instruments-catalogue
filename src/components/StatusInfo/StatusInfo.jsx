@@ -1,18 +1,24 @@
-import { Link } from 'react-router-dom';
-import { strings } from '../../strings';
-import styles from './StatusInfo.module.css';
 
-export const StatusInfo = ({ children, status }) => {
+import { RxCross2 } from "react-icons/rx";
+import { FcCheckmark } from "react-icons/fc";
+
+import styles from './StatusInfo.module.css';
+import cx from 'classnames';
+
+const StatusInfo = ({ children, status='info', mainPageLink=false, ...props }) => {
   return (
-    <div className={styles.container}>
-      {status === 'success' ? (
-        <div className={styles.success}>{children}</div>
-      ) : (
-        <div className={styles.fail}>
-          {children}
-          <Link to="/">{strings.return}</Link>
-        </div>
+    <div
+      className={cx(
+        styles.info,
+        status === 'success' && styles.success,
+        status === 'fail' && styles.fail
       )}
+      aria-live="polite"
+      {...props}
+    >
+        {status === 'success' && <FcCheckmark />}
+        {status === 'fail' && <RxCross2 className={styles.failIcon} />}
+        {children}
     </div>
   );
 };
