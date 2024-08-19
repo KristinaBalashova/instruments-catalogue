@@ -2,8 +2,7 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { FaStar } from 'react-icons/fa';
-import { BsToggleOff } from 'react-icons/bs';
-import { BsToggleOn } from 'react-icons/bs';
+import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
 import { strings } from '../../strings';
 import { ThemeContext } from '../../context/context';
@@ -16,6 +15,10 @@ import styles from './Header.module.css';
 const Header = () => {
   const { theme, setTheme } = useContext(ThemeContext);
 
+  const handleToggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
   return (
     <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
@@ -25,7 +28,7 @@ const Header = () => {
 
         <div className={styles.right}>
           <Link to="/auth">
-            <Button children={strings.signIn} />
+            <Button>{strings.signIn}</Button>
           </Link>
 
           <Link to="/favorites">
@@ -33,9 +36,17 @@ const Header = () => {
           </Link>
 
           {theme === 'light' ? (
-            <BsToggleOff onClick={() => setTheme('light')} className={styles.toggle} />
+            <BsToggleOff
+              onClick={handleToggleTheme}
+              className={styles.toggle}
+              aria-label="Switch to dark mode"
+            />
           ) : (
-            <BsToggleOn onClick={() => setTheme('dark')} className={styles.toggleDark} />
+            <BsToggleOn
+              onClick={handleToggleTheme}
+              className={styles.toggleDark}
+              aria-label="Switch to light mode"
+            />
           )}
         </div>
       </div>
