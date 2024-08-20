@@ -51,7 +51,6 @@ const InstrumentPage = ({ isEditable = false }) => {
     }
 
     try {
-      // If signedUrl is not available, use the existing image URL from editableItem
       const updatedItem = {
         ...editableItem,
         image: signedUrl || editableItem.image,
