@@ -57,7 +57,7 @@ function App() {
     <ErrorBoundary fallback={<div>Something went wrong</div>}>
       <ThemeContext.Provider value={{ theme, setTheme }}>
         <UserContext.Provider value={{ user, setUser }}>
-          <Router basename='/instruments-catalogue'>
+          <Router basename='/instruments-catalogue/'>
             <Header />
             <Routes>
               <Route path="/" element={<MainPage />} />
