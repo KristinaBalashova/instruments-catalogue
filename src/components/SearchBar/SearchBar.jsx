@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { RxCross2 } from 'react-icons/rx';
 import { strings } from '../../strings';
 
 import Button from '../Button/Button';
@@ -19,16 +19,28 @@ const SearchBar = ({ setSearchQuery, placeholder = 'Search...', disabled = false
     setSearchQuery(query);
   };
 
+  const handleClear = () => {
+    setQuery('');
+    setSearchQuery('');
+  };
+
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <Input
-        type="text"
-        placeholder={placeholder}
-        value={query}
-        onChange={handleInputChange}
-        disabled={disabled}
-      />
-      <Button type="submit" children={strings.search} disabled={disabled} />
+      <div className={styles.inputWrapper}>
+        <Input
+          type="text"
+          placeholder={placeholder}
+          value={query}
+          onChange={handleInputChange}
+          disabled={disabled}
+        />
+        {query && (
+          <RxCross2 className={styles.clearIcon} onClick={handleClear} aria-label="Clear search" />
+        )}
+      </div>
+      <Button type="submit" disabled={disabled}>
+        {strings.search}
+      </Button>
     </form>
   );
 };
