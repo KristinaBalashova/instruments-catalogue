@@ -9,11 +9,11 @@ import useFetchItem from '../../hooks/useFetchItem';
 import useUploadImage from '../../hooks/useUploadImage';
 import useDeleteItem from '../../hooks/useDeleteItem';
 
-import Button from '../Button/Button';
-import ImageDownloader from '../ImageDownloader/ImageDownloader';
-import EditorButtons from '../EditorButtons/EditorButtons';
-import StatusInfo from '../StatusInfo/StatusInfo';
-import Loader from '../Loader/Loader';
+import Button from '../../components/Button/Button';
+import ImageDownloader from '../../components/ImageDownloader/ImageDownloader';
+import EditorButtons from '../../components/EditorButtons/EditorButtons';
+import StatusInfo from '../../components/StatusInfo/StatusInfo';
+import Loader from '../../components/Loader/Loader';
 
 import styles from './InstrumentPage.module.css';
 

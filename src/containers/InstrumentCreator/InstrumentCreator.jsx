@@ -5,8 +5,8 @@ import { strings } from '../../strings';
 
 import useUploadImage from '../../hooks/useUploadImage';
 
-import Button from '../Button/Button';
-import ImageDownloader from '../ImageDownloader/ImageDownloader';
+import Button from '../../components/Button/Button';
+import ImageDownloader from '../../components/ImageDownloader/ImageDownloader';
 
 import styles from './InstrumentCreator.module.css';
 

@@ -9,10 +9,10 @@ import { UserContext, ThemeContext } from './context/context';
 import MainPage from './components/MainPage/MainPage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import InstrumentCreator from './components/InstrumentCreator/InstrumentCreator';
-import AuthPage from './components/AuthPage/AuthPage';
-import Favorites from './components/Favorites/Favorites';
-import InstrumentPage from './components/InstrumentPage/InstrumentPage';
+import InstrumentCreator from './containers/InstrumentCreator/InstrumentCreator';
+import AuthPage from './containers/AuthPage/AuthPage';
+import Favorites from './containers/Favorites/Favorites';
+import InstrumentPage from './containers/InstrumentPage/InstrumentPage';
 
 function App() {
   const [user, setUser] = useState(null);

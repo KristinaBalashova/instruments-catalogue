@@ -5,7 +5,7 @@ import { strings } from '../../strings';
 import { ThemeContext, UserContext } from '../../context/context';
 
 import Button from '../Button/Button';
-import InstrumentsCatalogue from '../InstrumentsCatalogue/InstrumentsCatalogue';
+import InstrumentsCatalogue from '../../containers/InstrumentsCatalogue/InstrumentsCatalogue';
 
 import cx from 'classnames';
 

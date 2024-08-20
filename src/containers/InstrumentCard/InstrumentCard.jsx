@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import { supabase } from '../../helpers/supabaseClient';
 import { UserContext } from '../../context/context';
-import EditorButtons from '../EditorButtons/EditorButtons';
+import EditorButtons from '../../components/EditorButtons/EditorButtons';
 
 import styles from './InstrumentCard.module.css';
 

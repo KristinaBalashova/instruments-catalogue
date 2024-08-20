@@ -1,9 +1,9 @@
-import InstrumentsList from '../InstrumentsList/InstrumentsList';
+import InstrumentsList from '../../components/InstrumentsList/InstrumentsList';
 import styles from './Favorites.module.css';
 import useDeleteItem from '../../hooks/useDeleteItem';
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
-import Loader from '../Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 import { UserContext } from '../../context/context';
 import { strings } from '../../strings';
 
