@@ -1,17 +1,22 @@
 import InstrumentsList from '../../components/InstrumentsList/InstrumentsList';
 import styles from './Favorites.module.css';
+import { Link } from 'react-router-dom';
 import useDeleteItem from '../../hooks/useDeleteItem';
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
 import Loader from '../../components/Loader/Loader';
+import Button from '../../components/Button/Button';
+
 import { UserContext } from '../../context/context';
 import { strings } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 
 const Favorites = () => {
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -46,7 +51,7 @@ const Favorites = () => {
           setData([]);
         }
       } catch (error) {
-        console.error(strings.errors.fethingData, error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -61,15 +66,27 @@ const Favorites = () => {
 
   return (
     <section className={styles.root}>
-      <h2>Your favorite instruments are here!</h2>
-      {loading && <Loader />}
-      <InstrumentsList
-        data={data}
-        deleteItem={deleteItem}
-        statusDelete={statusDelete}
-        errorDelete={errorDelete}
-        onDeleteSuccess={handleDeleteSuccess}
-      />
+      {!user && (
+        <div className={styles.container}>
+          {USER_MESSAGES.NOT_AUTH}
+          <Link to="/auth">
+            <Button>{USER_MESSAGES.SIGN_IN}</Button>
+          </Link>
+        </div>
+      )}
+      {user && (
+        <div className={styles.container}>
+          <h2>{USER_MESSAGES.FAVS}</h2>
+          {loading && <Loader />}
+          <InstrumentsList
+            data={data}
+            deleteItem={deleteItem}
+            statusDelete={statusDelete}
+            errorDelete={errorDelete}
+            onDeleteSuccess={handleDeleteSuccess}
+          />
+        </div>
+      )}
     </section>
   );
 };

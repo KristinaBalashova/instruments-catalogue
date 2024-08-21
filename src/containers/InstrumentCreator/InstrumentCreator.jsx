@@ -48,10 +48,7 @@ const InstrumentCreator = () => {
 
     setLoading(true); // Start loading
 
-    const { error } = await supabase
-      .from('instruments_collection')
-      .insert(newInstrument)
-      .select();
+    const { error } = await supabase.from('instruments_collection').insert(newInstrument).select();
 
     if (error) {
       setError(error.message);
@@ -74,9 +71,7 @@ const InstrumentCreator = () => {
               if (item === 'image') return null;
               return (
                 <div key={item}>
-                  <label htmlFor={item}>
-                    {USER_MESSAGES[item.toUpperCase()] || item}:
-                  </label>
+                  <label htmlFor={item}>{USER_MESSAGES[item.toUpperCase()] || item}:</label>
                   <input
                     id={item}
                     type="text"
@@ -93,7 +88,9 @@ const InstrumentCreator = () => {
               {loading ? 'Saving...' : USER_MESSAGES.SAVE}
             </Button>
           </form>
-          {isSuccess && <StatusInfo status="success">{USER_MESSAGES.STATUS.SAVE_SUCCESS}</StatusInfo>}
+          {isSuccess && (
+            <StatusInfo status="success">{USER_MESSAGES.STATUS.SAVE_SUCCESS}</StatusInfo>
+          )}
           {error && <StatusInfo status="fail">{error}</StatusInfo>}
         </div>
         <div className={styles.imageContainer}>
