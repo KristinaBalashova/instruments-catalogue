@@ -11,22 +11,26 @@
   width: 100%;
   gap: 30px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
   background-color: var(--secondary-color);
   border: 2px solid var(--border-color);
   box-shadow: 5px 5px 0 var(--darkest-teal);
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
 }
 
 .imageContainer {
   border: 1px solid black;
-  width: 50%;
   padding: 20px;
   margin: 20px 0;
   background-color: var(--secondary-color);
   border: 2px solid var(--border-color);
   box-shadow: 5px 5px 0 var(--darkest-teal);
-  @media (min-width: 744px) {
+  @media (min-width: 1024px) {
+    width: 50%;
     min-height: 480px;
   }
 }
