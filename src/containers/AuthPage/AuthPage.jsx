@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 
 import { supabase } from '../../helpers/supabaseClient';
 import { strings } from '../../strings';
-import { UserContext } from '../../context/context';
+import { ThemeContext, UserContext } from '../../context/context';
 import { isValidDomain } from '../../helpers/isValidDomain';
 
-import { Button, Input, UserDashboard } from '../../components';
+import { Button, UserDashboard, SignForm } from '../../components';
 
 import styles from './AuthPage.module.css';
+import cx from 'classnames';
 
 const authSchema = z.object({
   email: z
@@ -21,12 +22,10 @@ const authSchema = z.object({
 
 const AuthPage = () => {
   const { user, setUser } = useContext(UserContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [isSignUp, setIsSignUp] = useState(false);
   const [confirmationCheck, setConfirmationCheck] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (confirmationCheck) {
@@ -43,7 +42,7 @@ const AuthPage = () => {
     }
   }, [confirmationCheck, setUser]);
 
-  const validateForm = () => {
+  const validateForm = (email, password) => {
     const result = authSchema.safeParse({ email, password });
     if (!result.success) {
       setError(result.error.errors.map((err) => err.message).join(', '));
@@ -53,9 +52,9 @@ const AuthPage = () => {
     return true;
   };
 
-  const handleSignIn = async (e) => {
+  const handleSignIn = async (e, email, password) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    if (!validateForm(email, password)) return;
 
     const { error, data } = await supabase.auth.signInWithPassword({ email, password });
 
@@ -66,9 +65,9 @@ const AuthPage = () => {
     }
   };
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = async (e, email, password) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    if (!validateForm(email, password)) return;
 
     const { error, data } = await supabase.auth.signUp({ email, password });
 
@@ -77,7 +76,6 @@ const AuthPage = () => {
     } else {
       setConfirmationCheck(true);
       setError('');
-      setIsSignUp(false);
     }
   };
 
@@ -87,8 +85,6 @@ const AuthPage = () => {
       setError(error.message);
     } else {
       setUser(null);
-      setEmail('');
-      setPassword('');
     }
   };
 
@@ -103,57 +99,10 @@ const AuthPage = () => {
   };
 
   return (
-    <div className={styles.root}>
+    <div className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
         {!user && !confirmationCheck && (
-          <div className={styles.authForm}>
-            <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className={styles.form}>
-              <h2 className={styles.formTitle}>{strings.welcome}</h2>
-              <div className={styles.formContainer}>
-                {isSignUp ? (
-                  <p>
-                    {strings.doHaveAccount}{' '}
-                    <span onClick={() => setIsSignUp(false)} className={styles.link}>
-                      {strings.signIn}
-                    </span>
-                  </p>
-                ) : (
-                  <p>
-                    {strings.notHaveAccount}{' '}
-                    <span onClick={() => setIsSignUp(true)} className={styles.link}>
-                      {strings.signUp}
-                    </span>
-                  </p>
-                )}
-              </div>
-              <Input
-                label={strings.email}
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                error={error}
-                placeholder="email"
-                autocomplete="email"
-              />
-              <Input
-                label={strings.password}
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                error={error}
-                placeholder="password"
-                autocomplete="current-password"
-              />
-              <Button primary type="submit">
-                {isSignUp ? strings.signUp : strings.signIn}
-              </Button>
-              {error && <p className={styles.error}>{error}</p>}
-            </form>
-          </div>
+          <SignForm handleSignIn={handleSignIn} handleSignUp={handleSignUp} error={error} />
         )}
         {confirmationCheck && !isConfirmed && (
           <div>

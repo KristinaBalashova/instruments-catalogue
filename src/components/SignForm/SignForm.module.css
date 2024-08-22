@@ -1,0 +1,26 @@
+.authForm {
+  background-color: var(--secondary-color);
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formTitle {
+}
+
+.formContainer {
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
