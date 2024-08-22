@@ -8,7 +8,7 @@ import { Modal, Button, StatusInfo } from '../';
 
 import styles from './EditorButtons.module.css';
 
-const EditorButtons = ({ id, onDelete, statusDelete, errorDelete }) => {
+const EditorButtons = ({ id, onDelete, errorDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleConfirmDelete = async () => {
@@ -31,15 +31,11 @@ const EditorButtons = ({ id, onDelete, statusDelete, errorDelete }) => {
           header={strings.confirmDelete}
           appElement={document.getElementById('root') || undefined}
         >
-          {statusDelete ? (
-            <StatusInfo status="success">{strings.status.deleteSuccess}</StatusInfo>
-          ) : (
-            <div className={styles.modalButtons}>
-              <Button onClick={handleConfirmDelete}>{strings.yesDelete}</Button>
-              <Button onClick={() => setIsModalOpen(false)}>{strings.cancelDelete}</Button>
-            </div>
-          )}
-          {errorDelete && <div className={styles.error}>{strings.errorDelete}</div>}
+          <div className={styles.modalButtons}>
+            <Button onClick={handleConfirmDelete}>{strings.yesDelete}</Button>
+            <Button onClick={() => setIsModalOpen(false)}>{strings.cancelDelete}</Button>
+          </div>
+          {errorDelete && <StatusInfo status="fail">{errorDelete}</StatusInfo>}
         </Modal>
       )}
     </>

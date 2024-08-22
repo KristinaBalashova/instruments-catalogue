@@ -2,17 +2,14 @@ import React from 'react';
 import { InstrumentCard } from '../../containers';
 import styles from './InstrumentsList.module.css';
 
-const InstrumentsList = ({ data, deleteItem, statusDelete, errorDelete, onDeleteSuccess }) => {
+const InstrumentsList = ({ data, deleteItem, errorDelete, onDeleteSuccess }) => {
   return (
     <div className={styles.cards}>
       {data.map((item) => (
         <InstrumentCard
           key={item.id}
           instrumentData={item}
-          onDelete={() =>
-            deleteItem('instruments_collection', item.id, () => onDeleteSuccess(item.id))
-          }
-          statusDelete={statusDelete}
+          onDelete={() => deleteItem(item.id, () => onDeleteSuccess(item.id))}
           errorDelete={errorDelete}
         />
       ))}

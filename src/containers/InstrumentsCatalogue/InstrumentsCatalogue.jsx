@@ -18,6 +18,7 @@ import {
   InstrumentsList,
   Modal,
   Button,
+  StatusInfo,
 } from '../../components';
 
 import styles from './InstrumentsCatalogue.module.css';
@@ -27,7 +28,7 @@ const InstrumentsCatalogue = () => {
 
   const { theme } = useContext(ThemeContext);
 
-  const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
+  const { deleteItem, errorDelete } = useDeleteItem();
 
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
@@ -123,12 +124,11 @@ const InstrumentsCatalogue = () => {
           </div>
 
           {loading && <Loader />}
-          {!loading && totalItems === 0 && <div>{strings.nothingFound}</div>}
+          {!loading && totalItems === 0 && <StatusInfo>{strings.nothingFound}</StatusInfo>}
           <div className={styles.cardsContainer}>
             <InstrumentsList
               data={data}
               deleteItem={deleteItem}
-              statusDelete={statusDelete}
               errorDelete={errorDelete}
               onDeleteSuccess={handleDeleteSuccess}
             />
