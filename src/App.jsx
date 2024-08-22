@@ -44,17 +44,6 @@ function App() {
     fetchUserData();
   }, []);
 
-  const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN') {
-      setUser({
-        id: session.user.id,
-        role: session.user.role,
-      });
-    } else if (event === 'SIGNED_OUT') {
-      setUser(null);
-    }
-  });
-
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <ThemeContext.Provider value={{ theme, setTheme }}>
