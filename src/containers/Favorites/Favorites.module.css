@@ -1,16 +1,19 @@
 .root {
-  padding: 50px 25px;
-  max-width: 1440px;
   margin: 0 auto;
   width: 100%;
-  gap: 30px;
-}
-
-.dark.root {
+  height: 100vh;
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 20px;
+  max-width: 1440px;
+  padding: 50px 25px;
+  gap: 30px;
+  align-items: flex-start;
+}
+.root.darkTheme {
+  background-color: var(--dark-theme-background);
 }

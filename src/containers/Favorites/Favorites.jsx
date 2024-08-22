@@ -4,18 +4,19 @@ import { Link } from 'react-router-dom';
 import useDeleteItem from '../../hooks/useDeleteItem';
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
-
+import cx from 'classnames';
 import { Button, Loader } from '../../components';
 
-import { UserContext } from '../../context/context';
+import { ThemeContext, UserContext } from '../../context/context';
 import { USER_MESSAGES } from '../../strings';
 
 const Favorites = () => {
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useContext(UserContext);
   const [error, setError] = useState(null);
+  const { user } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -64,7 +65,7 @@ const Favorites = () => {
   }, []);
 
   return (
-    <section className={styles.root}>
+    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       {!user && (
         <div className={styles.container}>
           {USER_MESSAGES.NOT_AUTH}
