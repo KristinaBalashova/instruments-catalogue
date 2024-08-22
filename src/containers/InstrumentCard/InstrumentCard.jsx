@@ -8,7 +8,7 @@ import { EditorButtons } from '../../components';
 
 import styles from './InstrumentCard.module.css';
 
-const InstrumentCard = ({ instrumentData, onDelete, statusDelete, errorDelete }) => {
+const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
   const { id, name, image } = instrumentData;
   const [isFavorite, setIsFavorite] = useState(false);
   const { user } = useContext(UserContext);
@@ -80,12 +80,7 @@ const InstrumentCard = ({ instrumentData, onDelete, statusDelete, errorDelete })
         </Link>
         <div className={styles.buttons}>
           {user?.role === 'admin' && (
-            <EditorButtons
-              id={id}
-              onDelete={onDelete}
-              statusDelete={statusDelete}
-              errorDelete={errorDelete}
-            />
+            <EditorButtons id={id} onDelete={onDelete} errorDelete={errorDelete} />
           )}
           <FaStar className={isFavorite ? styles.filled : styles.unfilled} onClick={handleClick} />
         </div>
