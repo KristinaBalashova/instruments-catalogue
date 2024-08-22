@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES } from '../../strings';
 import useUploadImage from '../../hooks/useUploadImage';
-import Button from '../../components/Button/Button';
-import ImageDownloader from '../../components/ImageDownloader/ImageDownloader';
-import StatusInfo from '../../components/StatusInfo/StatusInfo';
+import { Button, ImageDownloader, StatusInfo } from '../../components';
 import styles from './InstrumentCreator.module.css';
 
 const dataStub = {

@@ -7,7 +7,7 @@ import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 import { strings } from '../../strings';
 import { ThemeContext } from '../../context/context';
 
-import Button from '../Button/Button';
+import { Button } from '../';
 
 import logo from '/logo.png';
 import styles from './Header.module.css';

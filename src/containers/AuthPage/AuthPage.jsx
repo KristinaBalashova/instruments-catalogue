@@ -7,10 +7,8 @@ import { strings } from '../../strings';
 import { UserContext } from '../../context/context';
 import { isValidDomain } from '../../helpers/isValidDomain';
 
-import Button from '../../components/Button/Button';
-import Input from '../../components/Input/Input';
+import { Button, Input, UserDashboard } from '../../components';
 
-import UserDashboard from '../../components/UserDashboard/UserDashboard';
 import styles from './AuthPage.module.css';
 
 const authSchema = z.object({

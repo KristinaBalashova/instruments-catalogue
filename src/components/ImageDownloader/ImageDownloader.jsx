@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { strings } from '../../strings';
 
-import Button from '../Button/Button';
+import { Button } from '../';
 
 import styles from './ImageDownloader.module.css';
 

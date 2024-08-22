@@ -1,10 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { strings } from '../../strings';
-
-import Button from '../Button/Button';
-
+import { Button } from '../';
 import styles from './FiltersPanel.module.css';
 
 const FiltersPanel = ({ data }) => {

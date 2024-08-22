@@ -10,11 +10,13 @@ import useDeleteItem from '../../hooks/useDeleteItem';
 
 import cx from 'classnames';
 
-import FiltersPanel from '../../components/FiltersPanel/FiltersPanel';
-import PaginationButtons from '../../components/PaginationButtons/PaginationButtons';
-import SearchBar from '../../components/SearchBar/SearchBar';
-import Loader from '../../components/Loader/Loader';
-import InstrumentsList from '../../components/InstrumentsList/InstrumentsList';
+import {
+  FiltersPanel,
+  PaginationButtons,
+  SearchBar,
+  Loader,
+  InstrumentsList,
+} from '../../components';
 
 import styles from './InstrumentsCatalogue.module.css';
 

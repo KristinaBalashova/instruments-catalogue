@@ -1,5 +1,5 @@
 import React from 'react';
-import InstrumentCard from '../../containers/InstrumentCard/InstrumentCard';
+import { InstrumentCard } from '../../containers';
 import styles from './InstrumentsList.module.css';
 
 const InstrumentsList = ({ data, deleteItem, statusDelete, errorDelete, onDeleteSuccess }) => {

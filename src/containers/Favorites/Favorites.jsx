@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 import useDeleteItem from '../../hooks/useDeleteItem';
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
-import Loader from '../../components/Loader/Loader';
-import Button from '../../components/Button/Button';
+
+import { Button, Loader } from '../../components';
 
 import { UserContext } from '../../context/context';
-import { strings } from '../../strings';
 import { USER_MESSAGES } from '../../strings';
 
 const Favorites = () => {

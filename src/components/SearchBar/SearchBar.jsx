@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { strings } from '../../strings';
-
-import Button from '../Button/Button';
-import Input from '../Input/Input';
-
+import { Button, Input } from '../';
 import styles from './SearchBar.module.css';
 
 const SearchBar = ({ setSearchQuery, placeholder = 'Search...', disabled = false }) => {

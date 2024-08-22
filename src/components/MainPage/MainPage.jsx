@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { strings } from '../../strings';
 import { ThemeContext, UserContext } from '../../context/context';
 
-import Button from '../Button/Button';
-import InstrumentsCatalogue from '../../containers/InstrumentsCatalogue/InstrumentsCatalogue';
+import { Button } from '../';
+import { InstrumentsCatalogue } from '../../containers';
 
 import cx from 'classnames';
 

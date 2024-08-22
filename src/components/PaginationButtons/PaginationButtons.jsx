@@ -13,14 +13,18 @@ const PaginationButtons = ({
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+  // Define isDisabled constants
+  const isBackDisabled = currentPage === 0;
+  const isForwardDisabled = currentPage + 1 >= totalPages;
+
   const handleBackClick = () => {
-    if (currentPage > 0) {
+    if (!isBackDisabled) {
       setCurrentPage(currentPage - 1);
     }
   };
 
   const handleForwardClick = () => {
-    if (currentPage + 1 < totalPages) {
+    if (!isForwardDisabled) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -30,23 +34,21 @@ const PaginationButtons = ({
   return (
     <div className={styles.container}>
       <span className={styles.pageCounter}>
-        Page {currentPage + 1} from {totalPages}
+        Page {currentPage + 1} of {totalPages}
       </span>
 
       <div className={styles.buttons}>
         <button
-          className={cx(styles.button, styles.back, { [styles.disabled]: currentPage === 0 })}
+          className={cx(styles.button, styles.back, isBackDisabled && styles.disabled)}
           onClick={handleBackClick}
-          disabled={currentPage === 0}
+          disabled={isBackDisabled}
         >
           <IoIosArrowBack className={styles.arrow} />
         </button>
         <button
-          className={cx(styles.button, styles.forward, {
-            [styles.disabled]: currentPage + 1 >= totalPages,
-          })}
+          className={cx(styles.button, styles.forward, isForwardDisabled && styles.disabled)}
           onClick={handleForwardClick}
-          disabled={currentPage + 1 >= totalPages}
+          disabled={isForwardDisabled}
         >
           <IoIosArrowForward className={styles.arrow} />
         </button>

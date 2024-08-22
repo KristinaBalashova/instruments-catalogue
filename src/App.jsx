@@ -2,18 +2,11 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { supabase } from './helpers/supabaseClient';
 import { UserContext, ThemeContext } from './context/context';
-import { getUserData } from './api/api';
-import { getUser } from './api/api';
+import { getUserData, getUser } from './api/api';
 
-import MainPage from './components/MainPage/MainPage';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import InstrumentCreator from './containers/InstrumentCreator/InstrumentCreator';
-import AuthPage from './containers/AuthPage/AuthPage';
-import Favorites from './containers/Favorites/Favorites';
-import InstrumentPage from './containers/InstrumentPage/InstrumentPage';
+import { MainPage, Header, Footer } from './components';
+import { AuthPage, Favorites, InstrumentCreator, InstrumentPage } from './containers';
 
 function App() {
   const [user, setUser] = useState(null);

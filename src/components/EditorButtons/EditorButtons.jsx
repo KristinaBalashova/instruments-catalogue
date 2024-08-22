@@ -4,9 +4,7 @@ import { IoTrash } from 'react-icons/io5';
 
 import { strings } from '../../strings';
 
-import Modal from '../Modal/Modal';
-import Button from '../Button/Button';
-import StatusInfo from '../StatusInfo/StatusInfo';
+import { Modal, Button, StatusInfo } from '../';
 
 import styles from './EditorButtons.module.css';
 
