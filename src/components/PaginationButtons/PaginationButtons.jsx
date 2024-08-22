@@ -1,6 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 import styles from './PaginationButtons.module.css';
+import { IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowBack } from 'react-icons/io';
 
 const PaginationButtons = ({
   currentPage,
@@ -30,14 +32,14 @@ const PaginationButtons = ({
         onClick={handleBackClick}
         disabled={currentPage === 0}
       >
-        <img src="/back.svg" alt="Back" className={styles.arrow} />
+        <IoIosArrowBack className={styles.arrow} />
       </button>
       <button
         className={cx(styles.paginationButton, styles.forward)}
         onClick={handleForwardClick}
         disabled={(currentPage + 1) * itemsPerPage >= totalItems}
       >
-        <img src="/more.svg" alt="Forward" className={styles.arrow} />
+        <IoIosArrowForward className={styles.arrow} />
       </button>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-
+import { RxCross2 } from 'react-icons/rx';
 import styles from './Modal.module.css';
 
 const Modal = ({ isOpen = false, onClose, children, header }) => {
@@ -21,7 +21,7 @@ const Modal = ({ isOpen = false, onClose, children, header }) => {
           className={styles.closeButton}
           data-testid="modal-close-button"
         >
-          <img src="/icon-close.svg" className={styles.closeIcon} alt="close" />
+          <RxCross2 className={styles.closeIcon} />
         </button>
         {header ? <div className={styles.header}>{header}</div> : null}
         <div className={styles.content}>{children}</div>

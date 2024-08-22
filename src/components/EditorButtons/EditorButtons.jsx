@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { IoTrash } from 'react-icons/io5';
 
 import { strings } from '../../strings';
 
@@ -8,6 +9,7 @@ import Button from '../Button/Button';
 import StatusInfo from '../StatusInfo/StatusInfo';
 
 import styles from './EditorButtons.module.css';
+
 const EditorButtons = ({ id, onDelete, statusDelete, errorDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,12 +23,7 @@ const EditorButtons = ({ id, onDelete, statusDelete, errorDelete }) => {
         <Link to={`/instrument-editor/${id}`} state={{ id }} className={styles.link}>
           <div className={styles.edit}>{strings.edit}</div>
         </Link>
-        <img
-          src="/trash-bin.png"
-          className={styles.delete}
-          alt="trash-bin-icon"
-          onClick={() => setIsModalOpen(true)}
-        />
+        <IoTrash className={styles.delete} onClick={() => setIsModalOpen(true)} />
       </div>
 
       {isModalOpen && (
