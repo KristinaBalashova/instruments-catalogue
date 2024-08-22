@@ -16,6 +16,8 @@ import {
   SearchBar,
   Loader,
   InstrumentsList,
+  Modal,
+  Button,
 } from '../../components';
 
 import styles from './InstrumentsCatalogue.module.css';
@@ -33,6 +35,7 @@ const InstrumentsCatalogue = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [searchQuery, setSearchQuery] = useState('*');
   const [dataFilters, setDataFilters] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filtersObject = getFiltersFromSearchParams(searchParams);
 
@@ -101,7 +104,24 @@ const InstrumentsCatalogue = () => {
       <div className={styles.container}>
         <SearchBar setSearchQuery={setSearchQuery} disabled={loading && true} />
         <div className={styles.dataContainer}>
-          <FiltersPanel data={dataFilters} />
+          <div className={styles.filtersMobile}>
+            <Button secondary onClick={() => setIsModalOpen(true)}>
+              Filters
+            </Button>
+            {isModalOpen && (
+              <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                appElement={document.getElementById('root') || undefined}
+              >
+                <FiltersPanel data={dataFilters} />
+              </Modal>
+            )}
+          </div>
+          <div className={styles.filtersDesktop}>
+            <FiltersPanel data={dataFilters} />
+          </div>
+
           {loading && <Loader />}
           {!loading && totalItems === 0 && <div>{strings.nothingFound}</div>}
           <div className={styles.cardsContainer}>
