@@ -2,6 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  justify-content: space-between;
+  gap: 30px;
 
   @media (min-width: 744px) {
     flex-direction: row;

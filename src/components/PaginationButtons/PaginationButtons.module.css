@@ -1,32 +1,35 @@
-.paginationButtons {
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.buttons {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 30px;
 }
 
-.paginationButton {
-  border-radius: 100%;
+.button {
+  border-radius: 8px;
   background-color: var(--primary-color);
   border-color: var(--lighter-teal);
   border: none;
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
   transition:
     box-shadow 0.3s ease,
     color 0.3s ease;
 }
 
-.paginationButton:hover {
+.button:hover {
   box-shadow: 3px 3px 0 var(--darkest-teal);
 }
 
-.paginationButton:disabled {
-}
-
 .arrow {
-  width: 25px;
-  height: 25px;
+  font-size: 20px;
   fill: white;
 }
 
