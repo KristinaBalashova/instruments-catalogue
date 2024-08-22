@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { strings } from './strings';
 import { supabase } from './helpers/supabaseClient';
 import { UserContext, ThemeContext } from './context/context';
+import { getUserData } from './api/api';
+import { getUser } from './api/api';
 
 import MainPage from './components/MainPage/MainPage';
 import Header from './components/Header/Header';
@@ -22,19 +23,12 @@ function App() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const {
-          data: { user: supabaseUser },
-          error: userError,
-        } = await supabase.auth.getUser();
+        const { supabaseUser, userError } = await getUser();
 
         if (userError) throw userError;
 
         if (supabaseUser) {
-          const { data, error } = await supabase
-            .from('users')
-            .select('id, role')
-            .eq('id', supabaseUser.id)
-            .single();
+          const { data, error } = await getUserData(id);
 
           if (error) throw error;
 
