@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import { supabase } from './helpers/supabaseClient';
 import { UserContext, ThemeContext } from './context/context';
-import { getUserData, getUser } from './api/api';
+import { getUserData } from './api/api';
 
 import { MainPage, Header, Footer } from './components';
 import { AuthPage, Favorites, InstrumentCreator, InstrumentPage } from './containers';
@@ -16,18 +17,21 @@ function App() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const { supabaseUser, userError } = await getUser();
+        const {
+          data: { session },
+          error: sessionError,
+        } = await supabase.auth.getSession();
 
-        if (userError) throw userError;
+        if (sessionError) throw sessionError;
 
-        if (supabaseUser) {
-          const { data, error } = await getUserData(id);
+        if (session) {
+          const { data, error } = await getUserData(session.user.id);
 
           if (error) throw error;
 
           if (data) {
             setUser({
-              id: supabaseUser.id,
+              id: session.user.id,
               role: data.role,
             });
           }
@@ -39,6 +43,17 @@ function App() {
 
     fetchUserData();
   }, []);
+
+  const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN') {
+      setUser({
+        id: session.user.id,
+        role: session.user.role,
+      });
+    } else if (event === 'SIGNED_OUT') {
+      setUser(null);
+    }
+  });
 
   return (
     <ErrorBoundary fallback={<div>Something went wrong</div>}>
