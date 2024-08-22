@@ -24,7 +24,12 @@
 
 .right {
   display: flex;
-  gap: 30px;
+  gap: 10px;
+  align-items: center;
+
+  @media (min-width: 744px) {
+    gap: 30px;
+  }
 }
 
 .toggle {

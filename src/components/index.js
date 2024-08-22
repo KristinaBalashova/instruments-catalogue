@@ -13,3 +13,4 @@ export { default as PaginationButtons } from './PaginationButtons/PaginationButt
 export { default as SearchBar } from './SearchBar/SearchBar';
 export { default as StatusInfo } from './StatusInfo/StatusInfo';
 export { default as UserDashboard } from './UserDashboard/UserDashboard';
+export { default as ErrorFallback } from './ErrorFallback/ErrorFallback';

@@ -6,7 +6,7 @@ import { supabase } from './helpers/supabaseClient';
 import { UserContext, ThemeContext } from './context/context';
 import { getUserData } from './api/api';
 
-import { MainPage, Header, Footer } from './components';
+import { MainPage, Header, Footer, ErrorFallback } from './components';
 import { AuthPage, Favorites, InstrumentCreator, InstrumentPage } from './containers';
 
 function App() {
@@ -56,7 +56,7 @@ function App() {
   });
 
   return (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
       <ThemeContext.Provider value={{ theme, setTheme }}>
         <UserContext.Provider value={{ user, setUser }}>
           <Router basename="/instruments-catalogue/">
