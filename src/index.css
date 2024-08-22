@@ -25,7 +25,7 @@ header {
   top: 0;
   width: 100%;
   z-index: 1000;
-  height: 60px; /* Adjust based on your header content */
+  height: 60px;
 }
 
 footer {
@@ -35,7 +35,7 @@ footer {
   bottom: 0;
   width: 100%;
   z-index: 1000;
-  height: 40px; /* Adjust based on your footer content */
+  height: 40px;
 }
 
 :root {
@@ -54,5 +54,6 @@ footer {
   --lighter-gray: #d3d3d3; /* Lighter Gray for disabled state */
   --lighter-gray-border: #c0c0c0; /* Lighter Gray Border for disabled state */
 
-  --dark-theme-background: #333333;
+  --dark-theme-background: #1c1c1c;
+  --dark-theme-support: hsla(0, 0%, 100%, 0.08);
 }

@@ -1,7 +1,8 @@
 export const strings = {
   title: 'Welcome to In-lib: Your Music Instruments Catalogues',
   welcome: 'Welcome to InLib!',
-  description: 'Welcome to In-lib: Your Music Instruments Catalogue',
+  description:
+    'Explore IN-LIB, your go-to catalog for musical instruments from around the world. Start your musical journey with IN-LIB today.',
   addInstrument: 'Add New Instrument',
   search: 'Search',
   clearFilters: 'Clear filters',

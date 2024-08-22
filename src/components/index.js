@@ -14,3 +14,4 @@ export { default as SearchBar } from './SearchBar/SearchBar';
 export { default as StatusInfo } from './StatusInfo/StatusInfo';
 export { default as UserDashboard } from './UserDashboard/UserDashboard';
 export { default as ErrorFallback } from './ErrorFallback/ErrorFallback';
+export { default as SignForm } from './SignForm/SignForm';

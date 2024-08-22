@@ -58,7 +58,6 @@ function App() {
               <Route path="/instrument-creator" element={<InstrumentCreator />} />
               <Route path="/instrument-page/:id" element={<InstrumentPage isEditable={false} />} />
             </Routes>
-            <Footer />
           </Router>
         </UserContext.Provider>
       </ThemeContext.Provider>

@@ -20,18 +20,22 @@
 }
 
 .headline {
-  font-size: 50px;
+  font-size: 40px;
   color: var(--accent-color);
   padding: 0;
+
+  @media (min-width: 500px) {
+    font-size: 50px;
+  }
 }
 
 .description {
   font-size: 18px;
   color: var(--darkest-gray);
-  margin: 10px 0 0;
 
-  @media (min-width: 744px) {
+  @media (min-width: 500px) {
     font-size: 30px;
+    max-width: 80%;
   }
 }
 
