@@ -1,51 +1,3 @@
-export const strings = {
-  title: 'Welcome to In-lib: Your Music Instruments Catalogues',
-  welcome: 'Welcome to InLib!',
-  description:
-    'Explore IN-LIB, your go-to catalog for musical instruments from around the world. Start your musical journey with IN-LIB today.',
-  addInstrument: 'Add New Instrument',
-  search: 'Search',
-  clearFilters: 'Clear filters',
-  edit: 'Edit',
-  signIn: 'Sign In',
-  signUp: 'Sign Up',
-  signOut: 'Sign Out',
-  save: 'Save',
-  imgUpload: 'Upload image',
-  uploadInfo: 'Upload PNG or JPG picture, 500x500 max with removed background',
-  notHaveAccount: 'Don’t have an account?',
-  doHaveAccount: 'Already have an account?',
-  email: 'Email',
-  password: 'Password',
-  currentlyLogedIn: 'You are logged in as',
-  confirmDelete: 'Are you sure you want to delete this instrument?',
-  deleteSuccess: 'Instrument deleted successfully!',
-  yesDelete: 'Yes, delete',
-  cancelDelete: 'No, cancel',
-  all: 'All',
-  createdBy: 'Created by',
-  placehilderImg: 'Placeholder image',
-  uploadRules: 'Upload PNG or JPG picture, 500x500 max with removed background',
-  delete: 'Delete',
-  nothingFound: 'Sorry, nothing found',
-  return: 'To the main page',
-  errors: {
-    userNotFound: 'No user found',
-    userNotAuth: 'User not authenticated',
-    fetchingError: 'Error fetching data:',
-    errorDelete: 'Error deleting data:',
-    formatError: 'Please upload a JPEG or PNG image.',
-    uploadError: 'Error uploading image:',
-    saveError: 'Failed to save instrument data.',
-    updateError: 'Error updating',
-    fethingData: 'Error fetching data',
-  },
-  status: {
-    saveSuccess: 'Instrument data saved successfully!',
-    deleteSuccess: 'Instrument deleted successfully!',
-    noImg: 'Please upload an image before saving.',
-  },
-};
 export const USER_MESSAGES = {
   TITLE: 'Welcome to In-lib: Your Music Instruments Catalogues',
   WELCOME: 'Welcome to InLib!',
@@ -84,7 +36,6 @@ export const USER_MESSAGES = {
   },
 };
 
-// Server messages
 export const SERVER_MESSAGES = {
   ERRORS: {
     USER_NOT_FOUND: 'No user found',

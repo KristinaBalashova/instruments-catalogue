@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { supabase } from '../../helpers/supabaseClient';
-import { strings } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 import { ThemeContext, UserContext } from '../../context/context';
 import { Button, UserDashboard, SignForm } from '../../components';
 
@@ -79,7 +79,7 @@ const AuthPage = () => {
               {'Resend'}
             </Button>
             <Link to="/" className={styles.link}>
-              <Button primary>{strings.return}</Button>
+              <Button primary>{USER_MESSAGES.RETURN}</Button>
             </Link>
           </div>
         )}

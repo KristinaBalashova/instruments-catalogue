@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { supabase } from '../../helpers/supabaseClient';
-import { strings } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 import { UserContext } from '../../context/context';
 
 import useFetchItem from '../../hooks/useFetchItem';
@@ -42,7 +42,7 @@ const InstrumentPage = ({ isEditable = false }) => {
 
   const handleSave = useCallback(async () => {
     if (errorUpload) {
-      alert(`${strings.uploadError}: ${errorUpload}`);
+      alert(errorUpload);
       return;
     }
 
@@ -61,9 +61,9 @@ const InstrumentPage = ({ isEditable = false }) => {
         throw updateError;
       }
 
-      alert(strings.status.saveSuccess);
+      alert(USER_MESSAGES.STATUS.SAVE_SUCCESS);
     } catch (error) {
-      setError(`${strings.errors.updateError}: ${error.message}`);
+      setError(error.message);
     }
   }, [editableItem, signedUrl, id, errorUpload]);
 
@@ -139,11 +139,11 @@ const InstrumentPage = ({ isEditable = false }) => {
               ['brand', 'description', 'country', 'materials', 'type', 'date'].map((title) =>
                 renderInputField(title, editableItem[title]),
               )}
-            {isEditable && <Button onClick={handleSave}>{strings.save}</Button>}
+            {isEditable && <Button onClick={handleSave}>{USER_MESSAGES.SAVE}</Button>}
           </div>
         </div>
       </div>
-      {error && <div className={styles.error}>{error}</div>}
+      {error && <StatusInfo status="fail">{error}</StatusInfo>}
     </div>
   );
 };

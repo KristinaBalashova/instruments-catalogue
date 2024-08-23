@@ -2,7 +2,6 @@ import { useEffect, useState, useContext, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { supabase } from '../../helpers/supabaseClient';
-import { strings } from '../../strings';
 import { ThemeContext } from '../../context/context';
 
 import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
@@ -50,7 +49,7 @@ const InstrumentsCatalogue = () => {
       const { data, error } = await supabase.from('instruments_collection').select('*');
 
       if (error) {
-        console.error(strings.errors.fethingData, error);
+        console.log(error);
       } else {
         const uniqueFilters = listOfFilters.reduce((acc, filter) => {
           acc[filter] = [...new Set(data.map((item) => item[filter]))];
@@ -88,7 +87,7 @@ const InstrumentsCatalogue = () => {
         .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
 
       if (error) {
-        console.error(strings.errors.fethingData, error);
+        console.log(error);
       } else {
         setData(data);
         setTotalItems(count);
@@ -132,7 +131,7 @@ const InstrumentsCatalogue = () => {
           </div>
 
           {loading && <Loader />}
-          {!loading && totalItems === 0 && <StatusInfo>{strings.nothingFound}</StatusInfo>}
+          {!loading && totalItems === 0 && <StatusInfo>{'nothing found'}</StatusInfo>}
           <div className={styles.cardsContainer}>
             <InstrumentsList
               data={data}
