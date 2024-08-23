@@ -8,7 +8,6 @@ import { Button } from '../';
 import { InstrumentsCatalogue } from '../../containers';
 import { getUserData } from '../../api/api';
 import cx from 'classnames';
-
 import styles from './MainPage.module.css';
 
 const MainPage = () => {
@@ -16,7 +15,6 @@ const MainPage = () => {
   const { theme } = useContext(ThemeContext);
   const [error, setError] = useState(null);
 
-  console.log(user, 'user');
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -46,6 +44,29 @@ const MainPage = () => {
 
     fetchUserData();
   }, []);
+
+  const { data } = supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN') {
+      const fetchUserData = async () => {
+        if (session) {
+          const { data, error } = await getUserData(session.user.id);
+
+          if (error) throw error;
+
+          if (data) {
+            setUser({
+              id: session.user.id,
+              role: data.role,
+            });
+          }
+        }
+      };
+      fetchUserData();
+    }
+    if (event === 'SIGNED_OUT') {
+      setUser(null);
+    }
+  });
 
   return (
     <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>

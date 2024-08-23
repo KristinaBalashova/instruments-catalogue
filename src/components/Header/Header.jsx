@@ -15,7 +15,6 @@ import styles from './Header.module.css';
 const Header = () => {
   const { theme, setTheme } = useContext(ThemeContext);
 
-  console.log(theme, 'theme');
   const handleToggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };

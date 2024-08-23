@@ -5,7 +5,6 @@ import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES } from '../../strings';
 import { ThemeContext, UserContext } from '../../context/context';
 import { Button, UserDashboard, SignForm } from '../../components';
-import { getUserData } from '../../api/api';
 import styles from './AuthPage.module.css';
 import cx from 'classnames';
 
@@ -35,8 +34,6 @@ const AuthPage = () => {
 
     if (error) {
       setError(error.message);
-    } else {
-      setUser(data.user);
     }
   };
 
@@ -54,8 +51,6 @@ const AuthPage = () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
       alert(error.message);
-    } else {
-      setUser(null);
     }
   };
 
