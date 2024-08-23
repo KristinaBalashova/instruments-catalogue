@@ -25,9 +25,7 @@ import styles from './InstrumentsCatalogue.module.css';
 
 const InstrumentsCatalogue = () => {
   const [searchParams] = useSearchParams();
-
   const { theme } = useContext(ThemeContext);
-
   const { deleteItem, errorDelete } = useDeleteItem();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -40,7 +38,7 @@ const InstrumentsCatalogue = () => {
 
   const filtersObject = getFiltersFromSearchParams(searchParams);
 
-  const { brand = '*', type = '*', country = '*' } = filtersObject;
+  const { brand = '*', type = '*', country = '*', order = 'new-first' } = filtersObject;
 
   const itemsPerPage = 6;
 
@@ -72,11 +70,18 @@ const InstrumentsCatalogue = () => {
 
       let query = supabase
         .from('instruments_collection')
-        .select('name, image, id', { count: 'exact' });
+        .select('name, image, id, timestamp', { count: 'exact' });
 
       if (brand !== '*') query = query.ilike('brand', brand);
       if (type !== '*') query = query.ilike('type', type);
       if (country !== '*') query = query.ilike('country', country);
+
+      // Apply sorting based on the order filter
+      if (order === 'new-first') {
+        query = query.order('timestamp', { ascending: false });
+      } else if (order === 'old-first') {
+        query = query.order('timestamp', { ascending: true });
+      }
 
       const { data, error, count } = await query
         .ilike('name', `%${searchQuery}%`)
@@ -93,7 +98,7 @@ const InstrumentsCatalogue = () => {
     };
 
     fetchData();
-  }, [currentPage, searchQuery, brand, type, country]);
+  }, [currentPage, searchQuery, brand, type, country, order]);
 
   const handleDeleteSuccess = useCallback((deletedId) => {
     setData((prevData) => prevData.filter((item) => item.id !== deletedId));
@@ -103,7 +108,10 @@ const InstrumentsCatalogue = () => {
   return (
     <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
-        <SearchBar setSearchQuery={setSearchQuery} disabled={loading && true} />
+        <div className={styles.search}>
+          <SearchBar setSearchQuery={setSearchQuery} disabled={loading} />
+          <FiltersPanel data={{ order: ['new-first', 'old-first'] }} clearButton={false} />
+        </div>
         <div className={styles.dataContainer}>
           <div className={styles.filtersMobile}>
             <Button secondary onClick={() => setIsModalOpen(true)}>

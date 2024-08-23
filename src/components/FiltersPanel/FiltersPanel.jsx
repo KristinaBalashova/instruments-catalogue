@@ -4,7 +4,7 @@ import { strings } from '../../strings';
 import { Button } from '../';
 import styles from './FiltersPanel.module.css';
 
-const FiltersPanel = ({ data }) => {
+const FiltersPanel = ({ data, clearButton = true }) => {
   const location = useLocation();
   const navigateTo = useNavigate();
 
@@ -54,9 +54,11 @@ const FiltersPanel = ({ data }) => {
           </select>
         </form>
       ))}
-      <Button secondary onClick={handleFilterClear}>
-        {strings.clearFilters}
-      </Button>
+      {clearButton && (
+        <Button secondary onClick={handleFilterClear} className={styles.button}>
+          {strings.clearFilters}
+        </Button>
+      )}
     </div>
   );
 };

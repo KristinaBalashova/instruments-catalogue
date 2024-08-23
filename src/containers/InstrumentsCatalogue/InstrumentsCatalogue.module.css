@@ -22,7 +22,7 @@
 .dataContainer {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   align-items: center;
   width: 100%;
 
@@ -60,4 +60,17 @@
 .root.darkTheme {
   background-color: var(--dark-theme-background);
   color: white;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+
+  @media (min-width: 744px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
 }

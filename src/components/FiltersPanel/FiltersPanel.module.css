@@ -1,13 +1,16 @@
 .form {
   display: flex;
   flex-direction: column;
-  width: 300px;
-  margin-bottom: 20px;
+  max-width: 300px;
   font-family: var(--font-family);
+  @media (min-width: 744px) {
+    width: 300px;
+  }
 }
 
 .label {
   margin-bottom: 8px;
+  margin-top: 8px;
   font-size: 16px;
   color: #787777;
 }
@@ -71,4 +74,8 @@ option:hover {
 .select option {
   background-color: var(--background-color);
   color: var(--primary-color);
+}
+
+.button {
+  margin-top: 10px;
 }
