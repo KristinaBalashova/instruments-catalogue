@@ -6,7 +6,7 @@ import { Button } from '../';
 
 import styles from './ImageDownloader.module.css';
 
-const ImageDownloader = ({ setFile, image = '/blank-image.png' }) => {
+const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
   const [error, setError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [objectURL, setObjectURL] = useState('');

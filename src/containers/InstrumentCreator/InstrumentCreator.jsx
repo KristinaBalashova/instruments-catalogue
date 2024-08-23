@@ -21,7 +21,7 @@ const InstrumentCreator = () => {
   const [imageFile, setImageFile] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); // New loading state
+  const [loading, setLoading] = useState(false);
   const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const InstrumentCreator = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setLoading(true); // Start loading
+    setLoading(true);
 
     const { error } = await supabase.from('instruments_collection').insert(newInstrument).select();
 
@@ -56,7 +56,7 @@ const InstrumentCreator = () => {
       setError(null);
     }
 
-    setLoading(false); // Stop loading
+    setLoading(false);
   };
 
   return (

@@ -8,6 +8,7 @@
   transition: all 0.2s ease;
   border-radius: 8px;
   height: 40px;
+  max-width: 200px;
 }
 
 .disabled {
