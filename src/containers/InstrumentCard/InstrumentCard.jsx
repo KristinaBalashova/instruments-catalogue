@@ -19,12 +19,12 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
       if (!user) return;
 
       setLoading(true);
-
+      console.log(user?.id);
       try {
         const { data, error } = await supabase
           .from('favorites')
           .select('item_id')
-          .eq('user_id', user.id);
+          .eq('user_id', user?.id);
 
         if (error) throw error;
 
@@ -47,7 +47,7 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
 
     const favItem = {
       item_id: id,
-      user_id: user.id,
+      user_id: user?.id,
     };
 
     try {
@@ -55,7 +55,7 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
         const { error } = await supabase
           .from('favorites')
           .delete()
-          .match({ item_id: id, user_id: user.id });
+          .match({ item_id: id, user_id: user?.id });
 
         if (error) throw error;
       } else {

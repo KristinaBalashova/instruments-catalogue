@@ -1,4 +1,5 @@
 import styles from './UserDashboard.module.css';
+import { Link } from 'react-router-dom';
 import { strings } from '../../strings';
 import { Button } from '../';
 import { useState, useEffect } from 'react';
@@ -37,9 +38,14 @@ const UserDashboard = ({ handleSignOut }) => {
     <div className={styles.container}>
       <p className={styles.text}>{strings.currentlyLogedIn}</p>
       <p className={styles.email}>{email}</p>
-      <Button secondary onClick={handleSignOut}>
-        {strings.signOut}
-      </Button>
+      <div className={styles.buttons}>
+        <Button secondary onClick={handleSignOut}>
+          {strings.signOut}
+        </Button>
+        <Link to="/" className={styles.link}>
+          <Button primary>{strings.return}</Button>
+        </Link>
+      </div>
     </div>
   );
 };

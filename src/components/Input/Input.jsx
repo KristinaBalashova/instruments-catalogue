@@ -13,8 +13,6 @@ const Input = ({
   disabled = false,
   autocomplete = '',
 }) => {
-  const errorMessage = error?.message;
-
   return (
     <div className={styles.root}>
       <div className={styles.container}>
@@ -34,7 +32,6 @@ const Input = ({
           disabled={disabled}
           autoComplete={autocomplete}
         />
-        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
       </div>
     </div>
   );
