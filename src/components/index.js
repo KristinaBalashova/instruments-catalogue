@@ -15,3 +15,4 @@ export { default as StatusInfo } from './StatusInfo/StatusInfo';
 export { default as UserDashboard } from './UserDashboard/UserDashboard';
 export { default as ErrorFallback } from './ErrorFallback/ErrorFallback';
 export { default as SignForm } from './SignForm/SignForm';
+export { default as ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
