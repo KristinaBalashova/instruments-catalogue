@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  align-items: left;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link {
+  cursor: pointer;
+  color: black;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  &:hover {
+    color: var(--darkest-teal);
+  }
+}

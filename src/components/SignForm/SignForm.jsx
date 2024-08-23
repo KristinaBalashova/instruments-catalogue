@@ -43,8 +43,8 @@ const SignForm = ({ handleSignIn, handleSignUp }) => {
 
   return (
     <form onSubmit={onSubmit} className={styles.form}>
-      <h2 className={styles.formTitle}>{USER_MESSAGES.WELCOME}</h2>
-      <div className={styles.formContainer}>
+      <h2 className={styles.title}>{USER_MESSAGES.WELCOME}</h2>
+      <div className={styles.container}>
         {isSignUp ? (
           <p>
             {USER_MESSAGES.DO_HAVE_ACCOUNT}{' '}

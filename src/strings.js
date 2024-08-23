@@ -1,3 +1,5 @@
+import { ConfirmationCheck } from './components';
+
 export const USER_MESSAGES = {
   TITLE: 'Welcome to In-lib: Your Music Instruments Catalogues',
   WELCOME: 'Welcome to InLib!',
@@ -29,6 +31,9 @@ export const USER_MESSAGES = {
   RETURN: 'Return to the main page',
   NOT_AUTH: 'You are not logged in',
   FAVS: 'Your favorite instruments are here!',
+  CONFIRMATION_CHECK:
+    "Check your email. If you didn't get a confirmation letter, click here to resend",
+  RESEND: 'Resend',
   STATUS: {
     SAVE_SUCCESS: 'Instrument data saved successfully!',
     DELETE_SUCCESS: 'Instrument deleted successfully!',

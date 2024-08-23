@@ -8,6 +8,7 @@
   transition: all 0.2s ease;
   border-radius: 8px;
   height: 40px;
+  min-width: 150px;
   max-width: 200px;
 }
 
