@@ -1,11 +1,5 @@
 .container {
-  background-color: var(--secondary-color);
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 360px;
+  
 }
 
 .text {
@@ -15,10 +9,9 @@
 
 .email {
   font-size: 14px;
-  margin-bottom: 10px;
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
-  padding: 10px;
+  margin-bottom: 30px;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .buttons {
