@@ -7,7 +7,6 @@ export { default as ImageDownloader } from './ImageDownloader/ImageDownloader';
 export { default as Input } from './Input/Input';
 export { default as InstrumentsList } from './InstrumentsList/InstrumentsList';
 export { default as Loader } from './Loader/Loader';
-export { default as MainPage } from './MainPage/MainPage';
 export { default as Modal } from './Modal/Modal';
 export { default as PaginationButtons } from './PaginationButtons/PaginationButtons';
 export { default as SearchBar } from './SearchBar/SearchBar';

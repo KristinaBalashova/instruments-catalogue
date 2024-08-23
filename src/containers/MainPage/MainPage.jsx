@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { USER_MESSAGES } from '../../strings';
 import { ThemeContext, UserContext } from '../../context/context';
 import { supabase } from '../../helpers/supabaseClient';
-import { Button } from '../';
-import { InstrumentsCatalogue } from '../../containers';
+import { Button } from '../../components';
+import { InstrumentsCatalogue } from '..';
 import { getUserData } from '../../api/api';
 import cx from 'classnames';
 import styles from './MainPage.module.css';
@@ -34,6 +34,7 @@ const MainPage = () => {
             setUser({
               id: session.user.id,
               role: data.role,
+              email: session.user.email,
             });
           }
         }
@@ -57,6 +58,7 @@ const MainPage = () => {
             setUser({
               id: session.user.id,
               role: data.role,
+              email: session.user.email,
             });
           }
         }

@@ -3,8 +3,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { UserProvider, ThemeProvider } from './context/context';
 
-import { MainPage, Header, ProtectedRoute, ErrorFallback } from './components';
-import { AuthPage, Favorites, InstrumentCreator, InstrumentPage } from './containers';
+import { Header, ProtectedRoute, ErrorFallback } from './components';
+import { AuthPage, Favorites, InstrumentCreator, InstrumentPage, MainPage } from './containers';
 
 function App() {
   return (

@@ -4,3 +4,4 @@ export { default as InstrumentCreator } from './InstrumentCreator/InstrumentCrea
 export { default as InstrumentCard } from './InstrumentCard/InstrumentCard';
 export { default as InstrumentPage } from './InstrumentPage/InstrumentPage';
 export { default as InstrumentsCatalogue } from './InstrumentsCatalogue/InstrumentsCatalogue';
+export { default as MainPage } from './MainPage/MainPage';
