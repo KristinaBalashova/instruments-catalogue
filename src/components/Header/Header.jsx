@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { FaStar } from 'react-icons/fa';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
-import { strings } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 import { ThemeContext } from '../../context/context';
 
 import { Button } from '../';
@@ -28,7 +28,7 @@ const Header = () => {
 
         <div className={styles.right}>
           <Link to="/auth">
-            <Button>{strings.signIn}</Button>
+            <Button>{USER_MESSAGES.SIGN_IN}</Button>
           </Link>
 
           <Link to="/favorites">

@@ -75,7 +75,6 @@ const InstrumentsCatalogue = () => {
       if (type !== '*') query = query.ilike('type', type);
       if (country !== '*') query = query.ilike('country', country);
 
-      // Apply sorting based on the order filter
       if (order === 'new-first') {
         query = query.order('timestamp', { ascending: false });
       } else if (order === 'old-first') {

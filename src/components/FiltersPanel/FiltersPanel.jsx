@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { strings } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 import { Button } from '../';
 import styles from './FiltersPanel.module.css';
 
@@ -44,7 +44,7 @@ const FiltersPanel = ({ data, clearButton = true }) => {
             className={styles.select}
             value={new URLSearchParams(location.search).get(filter) || '*'}
           >
-            <option value={'*'}>{strings.all}</option>
+            <option value={'*'}>{USER_MESSAGES.ALL}</option>
             {data[filter] &&
               data[filter].map((item) => (
                 <option value={item} key={item}>
@@ -56,7 +56,7 @@ const FiltersPanel = ({ data, clearButton = true }) => {
       ))}
       {clearButton && (
         <Button secondary onClick={handleFilterClear} className={styles.button}>
-          {strings.clearFilters}
+          {USER_MESSAGES.CLEAR_FILTERS}
         </Button>
       )}
     </div>

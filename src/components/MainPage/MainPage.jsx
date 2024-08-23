@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { strings } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 import { ThemeContext, UserContext } from '../../context/context';
 
 import { Button } from '../';
@@ -19,12 +19,12 @@ const MainPage = () => {
       <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
         <div className={styles.container}>
           <div className={styles.intro}>
-            <h1 className={styles.headline}>{strings.title}</h1>
-            <p className={styles.description}>{strings.description}</p>
+            <h1 className={styles.headline}>{USER_MESSAGES.TITLE}</h1>
+            <p className={styles.description}>{USER_MESSAGES.DESCRIPTION}</p>
             <div className={styles.auth}>
               {user?.role === 'admin' && (
                 <Link to="/instrument-creator">
-                  <Button>{strings.addInstrument}</Button>
+                  <Button>{USER_MESSAGES.ADD_INSTRUMENT}</Button>
                 </Link>
               )}
             </div>

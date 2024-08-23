@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { strings } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 
 import { Button } from '../';
 
@@ -29,8 +29,6 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
       setFile(file);
       setImageFile(file);
       setError(null);
-    } else {
-      setError(strings.formatError);
     }
   };
 
@@ -45,7 +43,7 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
     <div className={styles.root}>
       <img
         src={imageFile ? objectURL : image}
-        alt={imageFile ? imageFile.name : strings.placehilderImg}
+        alt={imageFile ? imageFile.name : USER_MESSAGES.PLACEHOLDER_IMG}
         className={styles.imagePreview}
       />
       <label>Upload image:</label>
@@ -56,11 +54,11 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
         className={styles.input}
       />
       <div className={styles.infoContainer}>
-        <p className={styles.text}>{strings.uploadRules}</p>
+        <p className={styles.text}>{USER_MESSAGES.UPLOAD_RULES}</p>
         {imageFile && (
           <div className={styles.fileInfo}>
             <Button onClick={handleDeleteFile} secondary className={styles.deleteButton}>
-              {strings.delete}
+              {USER_MESSAGES.DELETE}
             </Button>
           </div>
         )}

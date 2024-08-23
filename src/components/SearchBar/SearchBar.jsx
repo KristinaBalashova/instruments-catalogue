@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import { strings } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 import { Button, Input } from '../';
 import styles from './SearchBar.module.css';
 
-const SearchBar = ({ setSearchQuery, placeholder = 'Search...', disabled = false }) => {
+const SearchBar = ({ setSearchQuery, disabled = false }) => {
   const [query, setQuery] = useState('');
 
   const handleInputChange = (event) => {
@@ -26,7 +26,7 @@ const SearchBar = ({ setSearchQuery, placeholder = 'Search...', disabled = false
       <div className={styles.inputWrapper}>
         <Input
           type="text"
-          placeholder={placeholder}
+          placeholder={USER_MESSAGES.SEARCH}
           value={query}
           onChange={handleInputChange}
           disabled={disabled}
@@ -36,7 +36,7 @@ const SearchBar = ({ setSearchQuery, placeholder = 'Search...', disabled = false
         )}
       </div>
       <Button type="submit" disabled={disabled}>
-        {strings.search}
+        {USER_MESSAGES.SEARCH}
       </Button>
     </form>
   );

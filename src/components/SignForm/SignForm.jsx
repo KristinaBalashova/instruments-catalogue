@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { z } from 'zod';
-import { strings } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 import { isValidDomain } from '../../helpers/isValidDomain';
 
 import { Button, Input, StatusInfo } from '../';
@@ -43,26 +43,26 @@ const SignForm = ({ handleSignIn, handleSignUp }) => {
 
   return (
     <form onSubmit={onSubmit} className={styles.form}>
-      <h2 className={styles.formTitle}>{strings.welcome}</h2>
+      <h2 className={styles.formTitle}>{USER_MESSAGES.WELCOME}</h2>
       <div className={styles.formContainer}>
         {isSignUp ? (
           <p>
-            {strings.doHaveAccount}{' '}
+            {USER_MESSAGES.DO_HAVE_ACCOUNT}{' '}
             <span onClick={() => setIsSignUp(false)} className={styles.link}>
-              {strings.signIn}
+              {USER_MESSAGES.SIGN_IN}
             </span>
           </p>
         ) : (
           <p>
-            {strings.notHaveAccount}{' '}
+            {USER_MESSAGES.NOT_HAVE_ACCOUNT}{' '}
             <span onClick={() => setIsSignUp(true)} className={styles.link}>
-              {strings.signUp}
+              {USER_MESSAGES.SIGN_UP}
             </span>
           </p>
         )}
       </div>
       <Input
-        label={strings.email}
+        label={USER_MESSAGES.EMAIL}
         type="email"
         id="email"
         value={email}
@@ -73,7 +73,7 @@ const SignForm = ({ handleSignIn, handleSignUp }) => {
         autoComplete="email"
       />
       <Input
-        label={strings.password}
+        label={USER_MESSAGES.PASSWORD}
         type="password"
         id="password"
         value={password}
@@ -84,7 +84,7 @@ const SignForm = ({ handleSignIn, handleSignUp }) => {
         autoComplete="current-password"
       />
       <Button primary type="submit">
-        {isSignUp ? strings.signUp : strings.signIn}
+        {isSignUp ? USER_MESSAGES.SIGN_UP : USER_MESSAGES.SIGN_IN}
       </Button>
       {error && <StatusInfo status="fail">{error}</StatusInfo>}
     </form>
