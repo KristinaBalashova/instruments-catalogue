@@ -1,19 +1,43 @@
 import React, { useState } from 'react';
+import { z } from 'zod';
 import { strings } from '../../strings';
+import { isValidDomain } from '../../helpers/isValidDomain';
+
 import { Button, Input, StatusInfo } from '../';
 import styles from './SignForm.module.css';
 
-const SignForm = ({ handleSignIn, handleSignUp, error }) => {
+const authSchema = z.object({
+  email: z
+    .string()
+    .email({ message: 'Invalid email address' })
+    .refine((email) => isValidDomain(email), { message: 'Invalid email domain' }),
+  password: z.string().min(6, { message: 'Password must be at least 6 characters long' }),
+});
+
+const SignForm = ({ handleSignIn, handleSignUp }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
+
+  const validateForm = () => {
+    const result = authSchema.safeParse({ email, password });
+    if (!result.success) {
+      setError(result.error.errors.map((err) => err.message).join(', '));
+      return false;
+    }
+    setError('');
+    return true;
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (isSignUp) {
-      handleSignUp(e, email, password);
-    } else {
-      handleSignIn(e, email, password);
+    if (validateForm()) {
+      if (isSignUp) {
+        handleSignUp(email, password, setError);
+      } else {
+        handleSignIn(email, password, setError);
+      }
     }
   };
 
