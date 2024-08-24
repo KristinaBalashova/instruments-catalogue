@@ -6,7 +6,7 @@ import { getFavorites } from '../../api/api';
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
 import cx from 'classnames';
-import { Button, Loader } from '../../components';
+import { Button, Loader, StatusInfo } from '../../components';
 
 import { ThemeContext, UserContext } from '../../context';
 import { USER_MESSAGES } from '../../strings';
@@ -66,22 +66,26 @@ const Favorites = () => {
       {!user && (
         <div className={styles.container}>
           {USER_MESSAGES.NOT_AUTH}
-          <Link to="/auth">
-            <Button>{USER_MESSAGES.SIGN_IN}</Button>
-          </Link>
+          <Link to="/auth">{USER_MESSAGES.SIGN_IN}</Link>
         </div>
       )}
       {user && (
         <div className={styles.container}>
-          <h2>{USER_MESSAGES.FAVS}</h2>
           {loading && <Loader />}
-          <InstrumentsList
-            data={data}
-            deleteItem={deleteItem}
-            statusDelete={statusDelete}
-            errorDelete={errorDelete}
-            onDeleteSuccess={handleDeleteSuccess}
-          />
+          {!loading && data.length === 0 && (
+            <StatusInfo>
+              No added instruments. <Link to="/">Return to the main page.</Link>
+            </StatusInfo>
+          )}
+          {!loading && data.length > 0 && (
+            <InstrumentsList
+              data={data}
+              deleteItem={deleteItem}
+              statusDelete={statusDelete}
+              errorDelete={errorDelete}
+              onDeleteSuccess={handleDeleteSuccess}
+            />
+          )}
         </div>
       )}
     </section>

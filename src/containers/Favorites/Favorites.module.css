@@ -16,4 +16,5 @@
 }
 .root.darkTheme {
   background-color: var(--dark-theme-background);
+  color: var(--lighter-gray);
 }
