@@ -28,7 +28,6 @@ const InstrumentsCatalogue = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('*');
   const [dataFilters, setDataFilters] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
@@ -38,6 +37,7 @@ const InstrumentsCatalogue = () => {
   const { brand = '*', type = '*', country = '*', order = 'new-first' } = filtersObject;
 
   const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1;
+  const searchQuery = searchParams.get('search') || '*';
 
   const itemsPerPage = 6;
   const listOfFilters = ['brand', 'type', 'country'];
@@ -110,7 +110,7 @@ const InstrumentsCatalogue = () => {
     <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
         <div className={styles.search}>
-          <SearchBar setSearchQuery={setSearchQuery} disabled={loading} />
+          <SearchBar disabled={loading} />
           <FiltersPanel data={{ order: ['new-first', 'old-first'] }} clearButton={false} />
         </div>
         <div className={styles.dataContainer}>

@@ -6,7 +6,7 @@ import styles from './SearchBar.module.css';
 import { setQuery, deleteQuery } from '../../helpers/changeQuery';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const SearchBar = ({ setSearchQuery, disabled = false }) => {
+const SearchBar = ({ disabled = false }) => {
   const [queryInput, setQueryInput] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,13 +18,11 @@ const SearchBar = ({ setSearchQuery, disabled = false }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setQuery('search', queryInput, location, navigate);
-    setSearchQuery(queryInput);
   };
 
   const handleClear = () => {
-    setQueryInput(''); 
-    deleteQuery('search', location, navigate); 
-    setSearchQuery('');
+    setQueryInput('');
+    deleteQuery('search', location, navigate);
   };
 
   return (
