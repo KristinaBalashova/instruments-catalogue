@@ -21,8 +21,6 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
 
       const { favorites, favError } = await getFavorites(user?.id);
 
-      if (error) throw error;
-
       const favoriteCardIds = favorites.map((item) => item.item_id);
 
       setIsFavorite(favoriteCardIds.includes(id));

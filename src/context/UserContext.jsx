@@ -19,17 +19,12 @@ export const UserProvider = ({ children }) => {
         if (sessionError) throw sessionError;
 
         if (session) {
-          const { data, error } = await getUserData(session.user.id);
-
-          if (error) throw error;
-
-          if (data) {
-            setUser({
-              id: session.user.id,
-              role: data.role,
-              email: session.user.email,
-            });
-          }
+          const { data } = await getUserData(session.user.id);
+          setUser({
+            id: session.user.id,
+            role: data?.role || 'reader',
+            email: session.user.email,
+          });
         }
       } catch (error) {
         setError(error.message);
@@ -45,15 +40,15 @@ export const UserProvider = ({ children }) => {
         if (session) {
           const { data, error } = await getUserData(session.user.id);
 
-          if (error) throw error;
-
-          if (data) {
-            setUser({
-              id: session.user.id,
-              role: data.role,
-              email: session.user.email,
-            });
+          if (error) {
+            console.log(error.message);
           }
+
+          setUser({
+            id: session.user.id,
+            role: data?.role || 'reader',
+            email: session.user.email,
+          });
         }
       };
       fetchUserData();
