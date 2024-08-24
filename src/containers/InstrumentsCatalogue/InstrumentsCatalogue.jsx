@@ -1,12 +1,11 @@
 import { useEffect, useState, useContext, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
 import { supabase } from '../../helpers/supabaseClient';
 import { ThemeContext } from '../../context/context';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { setQuery } from '../../helpers/changeQuery';
 import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 
 import {
@@ -34,22 +33,17 @@ const InstrumentsCatalogue = () => {
   const [searchQuery, setSearchQuery] = useState('*');
   const [dataFilters, setDataFilters] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const location = useLocation();
   const navigate = useNavigate();
-  const filtersObject = getFiltersFromSearchParams(searchParams);
 
+  const filtersObject = getFiltersFromSearchParams(searchParams);
   const { brand = '*', type = '*', country = '*', order = 'new-first' } = filtersObject;
 
   const itemsPerPage = 6;
-
   const listOfFilters = ['brand', 'type', 'country'];
-  const updateQuery = (key, params) => {
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set(key, params);
-    navigate(`${location.pathname}?${searchParams.toString()}`, { replace: true });
-  };
+
   useEffect(() => {
+    navigate(location.pathname, { replace: true });
     const fetchAllData = async () => {
       setLoading(true);
       const { data, error } = await supabase.from('instruments_collection').select('*');
@@ -71,7 +65,7 @@ const InstrumentsCatalogue = () => {
 
   useEffect(() => {
     setCurrentPage(0);
-    updateQuery('page', 1);
+    setQuery('page', 1, location, navigate);
   }, [brand, type, country, order, searchQuery]);
 
   useEffect(() => {
@@ -155,7 +149,6 @@ const InstrumentsCatalogue = () => {
               itemsPerPage={itemsPerPage}
               setCurrentPage={setCurrentPage}
               isVisible={totalItems > itemsPerPage}
-              updateQuery={updateQuery}
             />
           </div>
         </div>
