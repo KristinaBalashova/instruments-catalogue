@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
-import { supabase } from '../../helpers/supabaseClient';
+
+import { USER_MESSAGES } from '../../strings';
+import { getFavorites, deleteFavItem, insertFavItem } from '../../api/api';
 import { UserContext } from '../../context';
 
 import { EditorButtons } from '../../components';
@@ -12,28 +14,22 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
   const { id, name, image } = instrumentData;
   const [isFavorite, setIsFavorite] = useState(false);
   const { user } = useContext(UserContext);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
       if (!user) return;
 
-      setLoading(true);
-      console.log(user?.id);
-      try {
-        const { data, error } = await supabase
-          .from('favorites')
-          .select('item_id')
-          .eq('user_id', user?.id);
+      const { favorites, favError } = await getFavorites(user?.id);
 
-        if (error) throw error;
+      if (error) throw error;
 
-        const favoriteCardIds = data.map((item) => item.item_id);
-        setIsFavorite(favoriteCardIds.includes(id));
-      } catch (error) {
-        console.error('Error fetching favorite status:', error);
+      const favoriteCardIds = favorites.map((item) => item.item_id);
+
+      setIsFavorite(favoriteCardIds.includes(id));
+
+      if (favError) {
+        console.error(favError);
       }
-      setLoading(false);
     };
 
     fetchFavoriteStatus();
@@ -41,7 +37,7 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
 
   const handleClick = async () => {
     if (!user) {
-      alert('You must be logged in to add favorites');
+      alert(USER_MESSAGES.LOGIN_TO_ADD_FAVS);
       return;
     }
 
@@ -52,16 +48,13 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
 
     try {
       if (isFavorite) {
-        const { error } = await supabase
-          .from('favorites')
-          .delete()
-          .match({ item_id: id, user_id: user?.id });
+        const { deleteError } = await deleteFavItem(id, user?.id);
 
-        if (error) throw error;
+        if (deleteError) throw deleteError;
       } else {
-        const { error } = await supabase.from('favorites').insert(favItem);
+        const { insertError } = await insertFavItem(favItem);
 
-        if (error) throw error;
+        if (insertError) throw insertError;
       }
       setIsFavorite(!isFavorite);
     } catch (error) {

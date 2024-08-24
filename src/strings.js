@@ -34,6 +34,7 @@ export const USER_MESSAGES = {
   CONFIRMATION_CHECK:
     "Check your email. If you didn't get a confirmation letter, click here to resend",
   RESEND: 'Resend',
+  LOGIN_TO_ADD_FAVS: 'You must be logged in to add favorites',
   STATUS: {
     SAVE_SUCCESS: 'Instrument data saved successfully!',
     DELETE_SUCCESS: 'Instrument deleted successfully!',

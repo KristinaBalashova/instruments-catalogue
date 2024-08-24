@@ -14,3 +14,24 @@ export const getUserData = async (id) => {
 
   return { data, error };
 };
+
+export const getFavorites = async (id) => {
+  const { data: favorites, error: favError } = await supabase
+    .from('favorites')
+    .select('item_id')
+    .eq('user_id', id);
+  return { favorites, favError };
+};
+
+export const deleteFavItem = async (item_id, user_id) => {
+  const { error: deleteError } = await supabase
+    .from('favorites')
+    .delete()
+    .match({ item_id: item_id, user_id: user_id });
+  return { deleteError };
+};
+
+export const insertFavItem = async (item) => {
+  const { incertError } = await supabase.from('favorites').insert(item);
+  return { incertError };
+};

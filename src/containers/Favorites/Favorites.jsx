@@ -2,6 +2,7 @@ import InstrumentsList from '../../components/InstrumentsList/InstrumentsList';
 import styles from './Favorites.module.css';
 import { Link } from 'react-router-dom';
 import useDeleteItem from '../../hooks/useDeleteItem';
+import { getFavorites } from '../../api/api';
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
 import cx from 'classnames';
@@ -24,13 +25,10 @@ const Favorites = () => {
       setLoading(true);
 
       try {
-        const { data: favorites, error: favError } = await supabase
-          .from('favorites')
-          .select('item_id')
-          .eq('user_id', user?.id);
+        const { favorites, favError } = await getFavorites(user?.id);
 
         if (favError) {
-          console.log(favError);
+          setError(favError);
           setLoading(false);
           return;
         }
@@ -48,8 +46,6 @@ const Favorites = () => {
           } else {
             setData(items);
           }
-        } else {
-          setData([]);
         }
       } catch (error) {
         setError(error.message);
