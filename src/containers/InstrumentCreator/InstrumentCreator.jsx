@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES } from '../../strings';
 import useUploadImage from '../../hooks/useUploadImage';
-import { Button, ImageDownloader, StatusInfo, Input } from '../../components';
+import { Button, ImageDownloader, StatusInfo, Input, Modal } from '../../components';
 import styles from './InstrumentCreator.module.css';
 
 const dataStub = {
@@ -19,11 +20,11 @@ const dataStub = {
 const InstrumentCreator = () => {
   const [newInstrument, setNewInstrument] = useState({ ...dataStub });
   const [imageFile, setImageFile] = useState(null);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (signedUrl) {
@@ -60,17 +61,16 @@ const InstrumentCreator = () => {
 
     if (error) {
       setError(error.message);
-      setIsSuccess(false);
     } else {
-      setIsSuccess(true);
       setError(null);
+      setIsModalOpen(true);
     }
 
     setLoading(false);
   };
 
   return (
-    <div className={styles.root}>
+    <section className={styles.root}>
       <div className={styles.container}>
         <div className={styles.editContainer}>
           <h2>{USER_MESSAGES.ADD_INSTRUMENT}</h2>
@@ -106,9 +106,6 @@ const InstrumentCreator = () => {
               {loading ? 'Saving...' : USER_MESSAGES.SAVE}
             </Button>
           </form>
-          {isSuccess && (
-            <StatusInfo status="success">{USER_MESSAGES.STATUS.SAVE_SUCCESS}</StatusInfo>
-          )}
           {error && <StatusInfo status="fail">{error}</StatusInfo>}
         </div>
         <div className={styles.imageContainer}>
@@ -116,7 +113,22 @@ const InstrumentCreator = () => {
           {errorUpload && <StatusInfo status="fail">{USER_MESSAGES.errors.uploadError}</StatusInfo>}
         </div>
       </div>
-    </div>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          appElement={document.getElementById('root') || undefined}
+        >
+          <StatusInfo status="success">{USER_MESSAGES.STATUS.SAVE_SUCCESS}</StatusInfo>
+          <div className={styles.modalButtons}>
+            <Button onClick={() => setIsModalOpen(false)}>Stay here</Button>
+            <Link to="/">
+              <Button>Return to the main page</Button>
+            </Link>
+          </div>
+        </Modal>
+      )}
+    </section>
   );
 };
 

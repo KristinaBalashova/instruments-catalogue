@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES } from '../../strings';
@@ -16,6 +17,7 @@ import {
   StatusInfo,
   Loader,
   Input,
+  Modal,
 } from '../../components';
 
 import styles from './InstrumentPage.module.css';
@@ -28,6 +30,7 @@ const InstrumentPage = ({ isEditable = false }) => {
   const [editableItem, setEditableItem] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { fetchedItem, errorFetch } = useFetchItem(id);
   const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
@@ -66,9 +69,9 @@ const InstrumentPage = ({ isEditable = false }) => {
 
       if (updateError) {
         throw updateError;
+      } else {
+        setIsModalOpen(true);
       }
-
-      alert(USER_MESSAGES.STATUS.SAVE_SUCCESS);
     } catch (error) {
       setError(error.message);
     }
@@ -97,7 +100,10 @@ const InstrumentPage = ({ isEditable = false }) => {
             label={title}
           />
         ) : (
-          data
+          <>
+            <span>{title}: </span>
+            {data}
+          </>
         )}
       </p>
     </div>
@@ -150,6 +156,21 @@ const InstrumentPage = ({ isEditable = false }) => {
         </div>
       </div>
       {error && <StatusInfo status="fail">{error}</StatusInfo>}
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          appElement={document.getElementById('root') || undefined}
+        >
+          <StatusInfo status="success">{USER_MESSAGES.STATUS.SAVE_SUCCESS}</StatusInfo>
+          <div className={styles.modalButtons}>
+            <Button onClick={() => setIsModalOpen(false)}>Stay here</Button>
+            <Link to="/">
+              <Button>Return to the main page</Button>
+            </Link>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
