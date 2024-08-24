@@ -1,5 +1,14 @@
 import { supabase } from '../helpers/supabaseClient';
 
+export const getSession = async () => {
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabase.auth.getSession();
+
+  return { session, sessionError };
+};
+
 export const getUser = async () => {
   const {
     data: { user: supabaseUser },

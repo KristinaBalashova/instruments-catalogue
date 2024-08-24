@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from 'react';
 import { supabase } from '../helpers/supabaseClient';
-import { getUserData } from '../api/api';
+import { getUserData, getSession } from '../api/api';
 
 export const UserContext = createContext();
 
@@ -9,12 +9,9 @@ export const UserProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchSessionAndSetUser = async () => {
       try {
-        const {
-          data: { session },
-          error: sessionError,
-        } = await supabase.auth.getSession();
+        const { session, sessionError } = await getSession();
 
         if (sessionError) throw sessionError;
 
@@ -31,7 +28,7 @@ export const UserProvider = ({ children }) => {
       }
     };
 
-    fetchUserData();
+    fetchSessionAndSetUser();
   }, []);
 
   const { data } = supabase.auth.onAuthStateChange((event, session) => {
