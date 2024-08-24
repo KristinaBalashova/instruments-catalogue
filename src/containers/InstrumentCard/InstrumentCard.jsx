@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import { supabase } from '../../helpers/supabaseClient';
-import { UserContext } from '../../context/context';
+import { UserContext } from '../../context';
 
 import { EditorButtons } from '../../components';
 

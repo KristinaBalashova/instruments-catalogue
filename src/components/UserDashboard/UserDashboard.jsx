@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { USER_MESSAGES } from '../../strings';
 import { Button } from '../';
-import { UserContext } from '../../context/context';
+import { UserContext } from '../../context';
 
 const UserDashboard = ({ handleSignOut }) => {
   const { user } = useContext(UserContext);

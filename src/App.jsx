@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { UserProvider, ThemeProvider } from './context/context';
+import { UserProvider, ThemeProvider } from './context';
 
-import { Header, ProtectedRoute, ErrorFallback } from './components';
-import { AuthPage, Favorites, InstrumentCreator, InstrumentPage, MainPage } from './containers';
+import { Header, ProtectedRoute, ErrorFallback, MainPage } from './components';
+import { AuthPage, Favorites, InstrumentCreator, InstrumentPage } from './containers';
 
 function App() {
   return (

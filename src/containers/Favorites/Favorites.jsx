@@ -7,7 +7,7 @@ import { supabase } from '../../helpers/supabaseClient';
 import cx from 'classnames';
 import { Button, Loader } from '../../components';
 
-import { ThemeContext, UserContext } from '../../context/context';
+import { ThemeContext, UserContext } from '../../context';
 import { USER_MESSAGES } from '../../strings';
 
 const Favorites = () => {

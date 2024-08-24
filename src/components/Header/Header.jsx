@@ -5,7 +5,7 @@ import { FaStar } from 'react-icons/fa';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
 import { USER_MESSAGES } from '../../strings';
-import { ThemeContext } from '../../context/context';
+import { ThemeContext } from '../../context';
 
 import { Button } from '../';
 

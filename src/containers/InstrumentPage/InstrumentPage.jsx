@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES } from '../../strings';
-import { UserContext } from '../../context/context';
+import { UserContext } from '../../context';
 
 import useFetchItem from '../../hooks/useFetchItem';
 import useUploadImage from '../../hooks/useUploadImage';

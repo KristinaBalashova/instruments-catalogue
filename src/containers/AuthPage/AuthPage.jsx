@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
-import { ThemeContext, UserContext } from '../../context/context';
+import { ThemeContext, UserContext } from '../../context';
 import { UserDashboard, SignForm, StatusInfo } from '../../components';
 import styles from './AuthPage.module.css';
 import cx from 'classnames';
