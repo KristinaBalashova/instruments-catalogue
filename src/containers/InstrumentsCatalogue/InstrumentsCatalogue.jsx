@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { supabase } from '../../helpers/supabaseClient';
 import { ThemeContext } from '../../context/context';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
 
@@ -35,6 +35,8 @@ const InstrumentsCatalogue = () => {
   const [dataFilters, setDataFilters] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const location = useLocation();
+  const navigate = useNavigate();
   const filtersObject = getFiltersFromSearchParams(searchParams);
 
   const { brand = '*', type = '*', country = '*', order = 'new-first' } = filtersObject;
@@ -42,7 +44,11 @@ const InstrumentsCatalogue = () => {
   const itemsPerPage = 6;
 
   const listOfFilters = ['brand', 'type', 'country'];
-
+  const updateQuery = (key, params) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set(key, params);
+    navigate(`${location.pathname}?${searchParams.toString()}`, { replace: true });
+  };
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
@@ -62,6 +68,11 @@ const InstrumentsCatalogue = () => {
 
     fetchAllData();
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(0);
+    updateQuery('page', 1);
+  }, [brand, type, country, order, searchQuery]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,6 +155,7 @@ const InstrumentsCatalogue = () => {
               itemsPerPage={itemsPerPage}
               setCurrentPage={setCurrentPage}
               isVisible={totalItems > itemsPerPage}
+              updateQuery={updateQuery}
             />
           </div>
         </div>
