@@ -43,7 +43,7 @@ const InstrumentsCatalogue = () => {
   const listOfFilters = ['brand', 'type', 'country'];
 
   useEffect(() => {
-    navigate(location.pathname, { replace: true });
+    //navigate(location.pathname, { replace: true });
     const fetchAllData = async () => {
       setLoading(true);
       const { data, error } = await supabase.from('instruments_collection').select('*');
