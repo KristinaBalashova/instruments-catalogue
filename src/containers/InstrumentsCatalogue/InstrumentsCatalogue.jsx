@@ -25,8 +25,6 @@ const InstrumentsCatalogue = () => {
   const [searchParams] = useSearchParams();
   const { theme } = useContext(ThemeContext);
   const { deleteItem, errorDelete } = useDeleteItem();
-
-  const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
@@ -39,11 +37,12 @@ const InstrumentsCatalogue = () => {
   const filtersObject = getFiltersFromSearchParams(searchParams);
   const { brand = '*', type = '*', country = '*', order = 'new-first' } = filtersObject;
 
+  const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1;
+
   const itemsPerPage = 6;
   const listOfFilters = ['brand', 'type', 'country'];
 
   useEffect(() => {
-    //navigate(location.pathname, { replace: true });
     const fetchAllData = async () => {
       setLoading(true);
       const { data, error } = await supabase.from('instruments_collection').select('*');
@@ -64,7 +63,6 @@ const InstrumentsCatalogue = () => {
   }, []);
 
   useEffect(() => {
-    setCurrentPage(0);
     setQuery('page', 1, location, navigate);
   }, [brand, type, country, order, searchQuery]);
 
@@ -147,7 +145,6 @@ const InstrumentsCatalogue = () => {
               currentPage={currentPage}
               totalItems={totalItems}
               itemsPerPage={itemsPerPage}
-              setCurrentPage={setCurrentPage}
               isVisible={totalItems > itemsPerPage}
             />
           </div>

@@ -5,13 +5,7 @@ import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import { setQuery } from '../../helpers/changeQuery';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const PaginationButtons = ({
-  currentPage,
-  totalItems,
-  itemsPerPage,
-  setCurrentPage,
-  isVisible,
-}) => {
+const PaginationButtons = ({ currentPage, totalItems, itemsPerPage, isVisible }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,7 +16,6 @@ const PaginationButtons = ({
   const handleBackClick = () => {
     if (!isBackDisabled) {
       const newPage = currentPage - 1;
-      setCurrentPage(newPage);
       setQuery('page', newPage + 1, location, navigate);
     }
   };
@@ -30,7 +23,6 @@ const PaginationButtons = ({
   const handleForwardClick = () => {
     if (!isForwardDisabled) {
       const newPage = currentPage + 1;
-      setCurrentPage(newPage);
       setQuery('page', newPage + 1, location, navigate);
     }
   };
