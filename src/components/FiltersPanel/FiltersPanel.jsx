@@ -1,26 +1,21 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { USER_MESSAGES } from '../../strings';
 import { Button } from '../';
 import styles from './FiltersPanel.module.css';
+import { setQuery, deleteQuery } from '../../helpers/changeQuery';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const FiltersPanel = ({ data, clearButton = true }) => {
   const location = useLocation();
-  const navigateTo = useNavigate();
+  const navigate = useNavigate();
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
-    const searchParams = new URLSearchParams(location.search);
-
     if (value === '*') {
-      searchParams.delete(name);
+      deleteQuery(name, location, navigate);
     } else {
-      searchParams.set(name, value);
+      setQuery(name, value, location, navigate);
     }
-
-    searchParams.set('page', 0);
-
-    navigateTo(`?${searchParams.toString()}`);
   };
 
   const handleFilterClear = () => {
@@ -28,8 +23,7 @@ const FiltersPanel = ({ data, clearButton = true }) => {
     Object.keys(data).forEach((filter) => {
       searchParams.delete(filter);
     });
-    searchParams.set('page', 0);
-    navigateTo(`?${searchParams.toString()}`);
+    navigate(`${location.pathname}?${searchParams.toString()}`, { replace: true });
   };
 
   return (

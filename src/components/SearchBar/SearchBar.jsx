@@ -3,22 +3,26 @@ import { RxCross2 } from 'react-icons/rx';
 import { USER_MESSAGES } from '../../strings';
 import { Button, Input } from '../';
 import styles from './SearchBar.module.css';
+import { setQuery, deleteQuery } from '../../helpers/changeQuery';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const SearchBar = ({ setSearchQuery, disabled = false }) => {
-  const [query, setQuery] = useState('');
+const SearchBar = ({ disabled = false }) => {
+  const [queryInput, setQueryInput] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
-    setQuery(event.target.value);
+    setQueryInput(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSearchQuery(query);
+    setQuery('search', queryInput, location, navigate);
   };
 
   const handleClear = () => {
-    setQuery('');
-    setSearchQuery('');
+    setQueryInput('');
+    deleteQuery('search', location, navigate);
   };
 
   return (
@@ -27,11 +31,11 @@ const SearchBar = ({ setSearchQuery, disabled = false }) => {
         <Input
           type="text"
           placeholder={USER_MESSAGES.SEARCH}
-          value={query}
+          value={queryInput}
           onChange={handleInputChange}
           disabled={disabled}
         />
-        {query && (
+        {queryInput && (
           <RxCross2 className={styles.clearIcon} onClick={handleClear} aria-label="Clear search" />
         )}
       </div>

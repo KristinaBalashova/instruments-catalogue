@@ -1,31 +1,29 @@
 import React from 'react';
 import cx from 'classnames';
 import styles from './PaginationButtons.module.css';
-import { IoIosArrowForward } from 'react-icons/io';
-import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
+import { setQuery } from '../../helpers/changeQuery';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const PaginationButtons = ({
-  currentPage,
-  totalItems,
-  itemsPerPage,
-  setCurrentPage,
-  isVisible,
-}) => {
+const PaginationButtons = ({ currentPage, totalItems, itemsPerPage, isVisible }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // Define isDisabled constants
   const isBackDisabled = currentPage === 0;
   const isForwardDisabled = currentPage + 1 >= totalPages;
 
   const handleBackClick = () => {
     if (!isBackDisabled) {
-      setCurrentPage(currentPage - 1);
+      const newPage = currentPage - 1;
+      setQuery('page', newPage + 1, location, navigate);
     }
   };
 
   const handleForwardClick = () => {
     if (!isForwardDisabled) {
-      setCurrentPage(currentPage + 1);
+      const newPage = currentPage + 1;
+      setQuery('page', newPage + 1, location, navigate);
     }
   };
 

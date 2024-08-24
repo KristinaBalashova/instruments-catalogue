@@ -1,12 +1,11 @@
 import { useEffect, useState, useContext, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
 import { supabase } from '../../helpers/supabaseClient';
 import { ThemeContext } from '../../context/context';
-
+import { setQuery } from '../../helpers/changeQuery';
 import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 
 import {
@@ -26,21 +25,21 @@ const InstrumentsCatalogue = () => {
   const [searchParams] = useSearchParams();
   const { theme } = useContext(ThemeContext);
   const { deleteItem, errorDelete } = useDeleteItem();
-
-  const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('*');
   const [dataFilters, setDataFilters] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const filtersObject = getFiltersFromSearchParams(searchParams);
-
   const { brand = '*', type = '*', country = '*', order = 'new-first' } = filtersObject;
 
-  const itemsPerPage = 6;
+  const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1;
+  const searchQuery = searchParams.get('search') || '*';
 
+  const itemsPerPage = 6;
   const listOfFilters = ['brand', 'type', 'country'];
 
   useEffect(() => {
@@ -62,6 +61,10 @@ const InstrumentsCatalogue = () => {
 
     fetchAllData();
   }, []);
+
+  useEffect(() => {
+    setQuery('page', 1, location, navigate);
+  }, [brand, type, country, order, searchQuery]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,7 +110,7 @@ const InstrumentsCatalogue = () => {
     <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
         <div className={styles.search}>
-          <SearchBar setSearchQuery={setSearchQuery} disabled={loading} />
+          <SearchBar disabled={loading} />
           <FiltersPanel data={{ order: ['new-first', 'old-first'] }} clearButton={false} />
         </div>
         <div className={styles.dataContainer}>
@@ -142,7 +145,6 @@ const InstrumentsCatalogue = () => {
               currentPage={currentPage}
               totalItems={totalItems}
               itemsPerPage={itemsPerPage}
-              setCurrentPage={setCurrentPage}
               isVisible={totalItems > itemsPerPage}
             />
           </div>
