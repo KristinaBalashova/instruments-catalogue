@@ -17,6 +17,7 @@ const Favorites = () => {
   const [error, setError] = useState(null);
   const { user } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -58,10 +59,10 @@ const Favorites = () => {
     };
 
     fetchFavorites();
-  }, [user]);
+  }, [user, reload]);
 
   const handleDeleteSuccess = useCallback((deletedId) => {
-    setData((prevData) => prevData.filter((item) => item.id !== deletedId));
+    setReload((prev) => !prev);
   }, []);
 
   return (
