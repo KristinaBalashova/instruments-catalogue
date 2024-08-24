@@ -1,16 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
 import { ThemeContext, UserContext } from '../../context';
-import { UserDashboard, SignForm, StatusInfo } from '../../components';
+import { UserDashboard, SignForm, StatusInfo, Loader } from '../../components';
 import styles from './AuthPage.module.css';
 import cx from 'classnames';
 import ConfirmationCheck from '../../components/ConfirmationCheck/ConfirmationCheck';
 
 const AuthPage = () => {
   const { user, setUser } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
   const [confirmationCheck, setConfirmationCheck] = useState(false);
   const [error, setError] = useState(null);
-  const { theme } = useContext(ThemeContext);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (confirmationCheck) {
@@ -27,42 +28,51 @@ const AuthPage = () => {
   }, [confirmationCheck, setUser]);
 
   const handleSignIn = async (email, password, setError) => {
-    const { error, data } = await supabase.auth.signInWithPassword({ email, password });
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       setError(error.message);
     }
+    setLoading(false);
   };
 
   const handleSignUp = async (email, password, setError) => {
-    const { error, data } = await supabase.auth.signUp({ email, password });
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
       setError(error.message);
     } else {
       setConfirmationCheck(true);
     }
+    setLoading(false);
   };
 
   const handleSignOut = async () => {
+    setLoading(true);
     const { error } = await supabase.auth.signOut();
 
     if (error) {
       setError(error.message);
     }
+    setLoading(false);
   };
 
   const handleResend = async (email) => {
+    setLoading(true);
     const { error } = await supabase.auth.resend({ type: 'signup', email });
 
     if (error) {
       setError(error.message);
     }
+    setLoading(false);
   };
 
   return (
     <div className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
+        {loading && <Loader />}
         {!user && !confirmationCheck && (
           <SignForm handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
         )}
