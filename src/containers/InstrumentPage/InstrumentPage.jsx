@@ -9,7 +9,14 @@ import useFetchItem from '../../hooks/useFetchItem';
 import useUploadImage from '../../hooks/useUploadImage';
 import useDeleteItem from '../../hooks/useDeleteItem';
 
-import { Button, ImageDownloader, EditorButtons, StatusInfo, Loader } from '../../components';
+import {
+  Button,
+  ImageDownloader,
+  EditorButtons,
+  StatusInfo,
+  Loader,
+  Input,
+} from '../../components';
 
 import styles from './InstrumentPage.module.css';
 
@@ -81,14 +88,13 @@ const InstrumentPage = ({ isEditable = false }) => {
   const renderInputField = (title, data) => (
     <div key={title} className={styles.descriptionContainer}>
       <p className={styles.description}>
-        <span className={styles.title}>{title}:</span>
         {isEditable ? (
-          <input
+          <Input
             type="text"
             name={title}
-            value={data}
+            value={data || ''}
             onChange={handleInputChange}
-            className={styles.input}
+            label={title}
           />
         ) : (
           data
@@ -122,14 +128,14 @@ const InstrumentPage = ({ isEditable = false }) => {
         <div className={styles.detailsContainer}>
           <div className={styles.content}>
             <h1 className={styles.name}>
-              <span className={styles.title}>Name:</span>
               {isEditable ? (
-                <input
+                <Input
                   type="text"
                   name="name"
                   value={editableItem?.name || ''}
                   onChange={handleInputChange}
                   className={styles.input}
+                  label={'name'}
                 />
               ) : (
                 editableItem?.name

@@ -49,28 +49,6 @@
 .title {
   font-weight: 600;
 }
-.name {
-  font-size: 26px;
-  margin-bottom: 10px;
-}
-
-.description {
-  font-size: 1.2em;
-  margin-bottom: 20px;
-}
-
-.characteristics {
-  margin-top: 20px;
-}
-
-.characteristics h2 {
-  margin-bottom: 10px;
-}
-
-.characteristicItem {
-  margin-bottom: 8px;
-  font-size: 1em;
-}
 
 .editorButtons {
   font-size: 30px;

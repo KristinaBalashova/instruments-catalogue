@@ -16,7 +16,6 @@
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.44.2",
-    "antd": "^5.19.1",
     "classnames": "^2.5.1",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.400.0",

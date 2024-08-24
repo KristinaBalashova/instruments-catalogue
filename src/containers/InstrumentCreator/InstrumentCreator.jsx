@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES } from '../../strings';
 import useUploadImage from '../../hooks/useUploadImage';
-import { Button, ImageDownloader, StatusInfo } from '../../components';
+import { Button, ImageDownloader, StatusInfo, Input } from '../../components';
 import styles from './InstrumentCreator.module.css';
 
 const dataStub = {
-  name: 'Name of the best music instrument',
-  description: 'Description for the best music instrument',
+  name: '',
+  description: '',
   image: '',
-  type: 'String',
-  date: '10.10.2024',
-  brand: 'Brand',
-  country: 'Country',
-  materials: 'Wood, Metal',
+  type: '',
+  date: '',
+  brand: '',
+  country: '',
+  materials: '',
 };
 
 const InstrumentCreator = () => {
@@ -22,6 +22,7 @@ const InstrumentCreator = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
 
   useEffect(() => {
@@ -41,8 +42,17 @@ const InstrumentCreator = () => {
     });
   };
 
+  const handleCheckboxChange = (e) => {
+    setIsConfirmed(e.target.checked);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isConfirmed) {
+      setError('You must confirm before submitting.');
+      return;
+    }
 
     setLoading(true);
 
@@ -68,20 +78,30 @@ const InstrumentCreator = () => {
             {Object.keys(dataStub).map((item) => {
               if (item === 'image') return null;
               return (
-                <div key={item}>
-                  <label htmlFor={item}>{USER_MESSAGES[item.toUpperCase()] || item}:</label>
-                  <input
-                    id={item}
-                    type="text"
-                    name={item}
-                    value={newInstrument[item]}
-                    onChange={handleChange}
-                    required
-                    className={styles.input}
-                  />
-                </div>
+                <Input
+                  id={item}
+                  type="text"
+                  name={item}
+                  value={newInstrument[item]}
+                  onChange={handleChange}
+                  required
+                  label={USER_MESSAGES[item.toUpperCase()] || item}
+                  key={item}
+                />
               );
             })}
+            <div className={styles.checkboxContainer}>
+              <input
+                type="checkbox"
+                id="confirmation"
+                checked={isConfirmed}
+                onChange={handleCheckboxChange}
+                className={styles.checkbox}
+              />
+              <label htmlFor="confirmation" className={styles.checkboxLabel}>
+                {USER_MESSAGES.CONFIRMATION_LABEL}
+              </label>
+            </div>
             <Button type="submit" disabled={loading}>
               {loading ? 'Saving...' : USER_MESSAGES.SAVE}
             </Button>
