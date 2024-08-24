@@ -1,15 +1,15 @@
 .button {
   padding: 10px;
+  border-radius: 8px;
+  height: 40px;
+  min-width: 100px;
+  max-width: 200px;
   font-family: var(--font-family);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.2s ease;
-  border-radius: 8px;
-  height: 40px;
-  min-width: 100px;
-  max-width: 200px;
 }
 
 .disabled {

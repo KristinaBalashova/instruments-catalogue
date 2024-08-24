@@ -7,15 +7,15 @@
 }
 
 .email {
-  font-size: 14px;
   margin-bottom: 30px;
   border-color: var(--primary-color);
+  font-size: 14px;
   color: var(--primary-color);
 }
 
 .buttons {
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
   gap: 10px;
-  justify-content: space-between;
 }

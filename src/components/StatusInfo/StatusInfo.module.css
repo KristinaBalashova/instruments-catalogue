@@ -1,11 +1,11 @@
 .info {
-  border: 1px solid #d2d2d2;
-  color: #9c9999;
-  border-radius: 8px;
-  padding: 10px;
   display: flex;
   align-items: center;
+  padding: 10px;
   gap: 10px;
+  border: 1px solid #d2d2d2;
+  border-radius: 8px;
+  color: #9c9999;
 }
 
 .success {

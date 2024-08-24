@@ -27,7 +27,7 @@ const SearchBar = ({ disabled = false }) => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <div className={styles.inputWrapper}>
+      <div className={styles.container}>
         <Input
           type="text"
           placeholder={USER_MESSAGES.SEARCH}

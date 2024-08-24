@@ -10,19 +10,19 @@
   }
 }
 
-.inputWrapper {
+.container {
   position: relative;
   flex: 1;
 }
 
 .input {
+  box-sizing: border-box;
   width: 100%;
   padding: 10px;
   padding-right: 40px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-  box-sizing: border-box;
 }
 
 .clearIcon {

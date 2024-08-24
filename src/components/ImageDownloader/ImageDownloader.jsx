@@ -46,7 +46,7 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
         alt={imageFile ? imageFile.name : USER_MESSAGES.PLACEHOLDER_IMG}
         className={styles.imagePreview}
       />
-      <label>Upload image:</label>
+      <label>{USER_MESSAGES.IMG_UPLOAD}</label>
       <input
         type="file"
         accept="image/jpeg, image/png"

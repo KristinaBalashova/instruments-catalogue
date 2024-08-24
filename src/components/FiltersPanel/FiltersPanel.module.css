@@ -3,6 +3,7 @@
   flex-direction: column;
   max-width: 300px;
   font-family: var(--font-family);
+
   @media (min-width: 744px) {
     width: 300px;
   }

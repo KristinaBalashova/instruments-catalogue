@@ -39,13 +39,13 @@ const Header = () => {
             <BsToggleOff
               onClick={handleToggleTheme}
               className={styles.toggle}
-              aria-label="Switch to dark mode"
+              aria-label={USER_MESSAGES.SWITCH_DARK}
             />
           ) : (
             <BsToggleOn
               onClick={handleToggleTheme}
               className={styles.toggleDark}
-              aria-label="Switch to light mode"
+              aria-label={USER_MESSAGES.SWITCH_LIGHT}
             />
           )}
         </div>

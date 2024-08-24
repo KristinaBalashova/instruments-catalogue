@@ -9,9 +9,9 @@ import styles from './SignForm.module.css';
 const authSchema = z.object({
   email: z
     .string()
-    .email({ message: 'Invalid email address' })
-    .refine((email) => isValidDomain(email), { message: 'Invalid email domain' }),
-  password: z.string().min(6, { message: 'Password must be at least 6 characters long' }),
+    .email({ message: USER_MESSAGES.VALIDATION.INVALID_EMAIL })
+    .refine((email) => isValidDomain(email), { message: USER_MESSAGES.VALIDATION.INVALID_DOMAIN }),
+  password: z.string().min(6, { message: USER_MESSAGES.VALIDATION.INVALID_PASSWORD }),
 });
 
 const SignForm = ({ handleSignIn, handleSignUp }) => {

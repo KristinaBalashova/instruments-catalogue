@@ -1,7 +1,6 @@
 export { default as Button } from './Button/Button';
 export { default as EditorButtons } from './EditorButtons/EditorButtons';
 export { default as FiltersPanel } from './FiltersPanel/FiltersPanel';
-export { default as Footer } from './Footer/Footer';
 export { default as Header } from './Header/Header';
 export { default as ImageDownloader } from './ImageDownloader/ImageDownloader';
 export { default as Input } from './Input/Input';

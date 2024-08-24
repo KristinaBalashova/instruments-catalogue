@@ -37,6 +37,14 @@ export const USER_MESSAGES = {
   LOGIN_TO_ADD_FAVS: 'You must be logged in to add favorites',
   CONFIRMATION_LABEL: 'Confirm adding new instrument',
   CONFIRMATION_LABEL: 'Confirm new instrument',
+  RELOAD: 'Reload page',
+  SWITCH_DARK: 'Switch to dark mode',
+  SWITCH_LIGHT: 'Switch to light mode',
+  VALIDATION: {
+    INVALID_EMAIL: 'Invalid email address',
+    INVALID_DOMAIN: 'Invalid email domain',
+    INVALID_PASSWORD: 'Password must be at least 6 characters long',
+  },
   STATUS: {
     SAVE_SUCCESS: 'Instrument data saved successfully!',
     DELETE_SUCCESS: 'Instrument deleted successfully!',
@@ -55,5 +63,6 @@ export const SERVER_MESSAGES = {
     SAVE_ERROR: 'Failed to save instrument data.',
     UPDATE_ERROR: 'Error updating',
     FETCHING_DATA: 'Error fetching data',
+    ERROR: 'Something went wrong',
   },
 };

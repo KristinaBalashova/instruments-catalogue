@@ -1,15 +1,15 @@
 .root {
-  font-size: 14px;
   padding: 25px;
+  font-size: 14px;
 }
 
 .container {
-  max-width: 1440px;
-  margin: 0 auto;
-  width: 100%;
-  gap: 30px;
   display: flex;
   flex-direction: row;
+  gap: 30px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .intro {
