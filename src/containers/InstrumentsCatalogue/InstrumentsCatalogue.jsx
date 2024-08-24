@@ -30,6 +30,7 @@ const InstrumentsCatalogue = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [dataFilters, setDataFilters] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reload, setReload] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -99,11 +100,10 @@ const InstrumentsCatalogue = () => {
     };
 
     fetchData();
-  }, [currentPage, searchQuery, brand, type, country, order]);
+  }, [currentPage, searchQuery, brand, type, country, order, reload]);
 
   const handleDeleteSuccess = useCallback((deletedId) => {
-    setData((prevData) => prevData.filter((item) => item.id !== deletedId));
-    setTotalItems((prevTotal) => prevTotal - 1);
+    setReload((prev) => !prev);
   }, []);
 
   return (
