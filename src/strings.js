@@ -29,6 +29,7 @@ export const USER_MESSAGES = {
   DELETE: 'Delete',
   NOTHING_FOUND: 'Sorry, nothing found',
   RETURN: 'Return to the main page',
+  STAY: 'Stay here',
   NOT_AUTH: 'You are not logged in',
   FAVS: 'Your favorite instruments are here!',
   CONFIRMATION_CHECK:

@@ -1,12 +1,12 @@
 import { useEffect, useState, useContext, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import cx from 'classnames';
+
 import { supabase } from '../../helpers/supabaseClient';
 import { ThemeContext } from '../../context';
 import { setQuery } from '../../helpers/changeQuery';
 import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
-import { useLocation, useNavigate } from 'react-router-dom';
-import cx from 'classnames';
 
 import {
   FiltersPanel,
@@ -20,17 +20,20 @@ import {
 } from '../../components';
 
 import styles from './InstrumentsCatalogue.module.css';
+import { USER_MESSAGES } from '../../strings';
 
 const InstrumentsCatalogue = () => {
   const [searchParams] = useSearchParams();
   const { theme } = useContext(ThemeContext);
   const { deleteItem, errorDelete } = useDeleteItem();
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
   const [dataFilters, setDataFilters] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reload, setReload] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -133,7 +136,7 @@ const InstrumentsCatalogue = () => {
           </div>
 
           {loading && <Loader />}
-          {!loading && totalItems === 0 && <StatusInfo>{'nothing found'}</StatusInfo>}
+          {!loading && totalItems === 0 && <StatusInfo>{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>}
           <div className={styles.cardsContainer}>
             <InstrumentsList
               data={data}

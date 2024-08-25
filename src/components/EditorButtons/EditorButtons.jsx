@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoTrash } from 'react-icons/io5';
+
 import { USER_MESSAGES } from '../../strings';
 import { Modal, Button, StatusInfo } from '../';
 

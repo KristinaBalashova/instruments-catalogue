@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   padding: 25px;
+
   @media (min-width: 744px) {
     padding: 50px;
   }
@@ -12,12 +13,12 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-
+  padding: 25px;
+  width: 100%;
   background-color: var(--secondary-color);
   border: 2px solid var(--border-color);
   box-shadow: 5px 5px 0 var(--darkest-teal);
-  padding: 25px;
-  width: 100%;
+
   @media (min-width: 744px) {
     width: 70%;
     flex-direction: row;
@@ -35,69 +36,41 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.detailsContainer {
-  width: 100%;
-  max-width: 800px;
+.infoContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.content {
+  gap: 10px;
+  width: 100%;
+  max-width: 800px;
 }
 
 .title {
   font-weight: 600;
 }
 
-.editorButtons {
-  font-size: 30px;
-  text-decoration: none;
-}
-
-.delete {
-  color: rgb(151, 22, 22);
-}
-
 .link {
   text-decoration: none;
 }
 
-.input {
-  background-color: var(--secondary-color);
-  color: var(--accent-color);
-  border: 2px solid var(--border-color);
-  padding: 10px;
-  font-size: 14px;
-  font-family: var(--font-family);
-  width: 100%;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
-  box-shadow: 3px 3px 0 var(--darkest-teal);
-}
-
-.input:hover {
-  border-color: var(--lighter-teal);
-}
-
-.input:focus {
-  background-color: var(--background-color);
-  border-color: var(--primary-color);
-}
-
-.input::placeholder {
-  color: var(--border-color);
-  opacity: 0.7;
-}
-
 .modalButtons {
   display: flex;
-  gap: 20px;
   flex-direction: column;
   gap: 10px;
   margin-top: 10px;
 
   @media (min-width: 744px) {
     flex-direction: row;
+  }
+}
+
+.root.darkTheme {
+  background-color: var(--dark-theme-background);
+  color: var(--lighter-text);
+}
+
+.root.darkTheme {
+  .container {
+    background-color: var(--dark-theme-background);
   }
 }

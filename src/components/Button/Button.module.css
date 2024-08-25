@@ -28,7 +28,7 @@
 }
 
 .button.primary:hover {
-  background-color: var(--hover-color);
+  background-color: var(--darker-teal);
   color: var(--secondary-color);
 }
 
@@ -48,7 +48,7 @@
 }
 
 .button.secondary:hover {
-  background-color: var(--border-color);
+  background-color: var(--darkest-gray);
   color: var(--secondary-color);
 }
 

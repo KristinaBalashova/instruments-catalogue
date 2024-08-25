@@ -1,10 +1,10 @@
 import { useEffect, useState, useCallback, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES } from '../../strings';
-import { UserContext } from '../../context';
+import { UserContext, ThemeContext } from '../../context';
 
 import useFetchItem from '../../hooks/useFetchItem';
 import useUploadImage from '../../hooks/useUploadImage';
@@ -24,8 +24,8 @@ import styles from './InstrumentPage.module.css';
 
 const InstrumentPage = ({ isEditable = false }) => {
   const { id } = useParams();
-
   const { user } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
 
   const [editableItem, setEditableItem] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -85,7 +85,7 @@ const InstrumentPage = ({ isEditable = false }) => {
   };
 
   if (!fetchedItem) return <Loader />;
-  if (!editableItem) return <StatusInfo status="fail">No avaliable data</StatusInfo>;
+  if (!editableItem) return <StatusInfo status="fail">{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>;
   if (errorFetch) return <StatusInfo status="fail">{errorFetch}</StatusInfo>;
 
   const renderInputField = (title, data) => (
@@ -110,7 +110,7 @@ const InstrumentPage = ({ isEditable = false }) => {
   );
 
   return (
-    <div className={styles.root}>
+    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           {isEditable ? (
@@ -131,28 +131,26 @@ const InstrumentPage = ({ isEditable = false }) => {
             />
           )}
         </div>
-        <div className={styles.detailsContainer}>
-          <div className={styles.content}>
-            <h1 className={styles.name}>
-              {isEditable ? (
-                <Input
-                  type="text"
-                  name="name"
-                  value={editableItem?.name || ''}
-                  onChange={handleInputChange}
-                  className={styles.input}
-                  label={'name'}
-                />
-              ) : (
-                editableItem?.name
-              )}
-            </h1>
-            {editableItem &&
-              ['brand', 'description', 'country', 'materials', 'type', 'date'].map((title) =>
-                renderInputField(title, editableItem[title]),
-              )}
-            {isEditable && <Button onClick={handleSave}>{USER_MESSAGES.SAVE}</Button>}
-          </div>
+        <div className={styles.infoContainer}>
+          <h1 className={styles.name}>
+            {isEditable ? (
+              <Input
+                type="text"
+                name="name"
+                value={editableItem?.name || ''}
+                onChange={handleInputChange}
+                className={styles.input}
+                label={'name'}
+              />
+            ) : (
+              editableItem?.name
+            )}
+          </h1>
+          {editableItem &&
+            ['brand', 'description', 'country', 'materials', 'type', 'date'].map((title) =>
+              renderInputField(title, editableItem[title]),
+            )}
+          {isEditable && <Button onClick={handleSave}>{USER_MESSAGES.SAVE}</Button>}
         </div>
       </div>
       {error && <StatusInfo status="fail">{error}</StatusInfo>}
@@ -164,14 +162,14 @@ const InstrumentPage = ({ isEditable = false }) => {
         >
           <StatusInfo status="success">{USER_MESSAGES.STATUS.SAVE_SUCCESS}</StatusInfo>
           <div className={styles.modalButtons}>
-            <Button onClick={() => setIsModalOpen(false)}>Stay here</Button>
+            <Button onClick={() => setIsModalOpen(false)}>{USER_MESSAGES.STAY}</Button>
             <Link to="/">
-              <Button>Return to the main page</Button>
+              <Button secondary>{USER_MESSAGES.RETURN}</Button>
             </Link>
           </div>
         </Modal>
       )}
-    </div>
+    </section>
   );
 };
 

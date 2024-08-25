@@ -57,6 +57,7 @@
     display: flex;
   }
 }
+
 .root.darkTheme {
   background-color: var(--dark-theme-background);
   color: white;
