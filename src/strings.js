@@ -25,7 +25,7 @@ export const USER_MESSAGES = {
   ALL: 'All',
   CREATED_BY: 'Created by',
   PLACEHOLDER_IMG: 'Placeholder image',
-  UPLOAD_RULES: 'Upload PNG or JPG picture, 500x500 max with removed background',
+  UPLOAD_RULES: 'Upload PNG or JPG picture, 500x500, white background',
   DELETE: 'Delete',
   NOTHING_FOUND: 'Sorry, nothing found',
   RETURN: 'Return to the main page',
@@ -40,6 +40,7 @@ export const USER_MESSAGES = {
   RELOAD: 'Reload page',
   SWITCH_DARK: 'Switch to dark mode',
   SWITCH_LIGHT: 'Switch to light mode',
+  NO_FAVS: 'No favorites added yet. Browse the collections and discover your favorites!',
   VALIDATION: {
     INVALID_EMAIL: 'Invalid email address',
     INVALID_DOMAIN: 'Invalid email domain',

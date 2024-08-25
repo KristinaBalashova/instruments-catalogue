@@ -1,23 +1,23 @@
-.container {
-  background-color: var(--secondary-color);
+.root {
+  padding: 15px;
   border: 2px solid var(--border-color);
   box-shadow: 5px 5px 0 var(--darkest-teal);
-  width: 100%;
-  padding: 15px;
-  text-align: center;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: column;
 
   @media (min-width: 744px) {
     width: 300px;
   }
 }
 
+.container {
+  text-align: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .img {
   width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
   cursor: pointer;
 }
 
@@ -28,13 +28,13 @@
   cursor: pointer;
 }
 
-.buttons {
+.cardManager {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.content {
+.info {
   padding: 15px;
 }
 
@@ -42,22 +42,28 @@
   align-self: flex-end;
 }
 
-.heart {
-  width: 50px;
-}
-
 .link {
   text-decoration: none;
 }
 
 .filled {
-  color: #d4af37;
+  color: var(--gold);
   cursor: pointer;
   font-size: 30px;
 }
 
 .unfilled {
-  color: gray;
+  color: var(--darkest-gray);
   cursor: pointer;
   font-size: 30px;
+}
+
+.root.darkTheme {
+  box-shadow: 5px 5px 0 var(--darker-teal);
+}
+
+.root.darkTheme {
+  .title {
+    color: var(--lighter-gray);
+  }
 }

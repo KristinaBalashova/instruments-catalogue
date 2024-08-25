@@ -44,7 +44,7 @@ footer {
   --accent-color: #333333; /* Black */
   --background-color: #f0f0f0; /* Light Gray */
   --border-color: #cccccc; /* Gray */
-  --hover-color: #005959; /* Darker Teal */
+  --darker-teal: #005959; /* Darker Teal */
   --font-family: 'Courier New', Courier, monospace;
   --darkest-teal: #004c4c; /* Darkest Teal for box-shadow */
   --lighter-teal: #b2d8d8; /* Lighter Teal for disabled state */
@@ -53,7 +53,7 @@ footer {
   --darkest-gray: #666666; /* Darkest Gray for box-shadow */
   --lighter-gray: #d3d3d3; /* Lighter Gray for disabled state */
   --lighter-gray-border: #c0c0c0; /* Lighter Gray Border for disabled state */
-
+  --gold: #d4af37;
   --dark-theme-background: #1c1c1c;
   --dark-theme-support: hsla(0, 0%, 100%, 0.08);
 }

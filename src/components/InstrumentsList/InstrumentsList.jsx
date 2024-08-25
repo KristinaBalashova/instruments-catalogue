@@ -10,6 +10,7 @@ const InstrumentsList = ({ data, deleteItem, errorDelete, onDeleteSuccess }) => 
           key={item.id}
           instrumentData={item}
           onDelete={() => deleteItem(item.id, () => onDeleteSuccess(item.id))}
+          onFavDelete={onDeleteSuccess}
           errorDelete={errorDelete}
         />
       ))}

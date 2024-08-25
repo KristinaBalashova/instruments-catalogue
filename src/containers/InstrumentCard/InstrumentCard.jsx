@@ -1,19 +1,22 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
+import cx from 'classnames';
 
 import { USER_MESSAGES } from '../../strings';
 import { getFavorites, deleteFavItem, insertFavItem } from '../../api/api';
-import { UserContext } from '../../context';
+import { UserContext, ThemeContext } from '../../context';
 
 import { EditorButtons } from '../../components';
 
 import styles from './InstrumentCard.module.css';
 
-const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
+const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) => {
   const { id, name, image } = instrumentData;
   const [isFavorite, setIsFavorite] = useState(false);
   const { user } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
@@ -33,7 +36,10 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
     fetchFavoriteStatus();
   }, [user, id]);
 
-  const handleClick = async () => {
+  const handleFavClick = async (event) => {
+    //event.preventDefault(); // Prevent default action
+    //event.stopPropagation(); // Stop event propagation
+
     if (!user) {
       alert(USER_MESSAGES.LOGIN_TO_ADD_FAVS);
       return;
@@ -47,11 +53,10 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
     try {
       if (isFavorite) {
         const { deleteError } = await deleteFavItem(id, user?.id);
-
         if (deleteError) throw deleteError;
+        onFavDelete();
       } else {
         const { insertError } = await insertFavItem(favItem);
-
         if (insertError) throw insertError;
       }
       setIsFavorite(!isFavorite);
@@ -60,20 +65,32 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete }) => {
     }
   };
 
+  const handleDeleteClick = (event) => {
+    event.preventDefault(); // Prevent default action
+    event.stopPropagation(); // Stop event propagation
+  };
+
+  const handleCardClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    navigate(`/instrument-page/${id}`, { state: { instrumentData } });
+  };
+
   return (
-    <div key={id} className={styles.container}>
-      <Link to={`/instrument-page/${id}`} state={{ instrumentData }} className={styles.link}>
+    <div key={id} className={cx(styles.root, styles.link, theme === 'dark' && styles.darkTheme)}>
+      <div className={styles.container}>
         <img src={image} alt={name} className={styles.img} />
-      </Link>
-      <div className={styles.content}>
-        <Link to={`/instrument-page/${id}`} state={{ instrumentData }} className={styles.link}>
+        <div className={styles.info}>
           <h3 className={styles.title}>{name}</h3>
-        </Link>
-        <div className={styles.buttons}>
-          {user?.role === 'admin' && (
-            <EditorButtons id={id} onDelete={onDelete} errorDelete={errorDelete} />
-          )}
-          <FaStar className={isFavorite ? styles.filled : styles.unfilled} onClick={handleClick} />
+          <div className={styles.cardManager}>
+            {user?.role === 'admin' && (
+              <EditorButtons id={id} onDelete={onDelete} errorDelete={errorDelete} />
+            )}
+            <FaStar
+              className={isFavorite ? styles.filled : styles.unfilled}
+              onClick={handleFavClick}
+            />
+          </div>
         </div>
       </div>
     </div>

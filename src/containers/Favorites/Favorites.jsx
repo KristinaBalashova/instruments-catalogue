@@ -1,15 +1,18 @@
-import InstrumentsList from '../../components/InstrumentsList/InstrumentsList';
-import styles from './Favorites.module.css';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import cx from 'classnames';
+
+import { supabase } from '../../helpers/supabaseClient';
 import useDeleteItem from '../../hooks/useDeleteItem';
 import { getFavorites } from '../../api/api';
-import { useState, useEffect, useCallback, useContext } from 'react';
-import { supabase } from '../../helpers/supabaseClient';
-import cx from 'classnames';
-import { Button, Loader, StatusInfo } from '../../components';
 
 import { ThemeContext, UserContext } from '../../context';
 import { USER_MESSAGES } from '../../strings';
+
+import { Button, Loader, StatusInfo } from '../../components';
+import InstrumentsList from '../../components/InstrumentsList/InstrumentsList';
+
+import styles from './Favorites.module.css';
 
 const Favorites = () => {
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
@@ -57,7 +60,7 @@ const Favorites = () => {
     fetchFavorites();
   }, [user, reload]);
 
-  const handleDeleteSuccess = useCallback((deletedId) => {
+  const handleDeleteSuccess = useCallback(() => {
     setReload((prev) => !prev);
   }, []);
 
@@ -74,7 +77,8 @@ const Favorites = () => {
           {loading && <Loader />}
           {!loading && data.length === 0 && (
             <StatusInfo>
-              No added instruments. <Link to="/">Return to the main page.</Link>
+              {USER_MESSAGES.NO_FAVS}
+              <Link to="/">{USER_MESSAGES.RETURN}</Link>
             </StatusInfo>
           )}
           {!loading && data.length > 0 && (
@@ -84,6 +88,7 @@ const Favorites = () => {
               statusDelete={statusDelete}
               errorDelete={errorDelete}
               onDeleteSuccess={handleDeleteSuccess}
+              onFavDelete={handleDeleteSuccess}
             />
           )}
         </div>
