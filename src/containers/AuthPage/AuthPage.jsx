@@ -1,14 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
+import cx from 'classnames';
+
 import { supabase } from '../../helpers/supabaseClient';
 import { ThemeContext, UserContext } from '../../context';
+
 import { UserDashboard, SignForm, StatusInfo, Loader } from '../../components';
-import styles from './AuthPage.module.css';
-import cx from 'classnames';
 import ConfirmationCheck from '../../components/ConfirmationCheck/ConfirmationCheck';
+
+import styles from './AuthPage.module.css';
 
 const AuthPage = () => {
   const { user, setUser } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
+
   const [confirmationCheck, setConfirmationCheck] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

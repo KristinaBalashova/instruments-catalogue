@@ -16,11 +16,12 @@ import styles from './Favorites.module.css';
 
 const Favorites = () => {
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
+  const { user } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user } = useContext(UserContext);
-  const { theme } = useContext(ThemeContext);
   const [reload, setReload] = useState(false);
 
   useEffect(() => {

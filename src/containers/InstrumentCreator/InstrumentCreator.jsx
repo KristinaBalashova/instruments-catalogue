@@ -1,30 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import cx from 'classnames';
+
 import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES } from '../../strings';
 import useUploadImage from '../../hooks/useUploadImage';
+
 import { Button, ImageDownloader, StatusInfo, Input, Modal } from '../../components';
+
+import { ThemeContext } from '../../context';
+
 import styles from './InstrumentCreator.module.css';
 
-const dataStub = {
-  name: '',
-  description: '',
-  image: '',
-  type: '',
-  date: '',
-  brand: '',
-  country: '',
-  materials: '',
-};
-
 const InstrumentCreator = () => {
-  const [newInstrument, setNewInstrument] = useState({ ...dataStub });
+  const [newInstrument, setNewInstrument] = useState({
+    name: '',
+    description: '',
+    image: '',
+    type: '',
+    date: '',
+    brand: '',
+    country: '',
+    materials: '',
+  });
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
+
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (signedUrl) {
@@ -51,7 +58,7 @@ const InstrumentCreator = () => {
     e.preventDefault();
 
     if (!isConfirmed) {
-      setError('You must confirm before submitting.');
+      setError(USER_MESSAGES.CONFIRMATION_REQUEST);
       return;
     }
 
@@ -70,12 +77,12 @@ const InstrumentCreator = () => {
   };
 
   return (
-    <section className={styles.root}>
+    <section className={cx(styles.root, styles.link, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
         <div className={styles.editContainer}>
-          <h2>{USER_MESSAGES.ADD_INSTRUMENT}</h2>
+          <h2 className={styles.title}>{USER_MESSAGES.ADD_INSTRUMENT}</h2>
           <form onSubmit={handleSubmit}>
-            {Object.keys(dataStub).map((item) => {
+            {Object.keys(newInstrument).map((item) => {
               if (item === 'image') return null;
               return (
                 <Input
@@ -103,7 +110,7 @@ const InstrumentCreator = () => {
               </label>
             </div>
             <Button type="submit" disabled={loading}>
-              {loading ? 'Saving...' : USER_MESSAGES.SAVE}
+              {USER_MESSAGES.SAVE}
             </Button>
           </form>
           {error && <StatusInfo status="fail">{error}</StatusInfo>}
@@ -121,9 +128,9 @@ const InstrumentCreator = () => {
         >
           <StatusInfo status="success">{USER_MESSAGES.STATUS.SAVE_SUCCESS}</StatusInfo>
           <div className={styles.modalButtons}>
-            <Button onClick={() => setIsModalOpen(false)}>Stay here</Button>
+            <Button onClick={() => setIsModalOpen(false)}>{USER_MESSAGES.STAY}</Button>
             <Link to="/">
-              <Button>Return to the main page</Button>
+              <Button>{USER_MESSAGES.RETURN}</Button>
             </Link>
           </div>
         </Modal>
