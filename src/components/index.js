@@ -16,3 +16,5 @@ export { default as SignForm } from './SignForm/SignForm';
 export { default as ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
 export { default as ConfirmationCheck } from './ConfirmationCheck/ConfirmationCheck';
 export { default as MainPage } from './MainPage/MainPage';
+export { default as InstrumentForm } from './InstrumentForm/InstrumentForm';
+export { default as InstrumentInfo } from './InstrumentInfo/InstrumentInfo';

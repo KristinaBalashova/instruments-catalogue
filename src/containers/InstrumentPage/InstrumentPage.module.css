@@ -36,34 +36,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.infoContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  max-width: 800px;
-}
-
-.title {
-  font-weight: 600;
-}
-
-.link {
-  text-decoration: none;
-}
-
-.modalButtons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-
-  @media (min-width: 744px) {
-    flex-direction: row;
-  }
-}
-
 .root.darkTheme {
   background-color: var(--dark-theme-background);
   color: var(--lighter-text);

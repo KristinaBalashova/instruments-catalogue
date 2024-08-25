@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback, useContext } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
@@ -11,13 +11,12 @@ import useUploadImage from '../../hooks/useUploadImage';
 import useDeleteItem from '../../hooks/useDeleteItem';
 
 import {
-  Button,
   ImageDownloader,
   EditorButtons,
   StatusInfo,
   Loader,
-  Input,
-  Modal,
+  InstrumentForm,
+  InstrumentInfo,
 } from '../../components';
 
 import styles from './InstrumentPage.module.css';
@@ -30,7 +29,7 @@ const InstrumentPage = ({ isEditable = false }) => {
   const [editableItem, setEditableItem] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const { fetchedItem, errorFetch } = useFetchItem(id);
   const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
@@ -50,32 +49,36 @@ const InstrumentPage = ({ isEditable = false }) => {
     }));
   }, []);
 
-  const handleSave = useCallback(async () => {
-    if (errorUpload) {
-      alert(errorUpload);
-      return;
-    }
-
-    try {
-      const updatedItem = {
-        ...editableItem,
-        image: signedUrl || editableItem.image,
-      };
-
-      const { error: updateError } = await supabase
-        .from('instruments_collection')
-        .update(updatedItem)
-        .eq('id', id);
-
-      if (updateError) {
-        throw updateError;
-      } else {
-        setIsModalOpen(true);
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (errorUpload) {
+        alert(errorUpload);
+        return;
       }
-    } catch (error) {
-      setError(error.message);
-    }
-  }, [editableItem, signedUrl, id, errorUpload]);
+
+      try {
+        const updatedItem = {
+          ...editableItem,
+          image: signedUrl || editableItem.image,
+        };
+
+        const { error: updateError } = await supabase
+          .from('instruments_collection')
+          .update(updatedItem)
+          .eq('id', id);
+
+        if (updateError) {
+          throw updateError;
+        } else {
+          setIsSuccess(true);
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    },
+    [editableItem, signedUrl, id, errorUpload],
+  );
 
   const handleDelete = async () => {
     const successCallback = () => {
@@ -87,27 +90,6 @@ const InstrumentPage = ({ isEditable = false }) => {
   if (!fetchedItem) return <Loader />;
   if (!editableItem) return <StatusInfo status="fail">{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>;
   if (errorFetch) return <StatusInfo status="fail">{errorFetch}</StatusInfo>;
-
-  const renderInputField = (title, data) => (
-    <div key={title} className={styles.descriptionContainer}>
-      <p className={styles.description}>
-        {isEditable ? (
-          <Input
-            type="text"
-            name={title}
-            value={data || ''}
-            onChange={handleInputChange}
-            label={title}
-          />
-        ) : (
-          <>
-            <span>{title}: </span>
-            {data}
-          </>
-        )}
-      </p>
-    </div>
-  );
 
   return (
     <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
@@ -131,44 +113,19 @@ const InstrumentPage = ({ isEditable = false }) => {
             />
           )}
         </div>
-        <div className={styles.infoContainer}>
-          <h1 className={styles.name}>
-            {isEditable ? (
-              <Input
-                type="text"
-                name="name"
-                value={editableItem?.name || ''}
-                onChange={handleInputChange}
-                className={styles.input}
-                label={'name'}
-              />
-            ) : (
-              editableItem?.name
-            )}
-          </h1>
-          {editableItem &&
-            ['brand', 'description', 'country', 'materials', 'type', 'date'].map((title) =>
-              renderInputField(title, editableItem[title]),
-            )}
-          {isEditable && <Button onClick={handleSave}>{USER_MESSAGES.SAVE}</Button>}
-        </div>
+        {isEditable ? (
+          <InstrumentForm
+            data={editableItem}
+            onChange={handleInputChange}
+            onSubmit={handleSubmit}
+            isLoading={false}
+            isSuccess={isSuccess}
+          />
+        ) : (
+          <InstrumentInfo data={editableItem} />
+        )}
       </div>
       {error && <StatusInfo status="fail">{error}</StatusInfo>}
-      {isModalOpen && (
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          appElement={document.getElementById('root') || undefined}
-        >
-          <StatusInfo status="success">{USER_MESSAGES.STATUS.SAVE_SUCCESS}</StatusInfo>
-          <div className={styles.modalButtons}>
-            <Button onClick={() => setIsModalOpen(false)}>{USER_MESSAGES.STAY}</Button>
-            <Link to="/">
-              <Button secondary>{USER_MESSAGES.RETURN}</Button>
-            </Link>
-          </div>
-        </Modal>
-      )}
     </section>
   );
 };
