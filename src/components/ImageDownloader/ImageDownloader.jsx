@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 
 import { USER_MESSAGES } from '../../strings';
 
-import { Button } from '../';
+import { Button} from '../';
 
 import styles from './ImageDownloader.module.css';
 
 const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
-  const [error, setError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [objectURL, setObjectURL] = useState('');
 
@@ -28,7 +27,6 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
     if (file) {
       setFile(file);
       setImageFile(file);
-      setError(null);
     }
   };
 
@@ -36,7 +34,6 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
     setFile(null);
     setImageFile(null);
     setObjectURL('');
-    setError(null);
   };
 
   return (
@@ -63,7 +60,6 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
           </div>
         )}
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };
