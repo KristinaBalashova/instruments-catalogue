@@ -5,7 +5,6 @@ const useDeleteItem = () => {
   const [errorDelete, setErrorDelete] = useState(false);
 
   const deleteItem = async (id, onSuccess) => {
-    console.log(id, 'id');
     try {
       const { error: favoriteError } = await supabase.from('favorites').delete().eq('item_id', id);
 
@@ -16,8 +15,7 @@ const useDeleteItem = () => {
       if (error) throw error;
       if (onSuccess) onSuccess(id);
     } catch (error) {
-      console.error('Error deleting data:', error);
-      setErrorDelete('Error deleting data');
+      setErrorDelete(error.message);
     }
   };
 

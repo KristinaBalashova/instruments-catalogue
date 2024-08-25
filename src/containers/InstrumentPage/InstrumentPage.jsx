@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
@@ -23,6 +23,7 @@ import styles from './InstrumentPage.module.css';
 
 const InstrumentPage = ({ isEditable = false }) => {
   const { id } = useParams();
+  const navigate = useNavigate(); // Added useNavigate
   const { user } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
 
@@ -83,8 +84,9 @@ const InstrumentPage = ({ isEditable = false }) => {
   const handleDelete = async () => {
     const successCallback = () => {
       setEditableItem(null);
+      navigate('/'); // Navigate to the main page after deletion
     };
-    await deleteItem('instruments_collection', id, successCallback);
+    await deleteItem(id, successCallback);
   };
 
   if (!fetchedItem) return <Loader />;
