@@ -47,7 +47,7 @@ const AuthPage = () => {
       email,
       password,
       options: {
-        emailRedirectTo: 'https://kristinabalashova.github.io/instruments-catalogue/?page=1',
+        emailRedirectTo: 'https://kristinabalashova.github.io/instruments-catalogue/',
       },
     });
 
