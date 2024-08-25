@@ -30,10 +30,8 @@ To run this project locally, follow these steps:
    git clone https://github.com/your-username/musical-instruments-catalogue.git
 
    2. Navigate to the project directory
-   ```bash
    cd instruments-catalogue
 
    3. Install dependencies
-   ```bash
    npm install
   
