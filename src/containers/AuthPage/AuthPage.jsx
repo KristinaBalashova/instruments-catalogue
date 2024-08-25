@@ -74,7 +74,7 @@ const AuthPage = () => {
   };
 
   return (
-    <div className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
+    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
         {loading && <Loader />}
         {!user && !confirmationCheck && (
@@ -84,7 +84,7 @@ const AuthPage = () => {
         {user && <UserDashboard user={user} handleSignOut={handleSignOut} />}
         {error && <StatusInfo status="fail">{error}</StatusInfo>}
       </div>
-    </div>
+    </section>
   );
 };
 

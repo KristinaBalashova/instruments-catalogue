@@ -1,0 +1,17 @@
+.root {
+}
+
+.title {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.name {
+  font-weight: bold;
+}

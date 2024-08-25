@@ -1,15 +1,17 @@
+import styles from './InstrumentInfo.module.css';
+
 const InstrumentInfo = ({ data }) => {
   return (
-    <div>
-      <h1 className={styles.name}>{data.name}</h1>
-      {['brand', 'description', 'country', 'materials', 'type', 'date'].map((title) => (
-        <div key={title} className={styles.descriptionContainer}>
-          <p className={styles.description}>
-            <span>{title.charAt(0).toUpperCase() + title.slice(1)}: </span>
-            {[title]}
+    <div className={styles.root}>
+      <h2 className={styles.title}>{data.name}</h2>
+      <div className={styles.container}>
+        {['brand', 'description', 'country', 'materials', 'type', 'date'].map((item) => (
+          <p key={item} className={styles.item}>
+            <span className={styles.name}>{item.charAt(0).toUpperCase() + item.slice(1)}: </span>
+            {data[item]}
           </p>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

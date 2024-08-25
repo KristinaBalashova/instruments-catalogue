@@ -16,7 +16,6 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) 
   const [isFavorite, setIsFavorite] = useState(false);
   const { user } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
@@ -37,9 +36,6 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) 
   }, [user, id]);
 
   const handleFavClick = async (event) => {
-    //event.preventDefault(); // Prevent default action
-    //event.stopPropagation(); // Stop event propagation
-
     if (!user) {
       alert(USER_MESSAGES.LOGIN_TO_ADD_FAVS);
       return;
@@ -65,23 +61,17 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) 
     }
   };
 
-  const handleDeleteClick = (event) => {
-    event.preventDefault(); // Prevent default action
-    event.stopPropagation(); // Stop event propagation
-  };
-
-  const handleCardClick = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    navigate(`/instrument-page/${id}`, { state: { instrumentData } });
-  };
-
   return (
     <div key={id} className={cx(styles.root, styles.link, theme === 'dark' && styles.darkTheme)}>
       <div className={styles.container}>
-        <img src={image} alt={name} className={styles.img} />
+        <Link to={`/instrument-page/${id}`} className={styles.link}>
+          <img src={image} alt={name} className={styles.img} />
+        </Link>
         <div className={styles.info}>
-          <h3 className={styles.title}>{name}</h3>
+          <Link to={`/instrument-page/${id}`} className={styles.link}>
+            <h3 className={styles.title}>{name}</h3>
+          </Link>
+
           <div className={styles.cardManager}>
             {user?.role === 'admin' && (
               <EditorButtons id={id} onDelete={onDelete} errorDelete={errorDelete} />

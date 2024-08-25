@@ -1,9 +1,13 @@
 .root {
-  font-size: 14px;
-  color: black;
-  font-family: 'Courier New', Courier, monospace;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  font-size: 14px;
+  height: 100vh;
+  @media (min-width: 744px) {
+    padding: 50px;
+  }
 }
 
 .container {
