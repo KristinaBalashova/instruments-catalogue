@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
@@ -51,7 +50,6 @@ const InstrumentCreator = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     const { error } = await supabase.from('instruments_collection').insert(newInstrument).select();
@@ -60,6 +58,21 @@ const InstrumentCreator = () => {
       setError(error.message);
     } else {
       setIsSuccess(true);
+
+      setTimeout(() => {
+        setNewInstrument({
+          name: '',
+          description: '',
+          image: '',
+          type: '',
+          date: '',
+          brand: '',
+          country: '',
+          materials: '',
+        });
+        setImageFile(null);
+        setIsSuccess(false);
+      }, 5000);
     }
 
     setLoading(false);

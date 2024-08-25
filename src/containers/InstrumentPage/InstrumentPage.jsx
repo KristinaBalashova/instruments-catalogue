@@ -23,7 +23,7 @@ import styles from './InstrumentPage.module.css';
 
 const InstrumentPage = ({ isEditable = false }) => {
   const { id } = useParams();
-  const navigate = useNavigate(); // Added useNavigate
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
 
@@ -84,7 +84,7 @@ const InstrumentPage = ({ isEditable = false }) => {
   const handleDelete = async () => {
     const successCallback = () => {
       setEditableItem(null);
-      navigate('/'); // Navigate to the main page after deletion
+      navigate('/');
     };
     await deleteItem(id, successCallback);
   };
