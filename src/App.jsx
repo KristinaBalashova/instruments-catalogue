@@ -17,8 +17,22 @@ function App() {
               <Route path="/" element={<MainPage />} />
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/auth" element={<AuthPage />} />
-              <Route path="/instrument-editor/:id" element={<InstrumentPage isEditable={true} />} />
-              <Route path="/instrument-creator" element={<InstrumentCreator />} />
+              <Route
+                path="/instrument-editor/:id"
+                element={
+                  <ProtectedRoute>
+                    <InstrumentPage isEditable={true} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/instrument-creator"
+                element={
+                  <ProtectedRoute>
+                    <InstrumentCreator />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/instrument-page/:id" element={<InstrumentPage isEditable={false} />} />
             </Routes>
           </Router>

@@ -1,15 +1,19 @@
-import React, { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context';
 
-const ProtectedRoute = ({ element: Component, ...rest }) => {
+const ProtectedRoute = ({ children }) => {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  if (user?.role !== 'admin') {
-    return <Navigate to="/auth" />;
-  }
+  useEffect(() => {
+    if (user?.role !== 'admin') {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
-  return Component;
+  return children;
 };
 
 export default ProtectedRoute;
