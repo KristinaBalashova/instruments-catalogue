@@ -5,7 +5,7 @@ import { Button, Input, Modal, StatusInfo } from '../';
 import styles from './InstrumentForm.module.css';
 import { USER_MESSAGES } from '../../strings';
 
-const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess }) => {
+const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess, submitDisabled }) => {
   const [isModalOpen, setIsModalOpen] = useState(isSuccess);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess }) => {
         .filter((item) => item !== 'timestamp' && item !== 'id' && item !== 'image')
         .map((item) => {
           const inputType = item === 'date' ? 'date' : 'text';
-          
+
           return (
             <Input
               id={item}
@@ -32,7 +32,7 @@ const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess }) => {
             />
           );
         })}
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isLoading || submitDisabled}>
         {USER_MESSAGES.SAVE}
       </Button>
       {isModalOpen && (

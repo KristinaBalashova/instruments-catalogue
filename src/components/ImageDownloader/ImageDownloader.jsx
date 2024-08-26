@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-
 import { USER_MESSAGES } from '../../strings';
-
 import { Button } from '../';
-
 import styles from './ImageDownloader.module.css';
 
 const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
@@ -30,12 +27,6 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
     }
   };
 
-  const handleDeleteFile = () => {
-    setFile(null);
-    setImageFile(null);
-    setObjectURL('');
-  };
-
   return (
     <div className={styles.root}>
       <img
@@ -52,13 +43,6 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
       />
       <div className={styles.infoContainer}>
         <p className={styles.text}>{USER_MESSAGES.UPLOAD_RULES}</p>
-        {imageFile && (
-          <div className={styles.fileInfo}>
-            <Button onClick={handleDeleteFile} secondary className={styles.deleteButton}>
-              {USER_MESSAGES.DELETE}
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );

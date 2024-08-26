@@ -33,7 +33,7 @@ const InstrumentPage = ({ isEditable = false }) => {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const { fetchedItem, errorFetch } = useFetchItem(id);
-  const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
+  const { signedUrl, isSubmitable } = useUploadImage(imageFile, 'pics');
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
 
   useEffect(() => {
@@ -53,10 +53,6 @@ const InstrumentPage = ({ isEditable = false }) => {
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      if (errorUpload) {
-        alert(errorUpload);
-        return;
-      }
 
       try {
         const updatedItem = {
@@ -78,7 +74,7 @@ const InstrumentPage = ({ isEditable = false }) => {
         setError(error.message);
       }
     },
-    [editableItem, signedUrl, id, errorUpload],
+    [editableItem, signedUrl, id],
   );
 
   const handleDelete = async () => {
@@ -122,6 +118,7 @@ const InstrumentPage = ({ isEditable = false }) => {
             onSubmit={handleSubmit}
             isLoading={false}
             isSuccess={isSuccess}
+            submitDisabled={!isSubmitable}
           />
         ) : (
           <InstrumentInfo data={editableItem} />

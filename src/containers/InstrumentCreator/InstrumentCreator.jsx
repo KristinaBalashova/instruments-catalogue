@@ -2,11 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
-import { USER_MESSAGES } from '../../strings';
+import { SERVER_MESSAGES, USER_MESSAGES } from '../../strings';
 import useUploadImage from '../../hooks/useUploadImage';
 
 import { ImageDownloader, StatusInfo } from '../../components';
-
 import { ThemeContext } from '../../context';
 
 import styles from './InstrumentCreator.module.css';
@@ -28,7 +27,7 @@ const InstrumentCreator = () => {
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const { signedUrl, errorUpload } = useUploadImage(imageFile, 'pics');
+  const { signedUrl, isSubmitable } = useUploadImage(imageFile, 'pics');
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
@@ -40,6 +39,10 @@ const InstrumentCreator = () => {
     }
   }, [signedUrl]);
 
+  const handleImageUpload = (file) => {
+    setImageFile(file);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewInstrument({
@@ -50,6 +53,8 @@ const InstrumentCreator = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isSubmitable) return;
+
     setLoading(true);
 
     const { error } = await supabase.from('instruments_collection').insert(newInstrument).select();
@@ -60,22 +65,27 @@ const InstrumentCreator = () => {
       setIsSuccess(true);
 
       setTimeout(() => {
-        setNewInstrument({
-          name: '',
-          description: '',
-          image: '',
-          type: '',
-          date: '',
-          brand: '',
-          country: '',
-          materials: '',
-        });
-        setImageFile(null);
-        setIsSuccess(false);
+        resetForm();
+        setError(null);
       }, 5000);
     }
 
     setLoading(false);
+  };
+
+  const resetForm = () => {
+    setNewInstrument({
+      name: '',
+      description: '',
+      image: '',
+      type: '',
+      date: '',
+      brand: '',
+      country: '',
+      materials: '',
+    });
+    setImageFile(null);
+    setIsSuccess(false);
   };
 
   return (
@@ -89,14 +99,12 @@ const InstrumentCreator = () => {
             onSubmit={handleSubmit}
             isLoading={loading}
             isSuccess={isSuccess}
+            submitDisabled={!isSubmitable}
           />
           {error && <StatusInfo status="fail">{error}</StatusInfo>}
         </div>
         <div className={styles.imageContainer}>
-          <ImageDownloader setFile={setImageFile} />
-          {errorUpload && (
-            <StatusInfo status="fail">{USER_MESSAGES.ERRORS.UPLOAD_ERROR}</StatusInfo>
-          )}
+          <ImageDownloader setFile={handleImageUpload} />
         </div>
       </div>
     </section>
