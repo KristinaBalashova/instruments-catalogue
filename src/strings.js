@@ -10,6 +10,7 @@ export const SERVER_MESSAGES = {
     UPLOAD_ERROR: 'Error uploading image:',
     USER_NOT_AUTH: 'User not authenticated',
     USER_NOT_FOUND: 'No user found',
+    COMPRESSION_ERROR: 'Image compression failed. Please try again.',
   },
 };
 

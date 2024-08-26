@@ -13,6 +13,7 @@
   padding: 50px 25px;
   gap: 30px;
   align-items: flex-start;
+  height: 100%;
 }
 
 .instrumentsList {

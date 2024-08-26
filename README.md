@@ -1,9 +1,11 @@
 # Musical Instruments Catalogue
 
 ## Introduction
+
 The **Musical Instruments Catalogue** is a web application that allows users to explore, add, and manage a wide variety of musical instruments. Built with React and Supabase.
 
 ## Features
+
 - Browse and share musical instruments
 - Admins can add new instruments to the catalog, edit and delete existing instruments.
 - Users can search and filter instruments by type, brand, or other criteria
@@ -12,6 +14,7 @@ The **Musical Instruments Catalogue** is a web application that allows users to 
 - Dark and light themes.
 
 ## Tech Stack
+
 - **Frontend**: React, Vite
 - **Backend**: Supabase (PostgreSQL, Authentication, Storage)
 - **Styling**: CSS
@@ -22,6 +25,7 @@ The **Musical Instruments Catalogue** is a web application that allows users to 
 https://kristinabalashova.github.io/instruments-catalogue/#/?page=1
 
 ## Installation
+
 To run this project locally, follow these steps:
 
 ```bash
@@ -33,4 +37,5 @@ To run this project locally, follow these steps:
 
    3. Install dependencies
    npm install
-  
+
+```
