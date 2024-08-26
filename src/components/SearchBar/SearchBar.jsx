@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { USER_MESSAGES } from '../../strings';
 import { Button, Input } from '../';
@@ -7,9 +7,14 @@ import { setQuery, deleteQuery } from '../../helpers/changeQuery';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const SearchBar = ({ disabled = false }) => {
-  const [queryInput, setQueryInput] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Initialize queryInput with the current search query from the URL
+  const [queryInput, setQueryInput] = useState(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get('search') || '';
+  });
 
   const handleInputChange = (event) => {
     setQueryInput(event.target.value);
