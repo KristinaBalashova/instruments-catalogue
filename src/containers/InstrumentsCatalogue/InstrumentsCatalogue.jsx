@@ -2,6 +2,7 @@ import { useEffect, useState, useContext, useCallback } from 'react';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 
+import { THEME_DARK } from '../../strings';
 import { supabase } from '../../helpers/supabaseClient';
 import { ThemeContext } from '../../context';
 import { setQuery } from '../../helpers/changeQuery';
@@ -110,7 +111,7 @@ const InstrumentsCatalogue = () => {
   }, []);
 
   return (
-    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
+    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
       <div className={styles.container}>
         <div className={styles.search}>
           <SearchBar disabled={loading} />

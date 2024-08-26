@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from 'react';
 import { supabase } from '../helpers/supabaseClient';
 import { getUserData, getSession } from '../api/api';
+import { ROLE_READER } from './../strings';
 
 export const UserContext = createContext();
 
@@ -19,7 +20,7 @@ export const UserProvider = ({ children }) => {
           const { data } = await getUserData(session.user.id);
           setUser({
             id: session.user.id,
-            role: data?.role || 'reader',
+            role: data?.role || ROLE_READER,
             email: session.user.email,
           });
         }
@@ -43,7 +44,7 @@ export const UserProvider = ({ children }) => {
 
           setUser({
             id: session.user.id,
-            role: data?.role || 'reader',
+            role: data?.role || ROLE_READER,
             email: session.user.email,
           });
         }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoTrash } from 'react-icons/io5';
 
-import { USER_MESSAGES } from '../../strings';
+import { USER_MESSAGES, STATUS_FAIL } from '../../strings';
 import { Modal, Button, StatusInfo } from '../';
 
 import styles from './EditorButtons.module.css';
@@ -34,7 +34,7 @@ const EditorButtons = ({ id, onDelete, errorDelete }) => {
             <Button onClick={handleConfirmDelete}>{USER_MESSAGES.YES_DELETE}</Button>
             <Button onClick={() => setIsModalOpen(false)}>{USER_MESSAGES.CANCEL_DELETE}</Button>
           </div>
-          {errorDelete && <StatusInfo status="fail">{errorDelete}</StatusInfo>}
+          {errorDelete && <StatusInfo status={STATUS_FAIL}>{errorDelete}</StatusInfo>}
         </Modal>
       )}
     </>

@@ -7,9 +7,9 @@ import useDeleteItem from '../../hooks/useDeleteItem';
 import { getFavorites } from '../../api/api';
 
 import { ThemeContext, UserContext } from '../../context';
-import { USER_MESSAGES } from '../../strings';
+import { USER_MESSAGES, THEME_DARK } from '../../strings';
 
-import { Button, Loader, StatusInfo } from '../../components';
+import { Loader, StatusInfo } from '../../components';
 import InstrumentsList from '../../components/InstrumentsList/InstrumentsList';
 
 import styles from './Favorites.module.css';
@@ -66,7 +66,7 @@ const Favorites = () => {
   }, []);
 
   return (
-    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
+    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
       {!user && (
         <div className={styles.container}>
           {USER_MESSAGES.NOT_AUTH}

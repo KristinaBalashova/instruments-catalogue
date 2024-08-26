@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { USER_MESSAGES } from '../../strings';
+import { USER_MESSAGES, ROLE_ADMIN } from '../../strings';
 import { ThemeContext, UserContext } from '../../context';
 import { Button } from '..';
 import { InstrumentsCatalogue } from '../../containers';
@@ -18,7 +18,7 @@ const MainPage = () => {
           <h1 className={styles.headline}>{USER_MESSAGES.TITLE}</h1>
           <p className={styles.description}>{USER_MESSAGES.DESCRIPTION}</p>
           <div className={styles.auth}>
-            {user?.role === 'admin' && (
+            {user?.role === ROLE_ADMIN && (
               <Link to="/instrument-creator">
                 <Button>{USER_MESSAGES.ADD_INSTRUMENT}</Button>
               </Link>

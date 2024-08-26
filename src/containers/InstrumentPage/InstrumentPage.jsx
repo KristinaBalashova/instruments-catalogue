@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
-import { USER_MESSAGES } from '../../strings';
+import { ROLE_ADMIN, STATUS_FAIL, USER_MESSAGES, THEME_DARK } from '../../strings';
 import { UserContext, ThemeContext } from '../../context';
 
 import useFetchItem from '../../hooks/useFetchItem';
@@ -86,11 +86,12 @@ const InstrumentPage = ({ isEditable = false }) => {
   };
 
   if (!fetchedItem) return <Loader />;
-  if (!editableItem) return <StatusInfo status="fail">{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>;
-  if (errorFetch) return <StatusInfo status="fail">{errorFetch}</StatusInfo>;
+  if (!editableItem)
+    return <StatusInfo status={STATUS_FAIL}>{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>;
+  if (errorFetch) return <StatusInfo status={STATUS_FAIL}>{errorFetch}</StatusInfo>;
 
   return (
-    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
+    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           {isEditable ? (
@@ -102,7 +103,7 @@ const InstrumentPage = ({ isEditable = false }) => {
               className={styles.image}
             />
           )}
-          {user?.role === 'admin' && (
+          {user?.role === ROLE_ADMIN && (
             <EditorButtons
               id={id}
               onDelete={handleDelete}
@@ -124,7 +125,7 @@ const InstrumentPage = ({ isEditable = false }) => {
           <InstrumentInfo data={editableItem} />
         )}
       </div>
-      {error && <StatusInfo status="fail">{error}</StatusInfo>}
+      {error && <StatusInfo status={STATUS_FAIL}>{error}</StatusInfo>}
     </section>
   );
 };

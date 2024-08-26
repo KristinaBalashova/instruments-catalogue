@@ -3,6 +3,7 @@ import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
 import { ThemeContext, UserContext } from '../../context';
+import { THEME_DARK, STATUS_FAIL } from '../../strings';
 
 import { UserDashboard, SignForm, StatusInfo, Loader } from '../../components';
 import ConfirmationCheck from '../../components/ConfirmationCheck/ConfirmationCheck';
@@ -80,7 +81,7 @@ const AuthPage = () => {
   };
 
   return (
-    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
+    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
       <div className={styles.container}>
         {loading && <Loader />}
         {!user && !confirmationCheck && (
@@ -88,7 +89,7 @@ const AuthPage = () => {
         )}
         {confirmationCheck && !user && <ConfirmationCheck handleResend={handleResend} />}
         {user && <UserDashboard user={user} handleSignOut={handleSignOut} />}
-        {error && <StatusInfo status="fail">{error}</StatusInfo>}
+        {error && <StatusInfo status={STATUS_FAIL}>{error}</StatusInfo>}
       </div>
     </section>
   );

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
-import { SERVER_MESSAGES, USER_MESSAGES } from '../../strings';
+import { USER_MESSAGES, THEME_DARK, STATUS_FAIL } from '../../strings';
 import useUploadImage from '../../hooks/useUploadImage';
 
 import { ImageDownloader, StatusInfo } from '../../components';
@@ -89,7 +89,7 @@ const InstrumentCreator = () => {
   };
 
   return (
-    <section className={cx(styles.root, styles.link, theme === 'dark' && styles.darkTheme)}>
+    <section className={cx(styles.root, styles.link, theme === THEME_DARK && styles.darkTheme)}>
       <div className={styles.container}>
         <div className={styles.editContainer}>
           <h2 className={styles.title}>{USER_MESSAGES.ADD_INSTRUMENT}</h2>
@@ -101,7 +101,7 @@ const InstrumentCreator = () => {
             isSuccess={isSuccess}
             submitDisabled={!isSubmitable}
           />
-          {error && <StatusInfo status="fail">{error}</StatusInfo>}
+          {error && <StatusInfo status={STATUS_FAIL}>{error}</StatusInfo>}
         </div>
         <div className={styles.imageContainer}>
           <ImageDownloader setFile={handleImageUpload} />

@@ -1,3 +1,10 @@
+export const STATUS_FAIL = 'fail';
+export const STATUS_SUCCESS = 'success';
+export const ROLE_ADMIN = 'admin';
+export const ROLE_READER = 'reader';
+export const THEME_DARK = 'dark';
+export const THEME_LIGHT = 'light';
+
 export const SERVER_MESSAGES = {
   ERRORS: {
     ERROR: 'Something went wrong',
@@ -7,7 +14,6 @@ export const SERVER_MESSAGES = {
     FETCHING_ERROR: 'Error fetching data:',
     FORMAT_ERROR: 'Please upload a JPEG or PNG image.',
     SAVE_ERROR: 'Failed to save instrument data.',
-    UPLOAD_ERROR: 'Error uploading image:',
     USER_NOT_AUTH: 'User not authenticated',
     USER_NOT_FOUND: 'No user found',
     COMPRESSION_ERROR: 'Image compression failed. Please try again.',
@@ -50,8 +56,7 @@ export const USER_MESSAGES = {
   SWITCH_DARK: 'Switch to dark mode',
   SWITCH_LIGHT: 'Switch to light mode',
   TITLE: 'Welcome to In-lib: Your Music Instruments Catalogues',
-  UPLOAD_INFO: 'Upload PNG or JPG, JPEG file, 1:1, white background',
-  UPLOAD_RULES: 'Upload PNG or JPG picture, 500x500, white background',
+  UPLOAD_INFO: 'Upload PNG or JPG, JPEG file, upload size limit 100 KB',
   VALIDATION: {
     INVALID_DOMAIN: 'Invalid email domain',
     INVALID_EMAIL: 'Invalid email address',

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { z } from 'zod';
-import { USER_MESSAGES } from '../../strings';
+import { USER_MESSAGES, STATUS_FAIL } from '../../strings';
 import { isValidDomain } from '../../helpers/isValidDomain';
 
 import { Button, Input, StatusInfo } from '../';
@@ -86,7 +86,7 @@ const SignForm = ({ handleSignIn, handleSignUp }) => {
       <Button primary type="submit">
         {isSignUp ? USER_MESSAGES.SIGN_UP : USER_MESSAGES.SIGN_IN}
       </Button>
-      {error && <StatusInfo status="fail">{error}</StatusInfo>}
+      {error && <StatusInfo status={STATUS_FAIL}>{error}</StatusInfo>}
     </form>
   );
 };

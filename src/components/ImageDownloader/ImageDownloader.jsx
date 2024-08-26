@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { USER_MESSAGES } from '../../strings';
-import { Button } from '../';
 import styles from './ImageDownloader.module.css';
 
 const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
@@ -42,7 +41,7 @@ const ImageDownloader = ({ setFile, image = './blank-image.png' }) => {
         className={styles.input}
       />
       <div className={styles.infoContainer}>
-        <p className={styles.text}>{USER_MESSAGES.UPLOAD_RULES}</p>
+        <p className={styles.text}>{USER_MESSAGES.UPLOAD_INFO}</p>
       </div>
     </div>
   );

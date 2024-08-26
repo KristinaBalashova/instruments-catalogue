@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { FaStar } from 'react-icons/fa';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
-import { USER_MESSAGES } from '../../strings';
+import { USER_MESSAGES, THEME_DARK, THEME_LIGHT } from '../../strings';
 import { ThemeContext } from '../../context';
 
 import { Button } from '../';
@@ -16,11 +16,11 @@ const Header = () => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   const handleToggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    setTheme(theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT);
   };
 
   return (
-    <section className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
+    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
       <div className={styles.container}>
         <Link to="/">
           <img src={logo} className={styles.logo} alt="logo" />
@@ -35,7 +35,7 @@ const Header = () => {
             <FaStar className={styles.filled} />
           </Link>
 
-          {theme === 'light' ? (
+          {theme === THEME_LIGHT ? (
             <BsToggleOff
               onClick={handleToggleTheme}
               className={styles.toggle}

@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import cx from 'classnames';
 
-import { USER_MESSAGES } from '../../strings';
+import { USER_MESSAGES, THEME_DARK, ROLE_ADMIN } from '../../strings';
 import { getFavorites, deleteFavItem, insertFavItem } from '../../api/api';
 import { UserContext, ThemeContext } from '../../context';
 
@@ -35,7 +35,7 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) 
     fetchFavoriteStatus();
   }, [user, id]);
 
-  const handleFavClick = async (event) => {
+  const handleFavClick = async () => {
     if (!user) {
       alert(USER_MESSAGES.LOGIN_TO_ADD_FAVS);
       return;
@@ -62,7 +62,10 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) 
   };
 
   return (
-    <div key={id} className={cx(styles.root, styles.link, theme === 'dark' && styles.darkTheme)}>
+    <div
+      key={id}
+      className={cx(styles.root, styles.link, theme === THEME_DARK && styles.darkTheme)}
+    >
       <div className={styles.container}>
         <Link to={`/instrument-page/${id}`} className={styles.link}>
           <img src={image} alt={name} className={styles.img} />
@@ -73,7 +76,7 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) 
           </Link>
 
           <div className={styles.cardManager}>
-            {user?.role === 'admin' && (
+            {user?.role === ROLE_ADMIN && (
               <EditorButtons id={id} onDelete={onDelete} errorDelete={errorDelete} />
             )}
             <FaStar
