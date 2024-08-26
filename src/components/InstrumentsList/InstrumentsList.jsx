@@ -1,10 +1,11 @@
 import React from 'react';
 import { InstrumentCard } from '../../containers';
 import styles from './InstrumentsList.module.css';
+import cx from 'classNames';
 
-const InstrumentsList = ({ data, deleteItem, errorDelete, onDeleteSuccess }) => {
+const InstrumentsList = ({ data, deleteItem, errorDelete, onDeleteSuccess, className}) => {
   return (
-    <div className={styles.cards}>
+    <div className={cx(styles.cards, className)}>
       {data.map((item) => (
         <InstrumentCard
           key={item.id}

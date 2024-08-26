@@ -46,7 +46,7 @@
 }
 
 .closeButton:hover {
-  background-color: var(--hover-color);
+  background-color: var(--darker-teal);
 }
 
 .header {

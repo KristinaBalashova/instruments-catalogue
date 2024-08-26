@@ -1,3 +1,7 @@
+.container {
+
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -10,8 +14,7 @@
 }
 
 .label {
-  margin-bottom: 8px;
-  margin-top: 8px;
+  margin: 8px 0;
   font-size: 16px;
   color: #787777;
 }
@@ -20,46 +23,17 @@
   text-decoration: underline;
 }
 
-select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  font-size: 16px;
-  color: #333;
-  transition:
-    border-color 0.3s,
-    box-shadow 0.3s;
-}
-
-select:hover,
-select:focus {
-  border-color: #d4af37;
-  box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
-}
-
-option {
-  padding: 10px;
-  background-color: #fff;
-  color: #333;
-}
-
-option:hover {
-  background-color: #f1f1f1;
-}
-
 .select {
-  color: var(--accent-color);
-  background-color: var(--secondary-color);
+  padding: 10px;
   border: 2px solid var(--border-color);
   border-radius: 5px;
-  padding: 10px;
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
   font-family: 'Courier New', Courier, monospace;
   font-size: 16px;
   box-shadow: 3px 3px 0 var(--darkest-teal);
   transition: all 0.2s ease;
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
 }
 
 .select:hover {

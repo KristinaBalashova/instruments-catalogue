@@ -15,6 +15,11 @@
   align-items: flex-start;
 }
 
+.instrumentsList {
+  display: flex;
+  justify-content: space-between;
+}
+
 .root.darkTheme {
   background-color: var(--dark-theme-background);
   color: var(--lighter-gray);

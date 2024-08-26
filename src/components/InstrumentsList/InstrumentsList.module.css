@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   gap: 30px;
 
   @media (min-width: 744px) {

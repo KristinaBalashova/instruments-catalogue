@@ -27,7 +27,7 @@ const FiltersPanel = ({ data, clearButton = true }) => {
   };
 
   return (
-    <div className={styles.filterContainer}>
+    <div className={styles.container}>
       {Object.keys(data).map((filter) => (
         <form key={filter} className={styles.form}>
           <label className={styles.label}>{filter}</label>

@@ -16,18 +16,22 @@ const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess }) => {
     <form onSubmit={onSubmit} className={styles.form}>
       {Object.keys(data)
         .filter((item) => item !== 'timestamp' && item !== 'id' && item !== 'image')
-        .map((item) => (
-          <Input
-            id={item}
-            type="text"
-            name={item}
-            value={data[item]}
-            onChange={onChange}
-            required
-            label={item.charAt(0).toUpperCase() + item.slice(1)}
-            key={item}
-          />
-        ))}
+        .map((item) => {
+          const inputType = item === 'date' ? 'date' : 'text';
+          
+          return (
+            <Input
+              id={item}
+              type={inputType}
+              name={item}
+              value={data[item]}
+              onChange={onChange}
+              required
+              label={item.charAt(0).toUpperCase() + item.slice(1)}
+              key={item}
+            />
+          );
+        })}
       <Button type="submit" disabled={isLoading}>
         {USER_MESSAGES.SAVE}
       </Button>

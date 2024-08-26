@@ -90,6 +90,7 @@ const Favorites = () => {
               errorDelete={errorDelete}
               onDeleteSuccess={handleDeleteSuccess}
               onFavDelete={handleDeleteSuccess}
+              className={styles.instrumentsList}
             />
           )}
         </div>
