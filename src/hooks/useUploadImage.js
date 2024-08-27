@@ -12,7 +12,7 @@ const useUploadImage = (image, storageBucket) => {
 
       try {
         const options = {
-          maxSizeMB: 1,
+          maxSizeMB: 0.08, 
           maxWidthOrHeight: 1920,
           useWebWorker: true,
         };
