@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
@@ -39,19 +39,19 @@ const InstrumentCreator = () => {
     }
   }, [signedUrl]);
 
-  const handleImageUpload = (file) => {
+  const handleImageUpload = useCallback((file) => {
     setImageFile(file);
-  };
+  }, []);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
-    setNewInstrument({
-      ...newInstrument,
+    setNewInstrument((prevInstrument) => ({
+      ...prevInstrument,
       [name]: value,
-    });
-  };
+    }));
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     if (!isSubmitable) return;
 
@@ -71,9 +71,9 @@ const InstrumentCreator = () => {
     }
 
     setLoading(false);
-  };
+  }, [newInstrument, isSubmitable]);
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setNewInstrument({
       name: '',
       description: '',
@@ -86,7 +86,7 @@ const InstrumentCreator = () => {
     });
     setImageFile(null);
     setIsSuccess(false);
-  };
+  }, []);
 
   return (
     <section className={cx(styles.root, styles.link, theme === THEME_DARK && styles.darkTheme)}>
