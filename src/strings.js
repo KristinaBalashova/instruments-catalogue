@@ -68,4 +68,5 @@ export const USER_MESSAGES = {
     SAVE_SUCCESS: 'Instrument data saved successfully!',
   },
   YES_DELETE: 'Yes, delete',
+  WELCOME: 'Welcome to In-lib!',
 };
