@@ -44,7 +44,7 @@ const InstrumentsCatalogue = () => {
   const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1;
   const searchQuery = searchParams.get('search') || '*';
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 10;
   const listOfFilters = ['brand', 'type', 'country'];
 
   useEffect(() => {
