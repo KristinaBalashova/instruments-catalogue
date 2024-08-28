@@ -34,7 +34,7 @@ const useUploadImage = (image, storageBucket) => {
 
         const { data: signedURLData, error: signedURLError } = await supabase.storage
           .from(storageBucket)
-          .createSignedUrl(filePath, 60 * 60 * 24);
+          .createSignedUrl(filePath, 60 * 60 * 24 * 365);
 
         if (signedURLError) {
           throw signedURLError;
