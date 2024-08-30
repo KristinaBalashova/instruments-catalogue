@@ -68,7 +68,7 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) 
     >
       <div className={styles.container}>
         <Link to={`/instrument-page/${id}`} className={styles.link}>
-          <img src={image} alt={name} className={styles.img} />
+          <img src={image} alt={name} className={styles.img} loading="lazy" />
         </Link>
         <div className={styles.info}>
           <Link to={`/instrument-page/${id}`} className={styles.link}>
