@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
+import { GoSearch } from 'react-icons/go';
 import { USER_MESSAGES } from '../../strings';
-import { Button, Input } from '../';
+import { Input } from '../';
 import styles from './SearchBar.module.css';
 import { setQuery, deleteQuery } from '../../helpers/changeQuery';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -10,7 +11,6 @@ const SearchBar = ({ disabled = false }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Initialize queryInput with the current search query from the URL
   const [queryInput, setQueryInput] = useState(() => {
     const params = new URLSearchParams(location.search);
     return params.get('search') || '';
@@ -33,20 +33,26 @@ const SearchBar = ({ disabled = false }) => {
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.container}>
-        <Input
-          type="text"
-          placeholder={USER_MESSAGES.SEARCH}
-          value={queryInput}
-          onChange={handleInputChange}
-          disabled={disabled}
-        />
+        <div className={styles.searchContainer}>
+          <button className={styles.searchButton} type="submit" aria-label="Search">
+            <GoSearch />
+          </button>
+          <input
+            type="text"
+            placeholder={USER_MESSAGES.SEARCH}
+            value={queryInput}
+            onChange={handleInputChange}
+            disabled={disabled}
+            className={styles.input}
+          />
+        </div>
+
         {queryInput && (
-          <RxCross2 className={styles.clearIcon} onClick={handleClear} aria-label="Clear search" />
+          <button className={styles.clearButton} onClick={handleClear} aria-label="Clear search">
+            <RxCross2 />
+          </button>
         )}
       </div>
-      <Button type="submit" disabled={disabled}>
-        {USER_MESSAGES.SEARCH}
-      </Button>
     </form>
   );
 };
