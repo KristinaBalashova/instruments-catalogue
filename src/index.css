@@ -12,8 +12,6 @@ body {
   width: 100%;
   height: 100vh;
   overflow-x: hidden;
-  font-family: 'Montserrat', sans-serif;
-  background-color: var(--background-color);
   color: var(--accent-color);
   font-family: var(--font-family);
 }
@@ -45,7 +43,7 @@ footer {
   --background-color: #f0f0f0; /* Light Gray */
   --border-color: #cccccc; /* Gray */
   --darker-teal: #005959; /* Darker Teal */
-  --font-family: 'Courier New', Courier, monospace;
+  --font-family: 'Montserrat', sans-serif;
   --darkest-teal: #004c4c; /* Darkest Teal for box-shadow */
   --lighter-teal: #b2d8d8; /* Lighter Teal for disabled state */
   --lighter-teal-border: #a3c6c6; /* Lighter Teal Border for disabled state */

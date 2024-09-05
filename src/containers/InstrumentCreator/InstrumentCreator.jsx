@@ -51,27 +51,33 @@ const InstrumentCreator = () => {
     }));
   }, []);
 
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();
-    if (!isSubmitable) return;
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (!isSubmitable) return;
 
-    setLoading(true);
+      setLoading(true);
 
-    const { error } = await supabase.from('instruments_collection').insert(newInstrument).select();
+      const { error } = await supabase
+        .from('instruments_collection')
+        .insert(newInstrument)
+        .select();
 
-    if (error) {
-      setError(error.message);
-    } else {
-      setIsSuccess(true);
+      if (error) {
+        setError(error.message);
+      } else {
+        setIsSuccess(true);
 
-      setTimeout(() => {
-        resetForm();
-        setError(null);
-      }, 5000);
-    }
+        setTimeout(() => {
+          resetForm();
+          setError(null);
+        }, 5000);
+      }
 
-    setLoading(false);
-  }, [newInstrument, isSubmitable]);
+      setLoading(false);
+    },
+    [newInstrument, isSubmitable],
+  );
 
   const resetForm = useCallback(() => {
     setNewInstrument({

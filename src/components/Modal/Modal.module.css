@@ -75,7 +75,6 @@
 }
 
 .content {
-  max-height: 360px;
   padding: 25px 0px;
   font-family: var(--font-family);
   color: var(--accent-color);

@@ -1,7 +1,9 @@
-import { useEffect, useState, useContext, useCallback } from 'react';
+// InstrumentsCatalogue.js
+
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
-
+import { IoFilterOutline } from 'react-icons/io5';
 import { THEME_DARK } from '../../strings';
 import { supabase } from '../../helpers/supabaseClient';
 import { ThemeContext } from '../../context';
@@ -38,13 +40,14 @@ const InstrumentsCatalogue = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Извлекаем фильтры и порядок сортировки из URL параметров
   const filtersObject = getFiltersFromSearchParams(searchParams);
   const { brand = '*', type = '*', country = '*', order = 'new-first' } = filtersObject;
 
   const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1;
   const searchQuery = searchParams.get('search') || '*';
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 9;
   const listOfFilters = ['brand', 'type', 'country'];
 
   useEffect(() => {
@@ -106,52 +109,48 @@ const InstrumentsCatalogue = () => {
     fetchData();
   }, [currentPage, searchQuery, brand, type, country, order, reload]);
 
-  const handleDeleteSuccess = useCallback((deletedId) => {
+  const handleDeleteSuccess = useCallback(() => {
     setReload((prev) => !prev);
   }, []);
 
   return (
     <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
       <div className={styles.container}>
-        <div className={styles.search}>
-          <SearchBar disabled={loading} />
-          <FiltersPanel data={{ order: ['new-first', 'old-first'] }} clearButton={false} />
-        </div>
-        <div className={styles.dataContainer}>
-          <div className={styles.filtersMobile}>
-            <Button secondary onClick={() => setIsModalOpen(true)}>
-              Filters
-            </Button>
-            {isModalOpen && (
-              <Modal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                appElement={document.getElementById('root') || undefined}
-              >
-                <FiltersPanel data={dataFilters} />
-              </Modal>
-            )}
-          </div>
-          <div className={styles.filtersDesktop}>
-            <FiltersPanel data={dataFilters} />
+        <div className={styles.filters}>
+          <div className={styles.filters2} onClick={() => setIsModalOpen(true)}>
+            <button className={styles.filtersButton} aria-label="filters">
+              <IoFilterOutline />
+            </button>
+            <span className={styles.filtersText}>Filters</span>
           </div>
 
+          {isModalOpen && (
+            <Modal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              appElement={document.getElementById('root') || undefined}
+            >
+              <FiltersPanel data={{ ...dataFilters, order: ['new-first', 'old-first'] }} />
+            </Modal>
+          )}
+          <SearchBar disabled={loading} />
+        </div>
+
+        <div className={styles.cardsContainer}>
           {loading && <Loader />}
           {!loading && totalItems === 0 && <StatusInfo>{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>}
-          <div className={styles.cardsContainer}>
-            <InstrumentsList
-              data={data}
-              deleteItem={deleteItem}
-              errorDelete={errorDelete}
-              onDeleteSuccess={handleDeleteSuccess}
-            />
-            <PaginationButtons
-              currentPage={currentPage}
-              totalItems={totalItems}
-              itemsPerPage={itemsPerPage}
-              isVisible={totalItems > itemsPerPage}
-            />
-          </div>
+          <InstrumentsList
+            data={data}
+            deleteItem={deleteItem}
+            errorDelete={errorDelete}
+            onDeleteSuccess={handleDeleteSuccess}
+          />
+          <PaginationButtons
+            currentPage={currentPage}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            isVisible={totalItems > itemsPerPage}
+          />
         </div>
       </div>
     </section>
