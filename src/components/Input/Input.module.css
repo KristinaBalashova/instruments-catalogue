@@ -20,7 +20,6 @@
   border-radius: 5px;
   color: var(--accent-color);
   background-color: var(--secondary-color);
-  font-family: 'Courier New', Courier, monospace;
   font-size: 16px;
   box-shadow: 3px 3px 0 var(--darkest-teal);
   transition: all 0.2s ease;
