@@ -1,5 +1,3 @@
-// InstrumentsCatalogue.js
-
 import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
@@ -17,8 +15,6 @@ import {
   SearchBar,
   Loader,
   InstrumentsList,
-  Modal,
-  Button,
   StatusInfo,
 } from '../../components';
 
@@ -34,15 +30,18 @@ const InstrumentsCatalogue = () => {
   const [loading, setLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
   const [dataFilters, setDataFilters] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filtersToggle, setfiltersToggle] = useState(false);
   const [reload, setReload] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Извлекаем фильтры и порядок сортировки из URL параметров
-  const filtersObject = getFiltersFromSearchParams(searchParams);
-  const { brand = '*', type = '*', country = '*', order = 'new-first' } = filtersObject;
+  const {
+    brand = '*',
+    type = '*',
+    country = '*',
+    order = 'new-first',
+  } = getFiltersFromSearchParams(searchParams);
 
   const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1;
   const searchQuery = searchParams.get('search') || '*';
@@ -117,25 +116,17 @@ const InstrumentsCatalogue = () => {
     <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
       <div className={styles.container}>
         <div className={styles.filters}>
-          <div className={styles.filters2} onClick={() => setIsModalOpen(true)}>
+          <div className={styles.filters2} onClick={() => setfiltersToggle(!filtersToggle)}>
             <button className={styles.filtersButton} aria-label="filters">
               <IoFilterOutline />
             </button>
             <span className={styles.filtersText}>Filters</span>
           </div>
-
-          {isModalOpen && (
-            <Modal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              appElement={document.getElementById('root') || undefined}
-            >
-              <FiltersPanel data={{ ...dataFilters, order: ['new-first', 'old-first'] }} />
-            </Modal>
-          )}
           <SearchBar disabled={loading} />
         </div>
-
+        {filtersToggle && (
+          <FiltersPanel data={{ ...dataFilters, order: ['new-first', 'old-first'] }} />
+        )}
         <div className={styles.cardsContainer}>
           {loading && <Loader />}
           {!loading && totalItems === 0 && <StatusInfo>{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>}
