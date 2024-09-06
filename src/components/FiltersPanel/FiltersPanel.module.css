@@ -1,13 +1,22 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+
+  @media (min-width: 500px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  max-width: 300px;
-
-  @media (min-width: 744px) {
-    width: 300px;
+  width: 100%;
+  @media (min-width: 500px) {
+    width: 200px;
   }
 }
 
