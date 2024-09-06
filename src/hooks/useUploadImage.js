@@ -10,6 +10,7 @@ const useUploadImage = (image, storageBucket) => {
     const uploadImage = async () => {
       if (!image || !storageBucket) return;
 
+      setIsSubmitable(false);
       try {
         const options = {
           maxSizeMB: 0.08,
