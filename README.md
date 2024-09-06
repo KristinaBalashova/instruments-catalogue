@@ -24,6 +24,9 @@ The **Musical Instruments Catalogue** is a web application that allows users to 
 
 https://kristinabalashova.github.io/instruments-catalogue/#/?page=1
 
+Admin Email: admainemail1222@gmail.com
+Admin Password: 12345678
+
 ## Installation
 
 To run this project locally, follow these steps:
