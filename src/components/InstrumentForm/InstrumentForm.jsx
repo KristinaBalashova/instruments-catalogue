@@ -32,7 +32,7 @@ const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess, submit
             />
           );
         })}
-      <Button type="submit" disabled={isLoading || submitDisabled && true}>
+      <Button type="submit" disabled={(isLoading || submitDisabled) && true}>
         {USER_MESSAGES.SAVE}
       </Button>
       {isModalOpen && (

@@ -6,13 +6,34 @@ const useDeleteItem = () => {
 
   const deleteItem = async (id, onSuccess) => {
     try {
-      const { error: favoriteError } = await supabase.from('favorites').delete().eq('item_id', id);
+      const { data: imageData, error: filePathErr } = await supabase
+        .from('instruments_collection')
+        .select('image')
+        .eq('id', id)
+        .single();
 
+      if (filePathErr) throw filePathErr;
+
+      let imagePath = imageData?.image;
+      if (imagePath) {
+        const urlParts = imageData.image.split('/pics/');
+        imagePath = urlParts[1].split('?')[0];
+      }
+
+      const { error: favoriteError } = await supabase.from('favorites').delete().eq('item_id', id);
       if (favoriteError) throw favoriteError;
 
-      const { error } = await supabase.from('instruments_collection').delete().eq('id', id);
+      const { error: deleteError } = await supabase
+        .from('instruments_collection')
+        .delete()
+        .eq('id', id);
+      if (deleteError) throw deleteError;
 
-      if (error) throw error;
+      if (imagePath) {
+        const { error: storageErr } = await supabase.storage.from('pics').remove([imagePath]);
+        if (storageErr) throw storageErr;
+      }
+
       if (onSuccess) onSuccess(id);
     } catch (error) {
       setErrorDelete(error.message);
