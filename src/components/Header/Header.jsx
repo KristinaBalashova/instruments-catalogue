@@ -13,11 +13,7 @@ import logo from '/logo.png';
 import styles from './Header.module.css';
 
 const Header = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
-
-  const handleToggleTheme = () => {
-    setTheme(theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT);
-  };
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
@@ -37,13 +33,13 @@ const Header = () => {
 
           {theme === THEME_LIGHT ? (
             <BsToggleOff
-              onClick={handleToggleTheme}
+              onClick={toggleTheme}
               className={styles.toggle}
               aria-label={USER_MESSAGES.SWITCH_DARK}
             />
           ) : (
             <BsToggleOn
-              onClick={handleToggleTheme}
+              onClick={toggleTheme}
               className={styles.toggleDark}
               aria-label={USER_MESSAGES.SWITCH_LIGHT}
             />

@@ -1,10 +1,23 @@
-import { createContext, useState } from 'react';
-import { THEME_LIGHT } from './../strings';
+import { createContext, useState, useEffect } from 'react';
+import { THEME_LIGHT, THEME_DARK } from './../strings';
 
 export const ThemeContext = createContext(THEME_LIGHT);
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(THEME_LIGHT);
+  const getInitialTheme = () => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme ? JSON.parse(savedTheme) : THEME_LIGHT;
+  };
 
-  return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(theme));
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT));
+  };
+
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 };
