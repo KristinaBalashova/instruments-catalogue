@@ -22,7 +22,12 @@ const SearchBar = ({ disabled = false }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setQuery('search', queryInput, location, navigate);
+    if (queryInput) {
+      {
+        console.log('button renders with input');
+      }
+      setQuery('search', queryInput, location, navigate);
+    }
   };
 
   const handleClear = () => {
