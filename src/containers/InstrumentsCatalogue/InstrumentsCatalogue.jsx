@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import { useEffect, useState, useContext, useCallback } from 'react';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 import { IoFilterOutline } from 'react-icons/io5';
@@ -115,8 +115,8 @@ const InstrumentsCatalogue = () => {
   return (
     <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
       <div className={styles.container}>
-        <div className={styles.filters}>
-          <div className={styles.filters2} onClick={() => setfiltersToggle(!filtersToggle)}>
+        <div className={styles.nav}>
+          <div className={styles.filters} onClick={() => setfiltersToggle(!filtersToggle)}>
             <button className={styles.filtersButton} aria-label="filters">
               <IoFilterOutline />
             </button>
@@ -124,9 +124,11 @@ const InstrumentsCatalogue = () => {
           </div>
           <SearchBar disabled={loading} />
         </div>
-        {filtersToggle && (
-          <FiltersPanel data={{ ...dataFilters, order: ['new-first', 'old-first'] }} />
-        )}
+        <div className={cx(styles.filtersPanel, { [styles.visible]: filtersToggle })}>
+          {filtersToggle && (
+            <FiltersPanel data={{ ...dataFilters, order: ['new-first', 'old-first'] }} />
+          )}
+        </div>
         <div className={styles.cardsContainer}>
           {loading && <Loader />}
           {!loading && totalItems === 0 && <StatusInfo>{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>}
