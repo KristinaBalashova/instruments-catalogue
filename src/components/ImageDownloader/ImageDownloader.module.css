@@ -6,17 +6,12 @@
   margin: 10px 0px;
 }
 
-.input {
+.img {
   width: 100%;
-  padding: 10px;
-  background-color: var(--secondary-color);
-  border: 1px solid var(--primary-color);
 }
 
-.infoContainer {
-  margin-top: 20px;
-}
-
-.imagePreview {
-  width: 100%;
+.container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
 }
