@@ -1,11 +1,16 @@
 .root {
   padding: 15px;
-  border: 2px solid var(--border-color);
-  box-shadow: 5px 5px 0 var(--darkest-teal);
+  transition: border-color 200ms ease;
+  border: 2px solid white;
 
   @media (min-width: 744px) {
     width: 300px;
   }
+}
+
+.root:hover {
+  border-color: var(--border-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .container {
