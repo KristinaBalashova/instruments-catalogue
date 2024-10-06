@@ -51,12 +51,17 @@
   cursor: pointer;
 }
 
-.filtersButton {
+.filtersIcon {
   border: none;
   background-color: transparent;
   font-size: 40px;
   display: flex;
   cursor: pointer;
+  transition: 1s;
+}
+
+.active {
+  transform: rotate(180deg);
 }
 
 .filtersText {

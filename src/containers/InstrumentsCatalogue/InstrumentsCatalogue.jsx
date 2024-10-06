@@ -117,9 +117,10 @@ const InstrumentsCatalogue = () => {
       <div className={styles.container}>
         <div className={styles.nav}>
           <div className={styles.filters} onClick={() => setfiltersToggle(!filtersToggle)}>
-            <button className={styles.filtersButton} aria-label="filters">
-              <IoFilterOutline />
-            </button>
+            <IoFilterOutline
+              className={cx(styles.filtersIcon, filtersToggle && styles.active)}
+              aria-label="filters"
+            />
             <span className={styles.filtersText}>Filters</span>
           </div>
           <SearchBar disabled={loading} />
