@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Button, Input, Modal, StatusInfo } from '../';
+import { Button, Input, Modal } from '../';
 import styles from './InstrumentForm.module.css';
-import { USER_MESSAGES, STATUS_SUCCESS } from '../../strings';
+import { USER_MESSAGES } from '../../strings';
 
 const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess, submitDisabled }) => {
   const [isModalOpen, setIsModalOpen] = useState(isSuccess);
@@ -41,7 +41,6 @@ const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess, submit
           onClose={() => setIsModalOpen(false)}
           appElement={document.getElementById('root') || undefined}
         >
-          <StatusInfo status={STATUS_SUCCESS}>{USER_MESSAGES.STATUS.SAVE_SUCCESS}</StatusInfo>
           <div className={styles.modalButtons}>
             <Button onClick={() => setIsModalOpen(false)}>{USER_MESSAGES.STAY}</Button>
             <Link to="/">

@@ -1,22 +1,21 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
+import toast from 'react-hot-toast';
 
 import { supabase } from '../../helpers/supabaseClient';
-import { ROLE_ADMIN, STATUS_FAIL, USER_MESSAGES, THEME_DARK } from '../../strings';
+import { ROLE_ADMIN, THEME_DARK } from '../../strings';
 import { UserContext, ThemeContext } from '../../context';
 
-import useFetchItem from '../../hooks/useFetchItem';
-import useUploadImage from '../../hooks/useUploadImage';
-import useDeleteItem from '../../hooks/useDeleteItem';
+import { useFetchItem, useUploadImage, useDeleteItem } from '../../hooks';
 
 import {
   ImageDownloader,
   EditorButtons,
-  StatusInfo,
   Loader,
   InstrumentForm,
   InstrumentInfo,
+  SectionLayout,
 } from '../../components';
 
 import styles from './InstrumentPage.module.css';
@@ -27,7 +26,7 @@ const InstrumentPage = ({ isEditable = false }) => {
   const { user } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
 
-  const [editableItem, setEditableItem] = useState(null);
+  const [editableItem, setEditableItem] = useState({});
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -39,8 +38,10 @@ const InstrumentPage = ({ isEditable = false }) => {
   useEffect(() => {
     if (fetchedItem) {
       setEditableItem(fetchedItem);
+    } else if (errorFetch) {
+      toast.error(`Fetching failed: ${errorFetch}`);
     }
-  }, [fetchedItem]);
+  }, [fetchedItem, errorFetch]);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -69,9 +70,11 @@ const InstrumentPage = ({ isEditable = false }) => {
           throw updateError;
         } else {
           setIsSuccess(true);
+          toast.success('Instrument updated successfully!');
         }
       } catch (error) {
         setError(error.message);
+        toast.error(`Error updating instrument: ${error.message}`);
       }
     },
     [editableItem, signedUrl, id],
@@ -81,18 +84,25 @@ const InstrumentPage = ({ isEditable = false }) => {
     const successCallback = () => {
       setEditableItem(null);
       navigate('/');
+      toast.success('Instrument deleted successfully!');
     };
     await deleteItem(id, successCallback);
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Changes saved successfully!');
+    }
+    if (error) {
+      toast.error(`Error: ${error}`);
+    }
+  }, [isSuccess, error]);
+
   if (!fetchedItem) return <Loader />;
-  if (!editableItem)
-    return <StatusInfo status={STATUS_FAIL}>{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>;
-  if (errorFetch) return <StatusInfo status={STATUS_FAIL}>{errorFetch}</StatusInfo>;
 
   return (
-    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
-      <div className={styles.container}>
+    <SectionLayout>
+      <div className={cx(styles.container, theme === THEME_DARK && styles.darkTheme)}>
         <div className={styles.imageContainer}>
           {isEditable ? (
             <ImageDownloader setFile={setImageFile} image={editableItem?.image} />
@@ -112,7 +122,7 @@ const InstrumentPage = ({ isEditable = false }) => {
             />
           )}
         </div>
-        {isEditable ? (
+        {editableItem && isEditable ? (
           <InstrumentForm
             data={editableItem}
             onChange={handleInputChange}
@@ -125,8 +135,7 @@ const InstrumentPage = ({ isEditable = false }) => {
           <InstrumentInfo data={editableItem} />
         )}
       </div>
-      {error && <StatusInfo status={STATUS_FAIL}>{error}</StatusInfo>}
-    </section>
+    </SectionLayout>
   );
 };
 

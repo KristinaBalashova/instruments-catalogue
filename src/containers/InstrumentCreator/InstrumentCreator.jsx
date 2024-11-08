@@ -5,7 +5,7 @@ import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES, THEME_DARK, STATUS_FAIL } from '../../strings';
 import useUploadImage from '../../hooks/useUploadImage';
 
-import { ImageDownloader, StatusInfo } from '../../components';
+import { ImageDownloader, StatusInfo, SectionLayout } from '../../components';
 import { ThemeContext } from '../../context';
 
 import styles from './InstrumentCreator.module.css';
@@ -95,8 +95,8 @@ const InstrumentCreator = () => {
   }, []);
 
   return (
-    <section className={cx(styles.root, styles.link, theme === THEME_DARK && styles.darkTheme)}>
-      <div className={styles.container}>
+    <SectionLayout>
+      <div className={cx(styles.container, theme === THEME_DARK && styles.darkTheme)}>
         <div className={styles.editContainer}>
           <h2 className={styles.title}>{USER_MESSAGES.ADD_INSTRUMENT}</h2>
           <InstrumentForm
@@ -113,7 +113,7 @@ const InstrumentCreator = () => {
           <ImageDownloader setFile={handleImageUpload} />
         </div>
       </div>
-    </section>
+    </SectionLayout>
   );
 };
 

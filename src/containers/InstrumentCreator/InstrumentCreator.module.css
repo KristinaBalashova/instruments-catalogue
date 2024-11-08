@@ -1,12 +1,5 @@
-.root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 25px;
-
-  @media (min-width: 744px) {
-    padding: 50px;
-  }
+.darkTheme {
+  color: var(--lighter-text);
 }
 
 .container {
@@ -20,7 +13,6 @@
   box-shadow: 5px 5px 0 var(--darkest-teal);
 
   @media (min-width: 744px) {
-    width: 70%;
     flex-direction: row;
   }
 }
@@ -51,16 +43,5 @@
   @media (min-width: 1024px) {
     width: 50%;
     min-height: 480px;
-  }
-}
-
-.root.darkTheme {
-  background-color: var(--dark-theme-background);
-  color: var(--lighter-text);
-}
-
-.root.darkTheme {
-  .container {
-    background-color: var(--dark-theme-background);
   }
 }
