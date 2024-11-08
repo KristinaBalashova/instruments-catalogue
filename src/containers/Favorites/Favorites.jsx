@@ -1,10 +1,8 @@
-import { useState, useEffect, useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { supabase } from '../../helpers/supabaseClient';
+import useFavorites from '../../hooks/useFavorites';
 import useDeleteItem from '../../hooks/useDeleteItem';
-import { getFavorites } from '../../api/api';
-
 import { UserContext } from '../../context';
 import { USER_MESSAGES } from '../../strings';
 
@@ -16,52 +14,11 @@ import styles from './Favorites.module.css';
 const Favorites = () => {
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
   const { user } = useContext(UserContext);
-
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [reload, setReload] = useState(false);
-
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      setLoading(true);
-
-      try {
-        const { favorites, favError } = await getFavorites(user?.id);
-
-        if (favError) {
-          setError(favError);
-          setLoading(false);
-          return;
-        }
-
-        const itemIds = favorites.map((fav) => fav.item_id);
-
-        if (itemIds.length > 0) {
-          const { data: items, error: itemsError } = await supabase
-            .from('instruments_collection')
-            .select('id, name, image')
-            .in('id', itemIds);
-
-          if (itemsError) {
-            console.error(itemsError);
-          } else {
-            setData(items);
-          }
-        }
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFavorites();
-  }, [user, reload]);
+  const { data, loading, error, reload } = useFavorites();
 
   const handleDeleteSuccess = useCallback(() => {
-    setReload((prev) => !prev);
-  }, []);
+    reload();
+  }, [reload]);
 
   return (
     <SectionLayout>
