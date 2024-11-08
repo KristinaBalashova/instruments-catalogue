@@ -1,15 +1,8 @@
-.root {
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-}
-
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-  max-width: 1440px;
   padding: 50px 25px;
   gap: 30px;
   align-items: flex-start;
@@ -19,9 +12,4 @@
 .instrumentsList {
   display: flex;
   justify-content: space-evenly;
-}
-
-.root.darkTheme {
-  background-color: var(--dark-theme-background);
-  color: var(--lighter-gray);
 }

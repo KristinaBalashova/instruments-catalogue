@@ -18,3 +18,6 @@ export { default as ConfirmationCheck } from './ConfirmationCheck/ConfirmationCh
 export { default as MainPage } from './MainPage/MainPage';
 export { default as InstrumentForm } from './InstrumentForm/InstrumentForm';
 export { default as InstrumentInfo } from './InstrumentInfo/InstrumentInfo';
+export { default as SectionLayout } from './SectionLayout/SectionLayout';
+export { default as MainLayout } from './MainLayout/MainLayout';
+export { default as Intro } from './Intro/Intro';

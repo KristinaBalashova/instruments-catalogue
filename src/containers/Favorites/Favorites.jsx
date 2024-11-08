@@ -1,15 +1,14 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import cx from 'classnames';
 
 import { supabase } from '../../helpers/supabaseClient';
 import useDeleteItem from '../../hooks/useDeleteItem';
 import { getFavorites } from '../../api/api';
 
-import { ThemeContext, UserContext } from '../../context';
-import { USER_MESSAGES, THEME_DARK } from '../../strings';
+import { UserContext } from '../../context';
+import { USER_MESSAGES } from '../../strings';
 
-import { Loader, StatusInfo } from '../../components';
+import { Loader, StatusInfo, SectionLayout } from '../../components';
 import InstrumentsList from '../../components/InstrumentsList/InstrumentsList';
 
 import styles from './Favorites.module.css';
@@ -17,7 +16,6 @@ import styles from './Favorites.module.css';
 const Favorites = () => {
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
   const { user } = useContext(UserContext);
-  const { theme } = useContext(ThemeContext);
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -66,7 +64,7 @@ const Favorites = () => {
   }, []);
 
   return (
-    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
+    <SectionLayout>
       {!user && (
         <div className={styles.container}>
           {USER_MESSAGES.NOT_AUTH}
@@ -95,7 +93,7 @@ const Favorites = () => {
           )}
         </div>
       )}
-    </section>
+    </SectionLayout>
   );
 };
 

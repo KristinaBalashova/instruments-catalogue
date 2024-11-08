@@ -3,38 +3,51 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { UserProvider, ThemeProvider } from './context';
 
-import { Header, ProtectedRoute, ErrorFallback, MainPage } from './components';
+import { ProtectedRoute, ErrorFallback, MainPage, MainLayout } from './components';
 import { AuthPage, Favorites, InstrumentCreator, InstrumentPage } from './containers';
+
+const routes = {
+  main: '/',
+  favorites: '/favorites',
+  auth: '/auth',
+  instrumentEditor: '/instrument-editor/:id',
+  instrumentCreator: '/instrument-creator',
+  instrumentPage: '/instrument-page/:id',
+};
 
 function App() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <ThemeProvider>
         <UserProvider>
-          <Router basename="/">
-            <Header />
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/auth" element={<AuthPage />} />
-              <Route
-                path="/instrument-editor/:id"
-                element={
-                  <ProtectedRoute>
-                    <InstrumentPage isEditable={true} />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/instrument-creator"
-                element={
-                  <ProtectedRoute>
-                    <InstrumentCreator />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/instrument-page/:id" element={<InstrumentPage isEditable={false} />} />
-            </Routes>
+          <Router basename={routes.main}>
+            <MainLayout>
+              <Routes>
+                <Route path={routes.main} element={<MainPage />} />
+                <Route path={routes.favorites} element={<Favorites />} />
+                <Route path={routes.auth} element={<AuthPage />} />
+                <Route
+                  path={routes.instrumentEditor}
+                  element={
+                    <ProtectedRoute>
+                      <InstrumentPage isEditable={true} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path={routes.instrumentCreator}
+                  element={
+                    <ProtectedRoute>
+                      <InstrumentCreator />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path={routes.instrumentPage}
+                  element={<InstrumentPage isEditable={false} />}
+                />
+              </Routes>
+            </MainLayout>
           </Router>
         </UserProvider>
       </ThemeProvider>

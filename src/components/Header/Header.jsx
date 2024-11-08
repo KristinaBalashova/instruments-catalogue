@@ -1,13 +1,12 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import cx from 'classnames';
 import { FaStar } from 'react-icons/fa';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 
-import { USER_MESSAGES, THEME_DARK, THEME_LIGHT } from '../../strings';
+import { USER_MESSAGES, THEME_LIGHT } from '../../strings';
 import { ThemeContext } from '../../context';
 
-import { Button } from '../';
+import { Button, SectionLayout } from '../';
 
 import logo from '/logo.png';
 import styles from './Header.module.css';
@@ -16,7 +15,7 @@ const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
+    <SectionLayout>
       <div className={styles.container}>
         <Link to="/">
           <img src={logo} className={styles.logo} alt="logo" />
@@ -46,7 +45,7 @@ const Header = () => {
           )}
         </div>
       </div>
-    </section>
+    </SectionLayout>
   );
 };
 
