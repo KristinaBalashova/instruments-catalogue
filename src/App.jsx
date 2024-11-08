@@ -1,5 +1,6 @@
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Toaster } from 'react-hot-toast';
 
 import { UserProvider, ThemeProvider } from './context';
 
@@ -21,6 +22,7 @@ function App() {
       <ThemeProvider>
         <UserProvider>
           <Router basename={routes.main}>
+            <Toaster position="bottom-right" reverseOrder={false} />
             <MainLayout>
               <Routes>
                 <Route path={routes.main} element={<MainPage />} />

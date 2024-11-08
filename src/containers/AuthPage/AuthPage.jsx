@@ -1,15 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../context';
-import { STATUS_FAIL } from '../../strings';
+import toast from 'react-hot-toast';
 
-import { useSignIn, useSignUp, useSignOut, useResendConfirmation } from '../../hooks';
-import { UserDashboard, SignForm, StatusInfo, Loader, SectionLayout } from '../../components';
+import useSignIn from '../../hooks/useSignIn';
+import useSignUp from '../../hooks/useSignUp';
+import useSignOut from '../../hooks/useSignOut';
+import useResendConfirmation from '../../hooks/useResendConfirmation';
+
+import { UserDashboard, SignForm, Loader, SectionLayout } from '../../components';
 import ConfirmationCheck from '../../components/ConfirmationCheck/ConfirmationCheck';
 
 import styles from './AuthPage.module.css';
 
 const AuthPage = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [confirmationCheck, setConfirmationCheck] = useState(false);
 
@@ -23,18 +27,11 @@ const AuthPage = () => {
   const { handleResend, loading: resendLoading, error: resendError } = useResendConfirmation();
 
   useEffect(() => {
-    if (confirmationCheck) {
-      const interval = setInterval(async () => {
-        const { data } = await supabase.auth.getUser();
-        if (data.user && data.user.email_confirmed_at) {
-          setUser(data.user);
-          clearInterval(interval);
-        }
-      }, 5000);
-
-      return () => clearInterval(interval);
-    }
-  }, [confirmationCheck, setUser]);
+    if (signInError) toast.error(`Sign-in failed: ${signInError}`);
+    if (signUpError) toast.error(`Sign-up failed: ${signUpError}`);
+    if (signOutError) toast.error(`Sign-out failed: ${signOutError}`);
+    if (resendError) toast.error(`Resend confirmation failed: ${resendError}`);
+  }, [signInError, signUpError, signOutError, resendError]);
 
   return (
     <SectionLayout>
@@ -45,10 +42,6 @@ const AuthPage = () => {
         )}
         {confirmationCheck && !user && <ConfirmationCheck handleResend={handleResend} />}
         {user && <UserDashboard user={user} handleSignOut={handleSignOut} />}
-        {signInError && <StatusInfo status={STATUS_FAIL}>{signInError}</StatusInfo>}
-        {signUpError && <StatusInfo status={STATUS_FAIL}>{signUpError}</StatusInfo>}
-        {signOutError && <StatusInfo status={STATUS_FAIL}>{signOutError}</StatusInfo>}
-        {resendError && <StatusInfo status={STATUS_FAIL}>{resendError}</StatusInfo>}
       </div>
     </SectionLayout>
   );
