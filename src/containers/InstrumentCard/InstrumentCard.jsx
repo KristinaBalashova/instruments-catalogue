@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { ROLE_ADMIN } from '../../strings';
-import { UserContext, ThemeContext } from '../../context';
+import { UserContext } from '../../context';
 import { EditorButtons, FavoriteButton } from '../../components';
 import styles from './InstrumentCard.module.css';
 

@@ -1,22 +1,26 @@
-import React, { useState, useContext, useEffect } from 'react';
-import cx from 'classnames';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../context';
+import { STATUS_FAIL } from '../../strings';
 
-import { supabase } from '../../helpers/supabaseClient';
-import { ThemeContext, UserContext } from '../../context';
-import { THEME_DARK, STATUS_FAIL } from '../../strings';
-
-import { UserDashboard, SignForm, StatusInfo, Loader } from '../../components';
+import { useSignIn, useSignUp, useSignOut, useResendConfirmation } from '../../hooks';
+import { UserDashboard, SignForm, StatusInfo, Loader, SectionLayout } from '../../components';
 import ConfirmationCheck from '../../components/ConfirmationCheck/ConfirmationCheck';
 
 import styles from './AuthPage.module.css';
 
 const AuthPage = () => {
   const { user, setUser } = useContext(UserContext);
-  const { theme } = useContext(ThemeContext);
 
   const [confirmationCheck, setConfirmationCheck] = useState(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+  const { handleSignIn, loading: signInLoading, error: signInError } = useSignIn();
+  const {
+    handleSignUp,
+    loading: signUpLoading,
+    error: signUpError,
+  } = useSignUp(setConfirmationCheck);
+  const { handleSignOut, loading: signOutLoading, error: signOutError } = useSignOut();
+  const { handleResend, loading: resendLoading, error: resendError } = useResendConfirmation();
 
   useEffect(() => {
     if (confirmationCheck) {
@@ -32,66 +36,21 @@ const AuthPage = () => {
     }
   }, [confirmationCheck, setUser]);
 
-  const handleSignIn = async (email, password, setError) => {
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      setError(error.message);
-    }
-    setLoading(false);
-  };
-
-  const handleSignUp = async (email, password, setError) => {
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: 'https://kristinabalashova.github.io/instruments-catalogue/',
-      },
-    });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      setConfirmationCheck(true);
-    }
-    setLoading(false);
-  };
-
-  const handleSignOut = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      setError(error.message);
-    }
-    setLoading(false);
-  };
-
-  const handleResend = async (email) => {
-    setLoading(true);
-    const { error } = await supabase.auth.resend({ type: 'signup', email });
-
-    if (error) {
-      setError(error.message);
-    }
-    setLoading(false);
-  };
-
   return (
-    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
+    <SectionLayout>
       <div className={styles.container}>
-        {loading && <Loader />}
+        {(signInLoading || signUpLoading || signOutLoading || resendLoading) && <Loader />}
         {!user && !confirmationCheck && (
           <SignForm handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
         )}
         {confirmationCheck && !user && <ConfirmationCheck handleResend={handleResend} />}
         {user && <UserDashboard user={user} handleSignOut={handleSignOut} />}
-        {error && <StatusInfo status={STATUS_FAIL}>{error}</StatusInfo>}
+        {signInError && <StatusInfo status={STATUS_FAIL}>{signInError}</StatusInfo>}
+        {signUpError && <StatusInfo status={STATUS_FAIL}>{signUpError}</StatusInfo>}
+        {signOutError && <StatusInfo status={STATUS_FAIL}>{signOutError}</StatusInfo>}
+        {resendError && <StatusInfo status={STATUS_FAIL}>{resendError}</StatusInfo>}
       </div>
-    </section>
+    </SectionLayout>
   );
 };
 

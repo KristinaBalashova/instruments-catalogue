@@ -1,15 +1,3 @@
-.root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 25px;
-  font-size: 14px;
-  height: 100vh;
-  @media (min-width: 744px) {
-    padding: 50px;
-  }
-}
-
 .container {
   padding: 30px;
   margin-top: 30px;
@@ -23,8 +11,4 @@
     margin-top: 50px;
     padding: 50px;
   }
-}
-
-.root.darkTheme {
-  background-color: var(--dark-theme-background);
 }
