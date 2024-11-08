@@ -3,7 +3,7 @@ import { supabase } from '../helpers/supabaseClient';
 import { getFavorites } from '../api/api';
 import { UserContext } from '../context';
 
-const useFavorites = () => {
+const useGetFavorites = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,4 +50,4 @@ const useFavorites = () => {
   return { data, loading, error, reload: getFavorites };
 };
 
-export default useFavorites;
+export default useGetFavorites;

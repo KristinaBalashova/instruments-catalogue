@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import useFavorites from '../../hooks/useFavorites';
+import useGetFavorites from '../../hooks/useGetFavorites';
 import useDeleteItem from '../../hooks/useDeleteItem';
 import { UserContext } from '../../context';
 import { USER_MESSAGES } from '../../strings';
@@ -14,7 +14,7 @@ import styles from './Favorites.module.css';
 const Favorites = () => {
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
   const { user } = useContext(UserContext);
-  const { data, loading, error, reload } = useFavorites();
+  const { data, loading, error, reload } = useGetFavorites();
 
   const handleDeleteSuccess = useCallback(() => {
     reload();
