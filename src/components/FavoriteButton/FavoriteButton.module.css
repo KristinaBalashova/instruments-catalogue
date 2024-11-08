@@ -1,0 +1,11 @@
+.filled {
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.unfilled {
+  color: var(--darkest-gray);
+  cursor: pointer;
+  font-size: 30px;
+}

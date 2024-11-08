@@ -28,7 +28,7 @@
 
 .title {
   font-size: 20px;
-  color: var(--accent-color);
+  color: var(--lighter-text);
   margin: 10px 0;
   cursor: pointer;
 }
@@ -49,26 +49,4 @@
 
 .link {
   text-decoration: none;
-}
-
-.filled {
-  color: var(--gold);
-  cursor: pointer;
-  font-size: 30px;
-}
-
-.unfilled {
-  color: var(--darkest-gray);
-  cursor: pointer;
-  font-size: 30px;
-}
-
-.root.darkTheme {
-  box-shadow: 5px 5px 0 var(--darker-teal);
-}
-
-.root.darkTheme {
-  .title {
-    color: var(--lighter-gray);
-  }
 }
