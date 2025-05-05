@@ -30,7 +30,7 @@ The **Musical Instruments Catalogue** is a web application that allows users to 
 
 ## Deploy
 
-https://kristinabalashova.github.io/instruments-catalogue/#/?page=1
+https://instruments-catalogue.vercel.app/#/?page=1
 
 Admin Email: admainemail1222@gmail.com
 Admin Password: 12345678
