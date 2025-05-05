@@ -1,5 +1,7 @@
 # Musical Instruments Catalogue
 
+Please note that the deployed version of this project is currently does not have backend data due to Supabase issues. I'm planning to restore it in the near future. However, you're welcome to explore the code — it’s available and well-done 🙂
+
 ## Introduction
 
 The **Musical Instruments Catalogue** is a web application that allows users to explore, add, and manage a wide variety of musical instruments. Built with React and Supabase.
