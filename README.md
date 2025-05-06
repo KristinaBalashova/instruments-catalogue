@@ -1,6 +1,10 @@
 # Musical Instruments Catalogue
 
-Please note that the deployed version of this project is currently does not have backend data due to Supabase issues. I'm planning to restore it in the near future. However, you're welcome to explore the code — it’s available and well-done 🙂
+Please note:
+
+Creating new users is currently unavailable due to recent Supabase updates that I haven’t synchronized yet. I plan to fix this soon.
+
+In the meantime, you’re welcome to explore the project using the admin user credentials provided below 
 
 ## Introduction
 
