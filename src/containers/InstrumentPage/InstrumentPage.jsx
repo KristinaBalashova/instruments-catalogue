@@ -122,6 +122,7 @@ const InstrumentPage = ({ isEditable = false }) => {
             />
           )}
         </div>
+        <div className={styles.infoContainer}>
         {editableItem && isEditable ? (
           <InstrumentForm
             data={editableItem}
@@ -134,6 +135,7 @@ const InstrumentPage = ({ isEditable = false }) => {
         ) : (
           <InstrumentInfo data={editableItem} />
         )}
+        </div>
       </div>
     </SectionLayout>
   );

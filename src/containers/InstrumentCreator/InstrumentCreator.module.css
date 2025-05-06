@@ -5,15 +5,17 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 25px;
+  gap: 24px;
+  padding: 24px;
   width: 100%;
-  background-color: var(--secondary-color);
-  border: 2px solid var(--border-color);
-  box-shadow: 5px 5px 0 var(--darkest-teal);
+  background-color: var(--secondary-color, #f9f9f9);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 
   @media (min-width: 744px) {
     flex-direction: row;
+    padding: 32px;
   }
 }
 
@@ -29,16 +31,19 @@
 }
 
 .title {
-  font-size: 30px;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary, #222);
+  margin-bottom: 8px;
 }
 
 .imageContainer {
-  border: 1px solid black;
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 12px;
   padding: 20px;
-  margin: 20px 0;
-  background-color: var(--secondary-color);
-  border: 2px solid var(--border-color);
-  box-shadow: 5px 5px 0 var(--darkest-teal);
+  margin: 16px 0;
+  background-color: var(--secondary-color, #fff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 
   @media (min-width: 1024px) {
     width: 50%;
