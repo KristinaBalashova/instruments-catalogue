@@ -19,8 +19,7 @@ export const getUser = async () => {
 };
 
 export const getUserData = async (id) => {
-  const { data, error } = await supabase.from('users').select('id, role').eq('id', id).single();
-
+  const { data, error } = await supabase.from('users').select('id, role').eq('id', id).maybeSingle();
   return { data, error };
 };
 

@@ -11,7 +11,7 @@ const useFetchItem = (id) => {
         .from('instruments_collection')
         .select('*')
         .eq('id', id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         setErrorFetch('Error fetching instrument data.');

@@ -10,7 +10,7 @@ const useDeleteItem = () => {
         .from('instruments_collection')
         .select('image')
         .eq('id', id)
-        .single();
+        .maybeSingle();
 
       if (filePathErr) throw filePathErr;
 
