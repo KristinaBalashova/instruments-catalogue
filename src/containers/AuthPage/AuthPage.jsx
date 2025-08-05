@@ -7,7 +7,7 @@ import useSignUp from '../../hooks/useSignUp';
 import useSignOut from '../../hooks/useSignOut';
 import useResendConfirmation from '../../hooks/useResendConfirmation';
 
-import { UserDashboard, SignForm, Loader, SectionLayout } from '../../components';
+import { UserDashboard, SignForm, Loader, SectionLayout, CredentialsCard } from '../../components';
 import ConfirmationCheck from '../../components/ConfirmationCheck/ConfirmationCheck';
 
 import styles from './AuthPage.module.css';
@@ -37,10 +37,16 @@ const AuthPage = () => {
     <SectionLayout>
       <div className={styles.container}>
         {(signInLoading || signUpLoading || signOutLoading || resendLoading) && <Loader />}
+
         {!user && !confirmationCheck && (
-          <SignForm handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
+          <div className={styles.authWrapper}>
+            <SignForm handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
+            <CredentialsCard />
+          </div>
         )}
+
         {confirmationCheck && !user && <ConfirmationCheck handleResend={handleResend} />}
+
         {user && <UserDashboard user={user} handleSignOut={handleSignOut} />}
       </div>
     </SectionLayout>
