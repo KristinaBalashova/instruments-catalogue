@@ -22,3 +22,4 @@ export { default as SectionLayout } from './SectionLayout/SectionLayout';
 export { default as MainLayout } from './MainLayout/MainLayout';
 export { default as Intro } from './Intro/Intro';
 export { default as FavoriteButton } from './FavoriteButton/FavoriteButton';
+export { default as CredentialsCard } from './CredentialsCard/CredentialsCard';
