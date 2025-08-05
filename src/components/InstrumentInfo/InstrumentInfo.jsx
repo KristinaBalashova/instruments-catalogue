@@ -8,6 +8,7 @@ const InstrumentInfo = ({ data }) => {
         <h2 className={styles.title}>{data.name}</h2>
         <FavoriteButton id={data.id} />
       </div>
+      
       <div className={styles.container}>
         {['brand', 'description', 'country', 'materials', 'type', 'date'].map((item) => (
           <p key={item} className={styles.item}>
