@@ -6,10 +6,10 @@ const Input = ({
   disabled = false,
   name,
   onChange,
-  placeholder = null,
+  placeholder = '',
   readOnly = false,
   required = false,
-  type,
+  type = 'text',
   value,
   label = null,
   error,
@@ -24,12 +24,12 @@ const Input = ({
 
   return (
     <div className={styles.root}>
-      <div className={styles.container} onClick={handleClick}>
-        {label && (
-          <label htmlFor={id} className={cx(styles.label, error && styles.error)}>
-            {label}
-          </label>
-        )}
+      {label && (
+        <label htmlFor={id} className={cx(styles.label, error && styles.labelError)}>
+          {label}
+        </label>
+      )}
+      <div className={cx(styles.container, disabled && styles.disabled)} onClick={handleClick}>
         <input
           ref={inputRef}
           aria-label={name}
@@ -42,11 +42,12 @@ const Input = ({
           value={value}
           disabled={disabled}
           readOnly={readOnly}
-          className={cx(styles.input, error && styles.error, disabled && styles.disabled)}
+          className={cx(styles.input, error && styles.inputError)}
           autoComplete={autocomplete}
           required={required}
         />
       </div>
+      {error && <span className={styles.errorMessage}>{error}</span>}
     </div>
   );
 };
