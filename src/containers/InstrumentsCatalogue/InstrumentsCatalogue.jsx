@@ -8,6 +8,7 @@ import { ThemeContext } from '../../context';
 import { setQuery } from '../../helpers/changeQuery';
 import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
+import useStore from '../../store';
 
 import {
   FiltersPanel,
@@ -27,11 +28,15 @@ const InstrumentsCatalogue = () => {
   const { deleteItem, errorDelete } = useDeleteItem();
 
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+
   const [totalItems, setTotalItems] = useState(0);
   const [dataFilters, setDataFilters] = useState({});
   const [filtersToggle, setfiltersToggle] = useState(false);
   const [reload, setReload] = useState(false);
+
+  //постепенно внедряю стор для разбивки этого компонента на отдельные хуки и упрощение логики
+  const setLoading = useStore((state) => state.setLoading);
+  const loading = useStore((state) => state.loading);
 
   const location = useLocation();
   const navigate = useNavigate();
