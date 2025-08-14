@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { GoSearch } from 'react-icons/go';
-import { USER_MESSAGES } from '../../strings';
-import { Input } from '../';
+import { USER_MESSAGES } from '../../../../strings';
 import styles from './SearchBar.module.css';
-import { setQuery, deleteQuery } from '../../helpers/changeQuery';
+import { setQuery, deleteQuery } from '../../../../helpers/changeQuery';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const SearchBar = ({ disabled = false }) => {
@@ -23,9 +22,6 @@ const SearchBar = ({ disabled = false }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (queryInput) {
-      {
-        console.log('button renders with input');
-      }
       setQuery('search', queryInput, location, navigate);
     }
   };

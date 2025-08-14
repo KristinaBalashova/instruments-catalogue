@@ -1,0 +1,39 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  width: 100%;
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.filtersIcon {
+  border: none;
+  background-color: transparent;
+  font-size: 40px;
+  display: flex;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.active {
+  transform: rotate(180deg);
+}
+
+.filtersText {
+  display: none;
+  @media (min-width: 1024px) {
+    display: block;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+}

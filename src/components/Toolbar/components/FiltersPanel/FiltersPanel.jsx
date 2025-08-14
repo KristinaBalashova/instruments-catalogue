@@ -1,8 +1,7 @@
-import React from 'react';
-import { USER_MESSAGES } from '../../strings';
-import { Button } from '../';
+import { USER_MESSAGES } from '../../../../strings';
+import { Button } from '../../..';
 import styles from './FiltersPanel.module.css';
-import { setQuery, deleteQuery } from '../../helpers/changeQuery';
+import { setQuery, deleteQuery } from '../../../../helpers/changeQuery';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const FiltersPanel = ({ data, clearButton = true }) => {
