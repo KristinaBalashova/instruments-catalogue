@@ -8,7 +8,8 @@ import { ThemeContext } from '../../context';
 import { setQuery } from '../../helpers/changeQuery';
 import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
-import useStore from '../../store';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLoading } from '../../store/loadingSlice';
 
 import {
   FiltersPanel,
@@ -35,8 +36,8 @@ const InstrumentsCatalogue = () => {
   const [reload, setReload] = useState(false);
 
   //постепенно внедряю стор для разбивки этого компонента на отдельные хуки и упрощение логики
-  const setLoading = useStore((state) => state.setLoading);
-  const loading = useStore((state) => state.loading);
+  const loading = useSelector((state) => state.loading.value);
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const InstrumentsCatalogue = () => {
 
   useEffect(() => {
     const fetchAllData = async () => {
-      setLoading(true);
+      dispatch(setLoading(true));  
       const { data, error } = await supabase.from('instruments_collection').select('*');
 
       if (error) {
@@ -68,7 +69,7 @@ const InstrumentsCatalogue = () => {
         }, {});
         setDataFilters(uniqueFilters);
       }
-      setLoading(false);
+      dispatch(setLoading(false));
     };
 
     fetchAllData();
@@ -80,7 +81,7 @@ const InstrumentsCatalogue = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      dispatch(setLoading(true));
 
       let query = supabase
         .from('instruments_collection')
@@ -107,7 +108,7 @@ const InstrumentsCatalogue = () => {
         setTotalItems(count);
       }
 
-      setLoading(false);
+      dispatch(setLoading(false));
     };
 
     fetchData();

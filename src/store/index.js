@@ -1,8 +1,8 @@
-import { create } from 'zustand'
+import { configureStore } from '@reduxjs/toolkit';
+import loadingReducer from './loadingSlice';
 
-const useStore = create((set) => ({
-  loading: false,
-  setLoading: (state) => set({ loading: state }),
-}))
-
-export default useStore;
+export const store = configureStore({
+  reducer: {
+    loading: loadingReducer,
+  },
+});
