@@ -1,24 +1,23 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState} from 'react';
 import { supabase } from '../helpers/supabaseClient';
 
-function useInstrumentsData({ filters, searchQuery, currentPage, itemsPerPage }) {
+function useInstrumentsData({ brand, type, country, order, searchQuery, currentPage, itemsPerPage, reload }) {
   const [data, setData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [reload, setReload] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true);
+      setLoadingData (true);
       let query = supabase
         .from('instruments_collection')
         .select('name, image, id, timestamp', { count: 'exact' });
 
-      if (filters.brand !== '*') query = query.ilike('brand', filters.brand);
-      if (filters.type !== '*') query = query.ilike('type', filters.type);
-      if (filters.country !== '*') query = query.ilike('country', filters.country);
+      if (brand !== '*') query = query.ilike('brand', brand);
+      if (type !== '*') query = query.ilike('type', type);
+      if (country !== '*') query = query.ilike('country', country);
 
-      if (filters.order === 'new-first') {
+      if (order === 'new-first') {
         query = query.order('timestamp', { ascending: false });
       } else {
         query = query.order('timestamp', { ascending: true });
@@ -32,15 +31,13 @@ function useInstrumentsData({ filters, searchQuery, currentPage, itemsPerPage })
         setData(data);
         setTotalItems(count);
       }
-      setLoading(false);
+      setLoadingData(false);
     }
 
     fetchData();
-  }, [filters, searchQuery, currentPage, itemsPerPage, reload]);
+  }, [brand, type, country, order, searchQuery, currentPage, itemsPerPage, reload]);
 
-  const reloadData = useCallback(() => setReload((prev) => !prev), []);
-
-  return { data, totalItems, loading, reloadData };
+  return { data, totalItems, loadingData};
 }
 
 export default useInstrumentsData;

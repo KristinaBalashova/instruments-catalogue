@@ -8,8 +8,9 @@ import { ThemeContext } from '../../context';
 import { setQuery } from '../../helpers/changeQuery';
 import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setLoading } from '../../store/loadingSlice';
+import useInstrumentsData from '../../hooks/useInstrumentsData';
 
 import {
   FiltersPanel,
@@ -27,21 +28,16 @@ const InstrumentsCatalogue = () => {
   const [searchParams] = useSearchParams();
   const { theme } = useContext(ThemeContext);
   const { deleteItem, errorDelete } = useDeleteItem();
-
-  const [data, setData] = useState([]);
-
-  const [totalItems, setTotalItems] = useState(0);
   const [dataFilters, setDataFilters] = useState({});
   const [filtersToggle, setfiltersToggle] = useState(false);
-  const [reload, setReload] = useState(false);
-
-  //постепенно внедряю стор для разбивки этого компонента на отдельные хуки и упрощение логики
-  const loading = useSelector((state) => state.loading.value);
-  const dispatch = useDispatch();
-
   const location = useLocation();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const [reload, setReload] = useState(false);
+  const itemsPerPage = 9;
+  const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1;
+  const searchQuery = searchParams.get('search') || '*';
+  
   const {
     brand = '*',
     type = '*',
@@ -49,10 +45,17 @@ const InstrumentsCatalogue = () => {
     order = 'new-first',
   } = getFiltersFromSearchParams(searchParams);
 
-  const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1;
-  const searchQuery = searchParams.get('search') || '*';
+  const { loadingData, data, totalItems } = useInstrumentsData({
+    brand,
+    type,
+    country,
+    order,
+    searchQuery,
+    currentPage,
+    itemsPerPage,
+    reload
+  });
 
-  const itemsPerPage = 9;
   const listOfFilters = ['brand', 'type', 'country'];
 
   useEffect(() => {
@@ -79,41 +82,6 @@ const InstrumentsCatalogue = () => {
     setQuery('page', 1, location, navigate);
   }, [brand, type, country, order, searchQuery]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      dispatch(setLoading(true));
-
-      let query = supabase
-        .from('instruments_collection')
-        .select('name, image, id, timestamp', { count: 'exact' });
-
-      if (brand !== '*') query = query.ilike('brand', brand);
-      if (type !== '*') query = query.ilike('type', type);
-      if (country !== '*') query = query.ilike('country', country);
-
-      if (order === 'new-first') {
-        query = query.order('timestamp', { ascending: false });
-      } else if (order === 'old-first') {
-        query = query.order('timestamp', { ascending: true });
-      }
-
-      const { data, error, count } = await query
-        .ilike('name', `%${searchQuery}%`)
-        .range(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage - 1);
-
-      if (error) {
-        console.log(error);
-      } else {
-        setData(data);
-        setTotalItems(count);
-      }
-
-      dispatch(setLoading(false));
-    };
-
-    fetchData();
-  }, [currentPage, searchQuery, brand, type, country, order, reload]);
-
   const handleDeleteSuccess = useCallback(() => {
     setReload((prev) => !prev);
   }, []);
@@ -129,7 +97,7 @@ const InstrumentsCatalogue = () => {
             />
             <span className={styles.filtersText}>Filters</span>
           </div>
-          <SearchBar disabled={loading} />
+          <SearchBar disabled={loadingData} />
         </div>
         <div className={cx(styles.filtersPanel, { [styles.visible]: filtersToggle })}>
           {filtersToggle && (
@@ -137,8 +105,8 @@ const InstrumentsCatalogue = () => {
           )}
         </div>
         <div className={styles.cardsContainer}>
-          {loading && <Loader />}
-          {!loading && totalItems === 0 && <StatusInfo>{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>}
+          {loadingData && <Loader />}
+          {!loadingData && totalItems === 0 && <StatusInfo>{USER_MESSAGES.NOTHING_FOUND}</StatusInfo>}
           <InstrumentsList
             data={data}
             deleteItem={deleteItem}
