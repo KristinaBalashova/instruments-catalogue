@@ -1,26 +1,27 @@
-import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
-import { getFiltersFromSearchParams } from '../helpers/getFiltersFromSearchParams';
-import { setQuery } from '../helpers/changeQuery';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from '../helpers/supabaseClient';
 
-function useInstrumentFilters() {
-  const [searchParams] = useSearchParams();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const filters = getFiltersFromSearchParams(searchParams);
-  const searchQuery = searchParams.get('search') || '*';
-  const currentPage = parseInt(searchParams.get('page') || '1', 10) - 1;
+export function useInstrumentsFilters(listOfFilters) {
+  const [dataFilters, setDataFilters] = useState({});
+  const [loadingFilters, setLoadingFilters] = useState(false);
 
   useEffect(() => {
-    setQuery('page', 1, location, navigate);
-  }, [filters.brand, filters.type, filters.country, filters.order, searchQuery]);
+    const fetchAllData = async () => {
+      setLoadingFilters(true);
+      const { data, error } = await supabase.from('instruments_collection').select('*');
 
-  return {
-    filters,
-    searchQuery,
-    currentPage,
-  };
+      if (!error) {
+        const uniqueFilters = listOfFilters.reduce((acc, filter) => {
+          acc[filter] = [...new Set(data.map((item) => item[filter]))];
+          return acc;
+        }, {});
+        setDataFilters(uniqueFilters);
+      }
+      setLoadingFilters(false);
+    };
+
+    fetchAllData();
+  }, [listOfFilters]);
+
+  return { dataFilters, loadingFilters };
 }
-
-export default useInstrumentFilters;

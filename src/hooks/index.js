@@ -8,7 +8,6 @@ import useResendConfirmation from './useResendConfirmation';
 import useFetchFilteredData from './useFetchFilteredData';
 //import useInstrumentFilters from './useInstrumentFilters';
 //import useInstrumentsData from './useInstrumentsData';
-//import useInstrumentFilterOptions from './useInstrumentFilterOptions';
 
 export {
   useDeleteItem,
@@ -21,5 +20,4 @@ export {
   useFetchFilteredData,
   //useInstrumentFilters,
   //useInstrumentsData,
-  //useInstrumentFilterOptions,
 };
