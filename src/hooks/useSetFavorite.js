@@ -35,7 +35,7 @@ const useSetFavorite = (itemId) => {
       alert(USER_MESSAGES.LOGIN_TO_ADD_FAVS);
       return;
     }
-
+    if (loading) return;
     setLoading(true);
     try {
       if (isFavorite) {
