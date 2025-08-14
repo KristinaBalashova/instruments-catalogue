@@ -1,8 +1,8 @@
 import styles from './UserDashboard.module.css';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { USER_MESSAGES } from '../../strings';
-import { Button } from '../';
+import { Button } from '../ui';
 import { UserContext } from '../../context';
 
 const UserDashboard = ({ handleSignOut }) => {

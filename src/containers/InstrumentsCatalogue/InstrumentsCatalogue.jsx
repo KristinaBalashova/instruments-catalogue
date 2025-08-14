@@ -11,12 +11,11 @@ import { useInstrumentsFilters } from '../../hooks/useInstrumentFilters';
 
 import {
   PaginationButtons,
-  Loader,
   InstrumentsList,
-  StatusInfo,
   InstrumentsToolbar,
 } from '../../components';
 
+import { Loader, StatusInfo } from '../../components/ui';
 import styles from './InstrumentsCatalogue.module.css';
 import { USER_MESSAGES } from '../../strings';
 

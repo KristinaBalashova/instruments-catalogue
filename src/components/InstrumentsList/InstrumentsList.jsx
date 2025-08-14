@@ -1,4 +1,3 @@
-import React from 'react';
 import { InstrumentCard } from '../../containers';
 import styles from './InstrumentsList.module.css';
 import cx from 'classnames';

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { USER_MESSAGES, ROLE_ADMIN } from '../../strings';
 import { UserContext } from '../../context';
-import { Button } from '..';
+import { Button } from '../ui';
 
 import styles from './Intro.module.css';
 

@@ -12,11 +12,12 @@ import { useFetchItem, useUploadImage, useDeleteItem } from '../../hooks';
 import {
   ImageDownloader,
   EditorButtons,
-  Loader,
   InstrumentForm,
   InstrumentInfo,
-  SectionLayout,
 } from '../../components';
+
+import { Loader } from '../../components/ui';
+import { SectionLayout } from '../../components/layouts';
 
 import styles from './InstrumentPage.module.css';
 

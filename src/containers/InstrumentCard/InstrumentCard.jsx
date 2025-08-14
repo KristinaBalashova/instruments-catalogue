@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { ROLE_ADMIN } from '../../strings';
 import { UserContext } from '../../context';
-import { EditorButtons, FavoriteButton } from '../../components';
+import { EditorButtons } from '../../components';
+import { FavoriteButton } from '../../components/ui';
 import styles from './InstrumentCard.module.css';
+import useSetFavorite from '../../hooks/useSetFavorite';
 
 const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) => {
   const { id, name, image } = instrumentData;
+  const { isFavorite, loading, handleSetFavorite } = useSetFavorite(id);
   const { user } = useContext(UserContext);
 
   return (
@@ -25,7 +28,12 @@ const InstrumentCard = ({ instrumentData, onDelete, errorDelete, onFavDelete }) 
             {user?.role === ROLE_ADMIN && (
               <EditorButtons id={id} onDelete={onDelete} errorDelete={errorDelete} />
             )}
-            <FavoriteButton id={id} />
+            <div
+              onClick={!loading ? handleSetFavorite : undefined}
+              style={{ cursor: loading ? 'not-allowed' : 'pointer' }}
+            >
+              <FavoriteButton filled={isFavorite} />
+            </div>
           </div>
         </div>
       </div>

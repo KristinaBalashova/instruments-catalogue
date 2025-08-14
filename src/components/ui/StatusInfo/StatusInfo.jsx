@@ -1,6 +1,6 @@
 import { RxCross2 } from 'react-icons/rx';
 import { FcCheckmark } from 'react-icons/fc';
-import { STATUS_SUCCESS, STATUS_FAIL } from '../../strings';
+import { STATUS_SUCCESS, STATUS_FAIL } from '../../../strings';
 import styles from './StatusInfo.module.css';
 import cx from 'classnames';
 

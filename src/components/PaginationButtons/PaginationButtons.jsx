@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'classnames';
 import styles from './PaginationButtons.module.css';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { z } from 'zod';
 import { USER_MESSAGES, STATUS_FAIL } from '../../strings';
 import { isValidDomain } from '../../helpers/isValidDomain';
 
-import { Button, Input, StatusInfo } from '../';
+import { Button, Input, StatusInfo } from '../ui';
+
 import styles from './SignForm.module.css';
 
 const authSchema = z.object({

@@ -6,7 +6,9 @@ import useDeleteItem from '../../hooks/useDeleteItem';
 import { UserContext } from '../../context';
 import { USER_MESSAGES } from '../../strings';
 
-import { Loader, StatusInfo, SectionLayout } from '../../components';
+import { Loader, StatusInfo } from '../../components/ui';
+import {SectionLayout } from '../../components/layouts';
+
 import InstrumentsList from '../../components/InstrumentsList/InstrumentsList';
 
 import styles from './Favorites.module.css';

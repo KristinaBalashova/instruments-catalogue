@@ -1,7 +1,6 @@
-import React from 'react';
 import styles from './ErrorFallback.module.css';
 import { SERVER_MESSAGES, USER_MESSAGES } from '../../strings';
-import { Button } from '../';
+import { Button } from '../ui';
 
 const ErrorFallback = () => {
   return (

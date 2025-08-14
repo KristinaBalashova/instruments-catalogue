@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../context';
 import toast from 'react-hot-toast';
 
@@ -7,9 +7,9 @@ import useSignUp from '../../hooks/useSignUp';
 import useSignOut from '../../hooks/useSignOut';
 import useResendConfirmation from '../../hooks/useResendConfirmation';
 
-import { UserDashboard, SignForm, Loader, SectionLayout, CredentialsCard } from '../../components';
-import ConfirmationCheck from '../../components/ConfirmationCheck/ConfirmationCheck';
-
+import { UserDashboard, SignForm, CredentialsCard, ConfirmationCheck } from '../../components';
+import { SectionLayout } from '../../components/layouts';
+import { Loader } from '../../components/ui';
 import styles from './AuthPage.module.css';
 
 const AuthPage = () => {

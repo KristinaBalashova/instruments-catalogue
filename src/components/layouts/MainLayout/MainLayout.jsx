@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import cx from 'classnames';
 
-import { ThemeContext } from '../../context';
-import { Header } from '..';
+import { ThemeContext } from '../../../context';
+import { Header } from '../..';
 import styles from './MainLayout.module.css';
 
 const MainLayout = ({ children }) => {

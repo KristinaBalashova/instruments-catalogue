@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Button, Input, Modal } from '../';
+import { Button, Input, Modal } from '../ui';
 import styles from './InstrumentForm.module.css';
 import { USER_MESSAGES } from '../../strings';
 

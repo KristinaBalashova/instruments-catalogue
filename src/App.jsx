@@ -4,7 +4,8 @@ import { Toaster } from 'react-hot-toast';
 
 import { UserProvider, ThemeProvider } from './context';
 
-import { ProtectedRoute, ErrorFallback, MainPage, MainLayout } from './components';
+import { ProtectedRoute, ErrorFallback, MainPage } from './components';
+import { MainLayout } from './components/layouts';
 import { AuthPage, Favorites, InstrumentCreator, InstrumentPage } from './containers';
 
 const routes = {

@@ -1,5 +1,5 @@
-import React from 'react';
-import { SectionLayout, Intro } from '..';
+import { Intro } from '..';
+import { SectionLayout } from '../layouts';
 import { InstrumentsCatalogue } from '../../containers';
 
 const MainPage = () => {

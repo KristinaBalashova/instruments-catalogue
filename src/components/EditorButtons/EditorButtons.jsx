@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { IoTrash } from 'react-icons/io5';
 
 import { USER_MESSAGES, STATUS_FAIL } from '../../strings';
-import { Modal, Button, StatusInfo } from '../';
-
+import { Modal, Button, StatusInfo} from '../ui';
 import styles from './EditorButtons.module.css';
 
 const EditorButtons = ({ id, onDelete, errorDelete }) => {

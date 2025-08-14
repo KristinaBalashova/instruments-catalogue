@@ -19,7 +19,11 @@ export const getUser = async () => {
 };
 
 export const getUserData = async (id) => {
-  const { data, error } = await supabase.from('users').select('id, role').eq('id', id).maybeSingle();
+  const { data, error } = await supabase
+    .from('users')
+    .select('id, role')
+    .eq('id', id)
+    .maybeSingle();
   return { data, error };
 };
 
@@ -40,6 +44,8 @@ export const deleteFavItem = async (item_id, user_id) => {
 };
 
 export const insertFavItem = async (item) => {
-  const { incertError } = await supabase.from('favorites').insert(item);
-  return { incertError };
+  const { error } = await supabase
+    .from('favorites')
+    .upsert([item]);
+  return { insertError: error };
 };

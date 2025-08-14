@@ -1,5 +1,5 @@
 import { USER_MESSAGES } from '../../../../strings';
-import { Button } from '../../..';
+import { Button } from '../../../ui';
 import styles from './FiltersPanel.module.css';
 import { setQuery, deleteQuery } from '../../../../helpers/changeQuery';
 import { useLocation, useNavigate } from 'react-router-dom';

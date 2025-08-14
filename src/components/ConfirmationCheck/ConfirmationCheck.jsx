@@ -1,7 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { USER_MESSAGES } from '../../strings';
-import { Button } from '../../components';
+import { Button } from '../ui';
 import styles from './ConfirmationCheck.module.css';
 import { BiSolidHomeAlt2 } from 'react-icons/bi';
 

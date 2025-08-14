@@ -6,7 +6,8 @@ import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
 import { USER_MESSAGES, THEME_LIGHT } from '../../strings';
 import { ThemeContext } from '../../context';
 
-import { Button, SectionLayout } from '../';
+import { SectionLayout } from '../layouts';
+import { Button } from '../ui';
 
 import logo from '/logo.png';
 import styles from './Header.module.css';
