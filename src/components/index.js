@@ -1,19 +1,35 @@
-export { default as EditorButtons } from './EditorButtons/EditorButtons';
-export { default as Header } from './Header/Header';
-export { default as ImageDownloader } from './ImageDownloader/ImageDownloader';
-export { default as InstrumentsList } from './InstrumentsList/InstrumentsList';
-export { default as PaginationButtons } from './PaginationButtons/PaginationButtons';
-export { default as UserDashboard } from './UserDashboard/UserDashboard';
-export { default as ErrorFallback } from './ErrorFallback/ErrorFallback';
-export { default as SignForm } from './SignForm/SignForm';
-export { default as ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
-export { default as ConfirmationCheck } from './ConfirmationCheck/ConfirmationCheck';
-export { default as MainPage } from './MainPage/MainPage';
-export { default as InstrumentForm } from './InstrumentForm/InstrumentForm';
-export { default as InstrumentInfo } from './InstrumentInfo/InstrumentInfo';
-export { default as Intro } from './Intro/Intro';
-export { default as CredentialsCard } from './CredentialsCard/CredentialsCard';
-
+import EditorButtons from './EditorButtons/EditorButtons';
+import Header from './Header/Header';
+import ImageDownloader from './ImageDownloader/ImageDownloader';
+import InstrumentsList from './InstrumentsList/InstrumentsList';
+import PaginationButtons from './PaginationButtons/PaginationButtons';
+import UserDashboard from './UserDashboard/UserDashboard';
+import ErrorFallback from './ErrorFallback/ErrorFallback';
+import SignForm from './SignForm/SignForm';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import ConfirmationCheck from './ConfirmationCheck/ConfirmationCheck';
+import MainPage from './MainPage/MainPage';
+import InstrumentForm from './InstrumentForm/InstrumentForm';
+import InstrumentInfo from './InstrumentInfo/InstrumentInfo';
+import Intro from './Intro/Intro';
+import CredentialsCard from './CredentialsCard/CredentialsCard';
 import InstrumentsToolbar from './Toolbar/InstrumentsToolbar';
 
-export { InstrumentsToolbar };
+export {
+  EditorButtons,
+  Header,
+  ImageDownloader,
+  InstrumentsList,
+  PaginationButtons,
+  UserDashboard,
+  ErrorFallback,
+  SignForm,
+  ProtectedRoute,
+  ConfirmationCheck,
+  MainPage,
+  InstrumentForm,
+  InstrumentInfo,
+  Intro,
+  CredentialsCard,
+  InstrumentsToolbar,
+};
