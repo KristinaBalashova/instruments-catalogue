@@ -1,0 +1,6 @@
+.filtersIcon {
+  font-size: 24px;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}

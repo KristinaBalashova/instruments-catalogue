@@ -71,6 +71,7 @@ const InstrumentsCatalogue = () => {
           onToggleFilters={() => setfiltersToggle((prev) => !prev)}
           loadingData={loadingFilters}
           dataFilters={dataFilters}
+          query={[brand, type, country]}
         />
         <div className={styles.cardsContainer}>
           {loadingData && <Loader />}

@@ -1,25 +1,31 @@
 import { FiltersPanel, SearchBar } from './components';
 import styles from './InstrumentsToolbar.module.css';
-import { IoFilterOutline } from 'react-icons/io5';
+import FilterIcon from './components/FilterIcon/FilterIcon';
 import cx from 'classnames';
 
-const InstrumentsToolbar = ({ orderRules, loadingData, filtersToggle, onToggleFilters, dataFilters }) => {
+const InstrumentsToolbar = ({
+  orderRules,
+  loadingData,
+  filtersToggle,
+  onToggleFilters,
+  dataFilters,
+  query,
+}) => {
+
+  const hasActiveFilters = query.some((item) => item !== '*');
+
   return (
     <>
       <div className={styles.container}>
+        
+        <SearchBar disabled={loadingData} />
         <div className={styles.filters} onClick={onToggleFilters}>
-          <IoFilterOutline
-            className={cx(styles.filtersIcon, filtersToggle && styles.active)}
-            aria-label="filters"
-          />
+            <FilterIcon filtersToggle={filtersToggle} hasActiveFilters={hasActiveFilters} />
           <span className={styles.filtersText}>Filters</span>
         </div>
-        <SearchBar disabled={loadingData} />
       </div>
       <div className={cx(styles.filtersPanel, { [styles.visible]: filtersToggle })}>
-        {filtersToggle && (
-          <FiltersPanel data={{ ...dataFilters, order: orderRules }} />
-        )}
+        {filtersToggle && <FiltersPanel data={{ ...dataFilters, order: orderRules }} />}
       </div>
     </>
   );
