@@ -4,8 +4,7 @@ import cx from 'classnames';
 import { supabase } from '../../helpers/supabaseClient';
 import { USER_MESSAGES, THEME_DARK, STATUS_FAIL } from '../../strings';
 import useUploadImage from '../../hooks/useUploadImage';
-
-import { ImageDownloader } from '../../components';
+import ImageDownloader from '../../components/InstrumentImage/components/ImageDownloader/ImageDownloader';
 import { StatusInfo } from '../../components/ui';
 import { SectionLayout } from '../../components/layouts';
 import { ThemeContext } from '../../context';

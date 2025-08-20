@@ -1,6 +1,6 @@
-import { USER_MESSAGES } from '../../strings';
+import { USER_MESSAGES } from '../../../../strings';
 import styles from './ImageDownloader.module.css';
-import { Button } from '../ui';
+import { Button } from '../../../ui';
 
 import { useRef, useState, useEffect } from 'react';
 

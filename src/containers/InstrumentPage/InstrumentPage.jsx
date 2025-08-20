@@ -10,10 +10,10 @@ import { UserContext, ThemeContext } from '../../context';
 import { useItem, useUploadImage, useDeleteItem } from '../../hooks';
 
 import {
-  ImageDownloader,
   EditorButtons,
   InstrumentForm,
   InstrumentInfo,
+  InstrumentImage,
 } from '../../components';
 
 import { Loader } from '../../components/ui';
@@ -106,15 +106,7 @@ const InstrumentPage = ({ isEditable = false }) => {
     <SectionLayout>
       <div className={cx(styles.container, theme === THEME_DARK && styles.darkTheme)}>
         <div className={styles.imageContainer}>
-          {isEditable ? (
-            <ImageDownloader setFile={setImageFile} image={editableItem?.image} />
-          ) : (
-            <img
-              src={imageFile ? URL.createObjectURL(imageFile) : editableItem?.image}
-              alt={editableItem?.name}
-              className={styles.image}
-            />
-          )}
+          <InstrumentImage isEditable={isEditable} imageFile={imageFile} editableItem={editableItem} setImageFile={setImageFile} />
           {user?.role === ROLE_ADMIN && (
             <EditorButtons
               id={id}

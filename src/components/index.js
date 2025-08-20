@@ -1,6 +1,5 @@
 import EditorButtons from './EditorButtons/EditorButtons';
 import Header from './Header/Header';
-import ImageDownloader from './ImageDownloader/ImageDownloader';
 import InstrumentsList from './InstrumentsList/InstrumentsList';
 import PaginationButtons from './PaginationButtons/PaginationButtons';
 import UserDashboard from './UserDashboard/UserDashboard';
@@ -14,11 +13,11 @@ import InstrumentInfo from './InstrumentInfo/InstrumentInfo';
 import Intro from './Intro/Intro';
 import CredentialsCard from './CredentialsCard/CredentialsCard';
 import InstrumentsToolbar from './Toolbar/InstrumentsToolbar';
+import InstrumentImage from './InstrumentImage/InstrumentImage';
 
 export {
   EditorButtons,
   Header,
-  ImageDownloader,
   InstrumentsList,
   PaginationButtons,
   UserDashboard,
@@ -32,4 +31,5 @@ export {
   Intro,
   CredentialsCard,
   InstrumentsToolbar,
+  InstrumentImage
 };
