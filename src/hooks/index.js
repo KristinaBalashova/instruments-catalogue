@@ -1,5 +1,5 @@
 import useDeleteItem from './useDeleteItem';
-import useFetchItem from './useFetchItem';
+import useItem from './useItem';
 import useUploadImage from './useUploadImage';
 import useSignIn from './useSignIn';
 import useSignOut from './useSignOut';
@@ -11,7 +11,7 @@ import useFetchFilteredData from './useFetchFilteredData';
 
 export {
   useDeleteItem,
-  useFetchItem,
+  useItem,
   useUploadImage,
   useSignIn,
   useSignOut,

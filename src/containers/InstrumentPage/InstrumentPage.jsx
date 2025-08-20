@@ -7,7 +7,7 @@ import { supabase } from '../../helpers/supabaseClient';
 import { ROLE_ADMIN, THEME_DARK } from '../../strings';
 import { UserContext, ThemeContext } from '../../context';
 
-import { useFetchItem, useUploadImage, useDeleteItem } from '../../hooks';
+import { useItem, useUploadImage, useDeleteItem } from '../../hooks';
 
 import {
   ImageDownloader,
@@ -32,17 +32,18 @@ const InstrumentPage = ({ isEditable = false }) => {
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const { fetchedItem, errorFetch } = useFetchItem(id);
+  const { data: fetchedItem, isLoading: isItemLoading, error: itemError } = useItem(id);
+
   const { signedUrl, isSubmitable } = useUploadImage(imageFile, 'pics');
   const { deleteItem, statusDelete, errorDelete } = useDeleteItem();
 
   useEffect(() => {
     if (fetchedItem) {
       setEditableItem(fetchedItem);
-    } else if (errorFetch) {
-      toast.error(`Fetching failed: ${errorFetch}`);
+    } else if (itemError) {
+      toast.error(`Fetching failed: ${itemError.message}`);
     }
-  }, [fetchedItem, errorFetch]);
+  }, [fetchedItem, itemError]);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -99,7 +100,7 @@ const InstrumentPage = ({ isEditable = false }) => {
     }
   }, [isSuccess, error]);
 
-  if (!fetchedItem) return <Loader />;
+  if (isItemLoading) return <Loader />;
 
   return (
     <SectionLayout>
