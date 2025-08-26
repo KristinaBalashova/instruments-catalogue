@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { z } from 'zod';
+import * as yup from 'yup';
 import { USER_MESSAGES, STATUS_FAIL } from '../../strings';
 import { isValidDomain } from '../../helpers/isValidDomain';
 
@@ -7,12 +7,18 @@ import { Button, Input, StatusInfo } from '../ui';
 
 import styles from './SignForm.module.css';
 
-const authSchema = z.object({
-  email: z
+const authSchema = yup.object({
+  email: yup
     .string()
-    .email({ message: USER_MESSAGES.VALIDATION.INVALID_EMAIL })
-    .refine((email) => isValidDomain(email), { message: USER_MESSAGES.VALIDATION.INVALID_DOMAIN }),
-  password: z.string().min(6, { message: USER_MESSAGES.VALIDATION.INVALID_PASSWORD }),
+    .email(USER_MESSAGES.VALIDATION.INVALID_EMAIL)
+    .test(
+      'valid-domain',
+      USER_MESSAGES.VALIDATION.INVALID_DOMAIN,
+      (email) => (email ? isValidDomain(email) : false)
+    ),
+  password: yup
+    .string()
+    .min(6, USER_MESSAGES.VALIDATION.INVALID_PASSWORD),
 });
 
 const SignForm = ({ handleSignIn, handleSignUp }) => {
@@ -22,13 +28,14 @@ const SignForm = ({ handleSignIn, handleSignUp }) => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const validateForm = () => {
-    const result = authSchema.safeParse({ email, password });
-    if (!result.success) {
-      setError(result.error.errors.map((err) => err.message).join(', '));
+    try {
+      authSchema.validateSync({ email, password });
+      setError('');
+      return true;
+    } catch (err) {
+      setError(err.errors.map((error) => error.message).join(', '));
       return false;
     }
-    setError('');
-    return true;
   };
 
   const onSubmit = (e) => {
