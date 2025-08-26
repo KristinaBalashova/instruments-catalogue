@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import ImageDownloader from "./components/ImageDownloader/ImageDownloader";
 import styles from "./InstrumentImage.module.css";
 
@@ -13,4 +14,4 @@ function InstrumentImage({ isEditable, imageFile, editableItem, setImageFile }) 
   );
 }
 
-export default InstrumentImage;
+export default memo(InstrumentImage);

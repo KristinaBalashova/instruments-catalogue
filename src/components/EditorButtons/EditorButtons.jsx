@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { IoTrash } from 'react-icons/io5';
 
@@ -40,4 +40,4 @@ const EditorButtons = ({ id, onDelete, errorDelete }) => {
   );
 };
 
-export default EditorButtons;
+export default memo(EditorButtons);

@@ -1,8 +1,10 @@
+import { memo } from 'react';
 import styles from './InstrumentInfo.module.css';
 import { FavoriteButton } from '../ui';
 import useSetFavorite from '../../hooks/useSetFavorite';
 
 const InstrumentInfo = ({ data }) => {
+  if (!data) return null;
   const { id } = data;
   const { isFavorite, loading, handleSetFavorite } = useSetFavorite(id);
 
@@ -30,4 +32,4 @@ const InstrumentInfo = ({ data }) => {
   );
 };
 
-export default InstrumentInfo;
+export default memo(InstrumentInfo);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react';
+import React, { useEffect, useState, useCallback, useContext, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 import toast from 'react-hot-toast';
@@ -9,12 +9,7 @@ import { UserContext, ThemeContext } from '../../context';
 
 import { useItem, useUploadImage, useDeleteItem } from '../../hooks';
 
-import {
-  EditorButtons,
-  InstrumentForm,
-  InstrumentInfo,
-  InstrumentImage,
-} from '../../components';
+import { EditorButtons, InstrumentForm, InstrumentInfo, InstrumentImage } from '../../components';
 
 import { Loader } from '../../components/ui';
 import { SectionLayout } from '../../components/layouts';
@@ -56,7 +51,6 @@ const InstrumentPage = ({ isEditable = false }) => {
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-
       try {
         const updatedItem = {
           ...editableItem,
@@ -92,6 +86,7 @@ const InstrumentPage = ({ isEditable = false }) => {
   };
 
   useEffect(() => {
+
     if (isSuccess) {
       toast.success('Changes saved successfully!');
     }
@@ -100,13 +95,33 @@ const InstrumentPage = ({ isEditable = false }) => {
     }
   }, [isSuccess, error]);
 
-  if (isItemLoading) return <Loader />;
+  if (!editableItem) return <Loader />;
+
+  const infoData = useMemo(
+    () => ({
+      id: editableItem.id,
+      name: editableItem.name,
+      brand: editableItem.brand,
+      description: editableItem.description,
+      country: editableItem.country,
+      materials: editableItem.materials,
+      image: editableItem.image,
+      type: editableItem.type,
+      date: editableItem.date,
+    }),
+    [editableItem],
+  );
 
   return (
     <SectionLayout>
       <div className={cx(styles.container, theme === THEME_DARK && styles.darkTheme)}>
         <div className={styles.imageContainer}>
-          <InstrumentImage isEditable={isEditable} imageFile={imageFile} editableItem={editableItem} setImageFile={setImageFile} />
+          <InstrumentImage
+            isEditable={isEditable}
+            imageFile={imageFile}
+            editableItem={infoData}
+            setImageFile={setImageFile}
+          />
           {user?.role === ROLE_ADMIN && (
             <EditorButtons
               id={id}
@@ -117,18 +132,18 @@ const InstrumentPage = ({ isEditable = false }) => {
           )}
         </div>
         <div className={styles.infoContainer}>
-        {editableItem && isEditable ? (
-          <InstrumentForm
-            data={editableItem}
-            onChange={handleInputChange}
-            onSubmit={handleSubmit}
-            isLoading={false}
-            isSuccess={isSuccess}
-            submitDisabled={!isSubmitable}
-          />
-        ) : (
-          <InstrumentInfo data={editableItem} />
-        )}
+          {editableItem && isEditable ? (
+            <InstrumentForm
+              data={infoData}
+              onChange={handleInputChange}
+              onSubmit={handleSubmit}
+              isLoading={false}
+              isSuccess={isSuccess}
+              submitDisabled={!isSubmitable}
+            />
+          ) : (
+            <InstrumentInfo data={editableItem} />
+          )}
         </div>
       </div>
     </SectionLayout>

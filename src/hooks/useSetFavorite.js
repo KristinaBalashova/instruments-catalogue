@@ -10,8 +10,8 @@ const useSetFavorite = (itemId) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    if (!user) return;
-
+    if (!user || !itemId) return;
+    
     const fetchFavoriteStatus = async () => {
       setLoading(true);
       try {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Button, Input, Modal } from '../ui';
@@ -6,6 +6,7 @@ import styles from './InstrumentForm.module.css';
 import { USER_MESSAGES } from '../../strings';
 
 const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess, submitDisabled }) => {
+
   const [isModalOpen, setIsModalOpen] = useState(isSuccess);
 
   useEffect(() => {
@@ -53,4 +54,4 @@ const InstrumentForm = ({ data, onChange, onSubmit, isLoading, isSuccess, submit
   );
 };
 
-export default InstrumentForm;
+export default memo(InstrumentForm);
