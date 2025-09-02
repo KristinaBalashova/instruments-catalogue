@@ -1,15 +1,14 @@
-import React, { useContext } from 'react';
 import cx from 'classnames';
+import { useSelector} from 'react-redux';
 
-import { ThemeContext } from '../../../context';
 import { Header } from '../..';
 import styles from './MainLayout.module.css';
 
 const MainLayout = ({ children }) => {
-  const { theme } = useContext(ThemeContext);
+  const currentTheme = useSelector((state) => state.theme.value);
 
   return (
-    <div className={cx(styles.root, theme === 'dark' && styles.darkTheme)}>
+    <div className={cx(styles.root, currentTheme === 'dark' && styles.darkTheme)}>
       <Header />
       {children}
     </div>

@@ -28,12 +28,6 @@
   gap: 20px;
 }
 
-
-.root.darkTheme {
-  background-color: var(--dark-theme-background);
-  color: white;
-}
-
 .filtersPanel {
   opacity: 0;
   transform: translateY(-10px);

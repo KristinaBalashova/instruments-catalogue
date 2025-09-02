@@ -1,7 +1,3 @@
-.darkTheme {
-  color: var(--lighter-text);
-}
-
 .container {
   display: flex;
   flex-direction: column;

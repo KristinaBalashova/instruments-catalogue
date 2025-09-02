@@ -1,8 +1,10 @@
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Toaster } from 'react-hot-toast';
+import { Provider } from 'react-redux';
+import store from './store';
 
-import { UserProvider, ThemeProvider } from './context';
+import { UserProvider } from './context';
 
 import { ProtectedRoute, ErrorFallback, MainPage } from './components';
 import { MainLayout } from './components/layouts';
@@ -20,7 +22,7 @@ const routes = {
 function App() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <ThemeProvider>
+      <Provider store={store}>
         <UserProvider>
           <Router basename={routes.main}>
             <Toaster position="bottom-right" reverseOrder={false} />
@@ -53,7 +55,7 @@ function App() {
             </MainLayout>
           </Router>
         </UserProvider>
-      </ThemeProvider>
+      </Provider>
     </ErrorBoundary>
   );
 }

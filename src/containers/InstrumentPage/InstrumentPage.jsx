@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useCallback, useContext, useMemo } from 'react';
+import { useEffect, useState, useCallback, useContext, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 import toast from 'react-hot-toast';
 
 import { supabase } from '../../helpers/supabaseClient';
-import { ROLE_ADMIN, THEME_DARK } from '../../strings';
-import { UserContext, ThemeContext } from '../../context';
+import { ROLE_ADMIN} from '../../strings';
+import { UserContext } from '../../context';
+
 
 import { useItem, useUploadImage, useDeleteItem } from '../../hooks';
 
@@ -20,7 +21,6 @@ const InstrumentPage = ({ isEditable = false }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const { theme } = useContext(ThemeContext);
 
   const [editableItem, setEditableItem] = useState({});
   const [imageFile, setImageFile] = useState(null);
@@ -114,7 +114,7 @@ const InstrumentPage = ({ isEditable = false }) => {
 
   return (
     <SectionLayout>
-      <div className={cx(styles.container, theme === THEME_DARK && styles.darkTheme)}>
+      <div className={cx(styles.container)}>
         <div className={styles.imageContainer}>
           <InstrumentImage
             isEditable={isEditable}

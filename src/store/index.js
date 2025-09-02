@@ -1,8 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import loadingReducer from './loadingSlice';
+import themeReducer from './themeSlice';
+import { loadTheme } from './helpers/loadTheme';
+import { themeMiddleware } from './helpers/themeMiddleware';
 
-export const store = configureStore({
+ const store = configureStore({
   reducer: {
-    loading: loadingReducer,
+    theme: themeReducer,
   },
+  preloadedState: loadTheme(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(themeMiddleware),
 });
+
+export default store;

@@ -7,8 +7,6 @@ import useUploadImage from '../../hooks/useUploadImage';
 import ImageDownloader from '../../components/InstrumentImage/components/ImageDownloader/ImageDownloader';
 import { StatusInfo } from '../../components/ui';
 import { SectionLayout } from '../../components/layouts';
-import { ThemeContext } from '../../context';
-
 import styles from './InstrumentCreator.module.css';
 import InstrumentForm from '../../components/InstrumentForm/InstrumentForm';
 
@@ -29,7 +27,6 @@ const InstrumentCreator = () => {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const { signedUrl, isSubmitable } = useUploadImage(imageFile, 'pics');
-  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (signedUrl) {
@@ -97,7 +94,7 @@ const InstrumentCreator = () => {
 
   return (
     <SectionLayout>
-      <div className={cx(styles.container, theme === THEME_DARK && styles.darkTheme)}>
+      <div className={cx(styles.container)}>
         <div className={styles.editContainer}>
           <h2 className={styles.title}>{USER_MESSAGES.ADD_INSTRUMENT}</h2>
           <InstrumentForm

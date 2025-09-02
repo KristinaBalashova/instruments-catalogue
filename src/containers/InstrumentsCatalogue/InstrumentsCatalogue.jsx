@@ -1,8 +1,8 @@
 import { useEffect, useState, useContext, useCallback, useMemo } from 'react';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
+
 import cx from 'classnames';
-import { THEME_DARK } from '../../strings';
-import { ThemeContext } from '../../context';
+
 import { setQuery } from '../../helpers/changeQuery';
 import { getFiltersFromSearchParams } from '../../helpers/getFiltersFromSearchParams';
 import useDeleteItem from '../../hooks/useDeleteItem';
@@ -21,7 +21,6 @@ import { USER_MESSAGES } from '../../strings';
 
 const InstrumentsCatalogue = () => {
   const [searchParams] = useSearchParams();
-  const { theme } = useContext(ThemeContext);
   const { deleteItem, errorDelete } = useDeleteItem();
   const [filtersToggle, setfiltersToggle] = useState(false);
   const location = useLocation();
@@ -63,7 +62,7 @@ const InstrumentsCatalogue = () => {
   }, []);
 
   return (
-    <section className={cx(styles.root, theme === THEME_DARK && styles.darkTheme)}>
+    <section className={cx(styles.root)}>
       <div className={styles.container}>
         <InstrumentsToolbar
           orderRules={orderRules}

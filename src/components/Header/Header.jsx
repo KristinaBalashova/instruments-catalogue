@@ -2,9 +2,10 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import { BsToggleOff, BsToggleOn } from 'react-icons/bs';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleTheme } from '../../store/themeSlice';
 
 import { USER_MESSAGES, THEME_LIGHT } from '../../strings';
-import { ThemeContext } from '../../context';
 
 import { SectionLayout } from '../layouts';
 import { Button } from '../ui';
@@ -13,7 +14,12 @@ import logo from '/logo.png';
 import styles from './Header.module.css';
 
 const Header = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  const currentTheme = useSelector((state) => state.theme.value);
+
+  const handleThemeToggle = () => {
+    dispatch(toggleTheme());
+  };
 
   return (
     <SectionLayout>
@@ -31,15 +37,15 @@ const Header = () => {
             <FaStar className={styles.filled} />
           </Link>
 
-          {theme === THEME_LIGHT ? (
+          {currentTheme === THEME_LIGHT ? (
             <BsToggleOff
-              onClick={toggleTheme}
+              onClick={handleThemeToggle}
               className={styles.toggle}
               aria-label={USER_MESSAGES.SWITCH_DARK}
             />
           ) : (
             <BsToggleOn
-              onClick={toggleTheme}
+              onClick={handleThemeToggle}
               className={styles.toggleDark}
               aria-label={USER_MESSAGES.SWITCH_LIGHT}
             />
